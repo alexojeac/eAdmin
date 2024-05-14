@@ -1,6 +1,6 @@
 package controller;
 
-import controller.account.AccountController;
+import controller.app.AppController;
 import java.awt.Color;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -53,7 +53,7 @@ public class FrontController {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     view.dispose();
                     AppView accountView = new AppView(view, true);
-                    AccountController controller = new AccountController(accountView);
+                    AppController controller = new AppController(accountView);
 
                     accountView.setVisible(true);
                 }
@@ -66,27 +66,40 @@ public class FrontController {
         FocusListener listener = new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                view.setUserText("");
+                if (view.getUserText().equals("Ingrese su nombre")) {
+                    view.setUserText("");
+                    view.setValidUser(true);
+                }
             }
 
             @Override
             public void focusLost(FocusEvent e) {
-                view.setUserText("Ingrese su nombre");
+                if (view.getUserText().equals("")) {
+                    view.setUserText("Ingrese su nombre");
+                    view.setValidUser(false);
+                }
             }
         };
         return listener;
     }
-    
+
     private FocusListener getPasswordTextFieldFocusListener() {
         FocusListener listener = new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                view.setPassText("");
+                if (view.getPassText().equals("jPasswordField1")) {
+                    view.setPassText("");
+                    view.setValidPass(true);
+                }
+
             }
 
             @Override
             public void focusLost(FocusEvent e) {
-                view.setPassText("micontrasena");
+                if (view.getPassText().equals("")) {
+                    view.setPassText("jPasswordField1");
+                    view.setValidPass(false);
+                }
             }
         };
         return listener;

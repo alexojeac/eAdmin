@@ -1,5 +1,7 @@
 package view.app;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -7,12 +9,13 @@ import javax.swing.JPanel;
 public class AppView extends javax.swing.JDialog {
 
     private int xMouse, yMouse;
-    
+
     public AppView(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
-@SuppressWarnings("unchecked")
+
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -27,19 +30,7 @@ public class AppView extends javax.swing.JDialog {
         topBarPanel = new javax.swing.JPanel();
         exitPanel = new javax.swing.JPanel();
         exitLabel = new javax.swing.JLabel();
-        accountPanel = new javax.swing.JPanel();
-        nameAccountLabel = new javax.swing.JLabel();
-        lastName1AccountLabel = new javax.swing.JLabel();
-        lastName2AccountLabel = new javax.swing.JLabel();
-        departmentAccountLabel = new javax.swing.JLabel();
-        onTimeButton = new javax.swing.JButton();
-        inputDateChooser = new com.toedter.calendar.JDateChooser();
-        inputLabel = new javax.swing.JLabel();
-        outputDateChooser = new com.toedter.calendar.JDateChooser();
-        outputLabel = new javax.swing.JLabel();
-        onTimesScrollPane = new javax.swing.JScrollPane();
-        onTimesTable = new javax.swing.JTable();
-        dataSeparator = new javax.swing.JSeparator();
+        contentPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocationByPlatform(true);
@@ -143,73 +134,18 @@ public class AppView extends javax.swing.JDialog {
 
         backgroundPanel.add(topBarPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 30));
 
-        accountPanel.setBackground(new java.awt.Color(255, 255, 255));
-        accountPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        javax.swing.GroupLayout contentPanelLayout = new javax.swing.GroupLayout(contentPanel);
+        contentPanel.setLayout(contentPanelLayout);
+        contentPanelLayout.setHorizontalGroup(
+            contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 590, Short.MAX_VALUE)
+        );
+        contentPanelLayout.setVerticalGroup(
+            contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 470, Short.MAX_VALUE)
+        );
 
-        nameAccountLabel.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        nameAccountLabel.setText("Nombre");
-        accountPanel.add(nameAccountLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 130, 30));
-
-        lastName1AccountLabel.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        lastName1AccountLabel.setText("Apellido1");
-        accountPanel.add(lastName1AccountLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 130, 30));
-
-        lastName2AccountLabel.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        lastName2AccountLabel.setText("Apellido2");
-        accountPanel.add(lastName2AccountLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 130, 30));
-
-        departmentAccountLabel.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        departmentAccountLabel.setText("Departamento: ");
-        accountPanel.add(departmentAccountLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 40, 130, 30));
-
-        onTimeButton.setBackground(new java.awt.Color(0, 134, 190));
-        onTimeButton.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        onTimeButton.setForeground(new java.awt.Color(255, 255, 255));
-        onTimeButton.setText("Fichar");
-        onTimeButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        accountPanel.add(onTimeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 140, 100, 30));
-
-        inputDateChooser.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        accountPanel.add(inputDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, 110, 30));
-
-        inputLabel.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        inputLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        inputLabel.setText("Entrada:");
-        accountPanel.add(inputLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 60, 30));
-
-        outputDateChooser.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        accountPanel.add(outputDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 140, 110, 30));
-
-        outputLabel.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        outputLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        outputLabel.setText("Salida:");
-        accountPanel.add(outputLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 140, 60, 30));
-
-        onTimesTable.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        onTimesTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null}
-            },
-            new String [] {
-                "Fecha", "Entrada", "Salida", "Horas"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        onTimesScrollPane.setViewportView(onTimesTable);
-
-        accountPanel.add(onTimesScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 490, 230));
-
-        dataSeparator.setForeground(new java.awt.Color(0, 134, 190));
-        accountPanel.add(dataSeparator, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 520, 10));
-
-        backgroundPanel.add(accountPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 30, 590, 470));
+        backgroundPanel.add(contentPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 30, 590, 470));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -236,16 +172,22 @@ public class AppView extends javax.swing.JDialog {
         yMouse = evt.getY();
     }//GEN-LAST:event_topBarPanelMousePressed
 
-     public JPanel getExitPanel() {
+    public JPanel getExitPanel() {
         return exitPanel;
     }
 
     public JLabel getExitLabel() {
         return exitLabel;
     }
-    
+
     public void setView(JPanel view) {
-        this.accountPanel = view;
+        view.setSize(590, 470);
+        view.setLocation(0, 0);
+
+        this.contentPanel.removeAll();
+        this.contentPanel.add(view, BorderLayout.CENTER);
+        this.contentPanel.revalidate();
+        this.contentPanel.repaint();
     }
 
     public void addTopBarPanelListener(MouseAdapter listener) {
@@ -255,34 +197,26 @@ public class AppView extends javax.swing.JDialog {
     public void addExitLabelListener(MouseAdapter listener) {
         this.exitLabel.addMouseListener(listener);
     }
-    
+
+    public void addHomeLabelListener(MouseAdapter listener) {
+        this.accountLabel.addMouseListener(listener);
+    }
+
     public void addRRHHLabelListener(MouseAdapter listener) {
         this.rrhhLabel.addMouseListener(listener);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel accountLabel;
-    private javax.swing.JPanel accountPanel;
     private javax.swing.JLabel adminLabel;
     private javax.swing.JPanel backgroundPanel;
-    private javax.swing.JSeparator dataSeparator;
-    private javax.swing.JLabel departmentAccountLabel;
+    private javax.swing.JPanel contentPanel;
     private javax.swing.JLabel departmentsLabel;
     private javax.swing.JLabel exitLabel;
     private javax.swing.JPanel exitPanel;
     private javax.swing.JLabel imageLogoLabel;
-    private com.toedter.calendar.JDateChooser inputDateChooser;
-    private javax.swing.JLabel inputLabel;
-    private javax.swing.JLabel lastName1AccountLabel;
-    private javax.swing.JLabel lastName2AccountLabel;
-    private javax.swing.JLabel nameAccountLabel;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JPanel navPanel;
-    private javax.swing.JButton onTimeButton;
-    private javax.swing.JScrollPane onTimesScrollPane;
-    private javax.swing.JTable onTimesTable;
-    private com.toedter.calendar.JDateChooser outputDateChooser;
-    private javax.swing.JLabel outputLabel;
     private javax.swing.JLabel rrhhLabel;
     private javax.swing.JPanel topBarPanel;
     // End of variables declaration//GEN-END:variables

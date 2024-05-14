@@ -1,19 +1,20 @@
 package view.login;
 
+import java.awt.Color;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class LoginView extends javax.swing.JFrame {
-
+    
     private int xMouse, yMouse;
-
+    
     public LoginView() {
         initComponents();
         this.eAdminLabel.grabFocus();
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -181,31 +182,55 @@ public class LoginView extends javax.swing.JFrame {
         int y = evt.getYOnScreen();
         this.setLocation(x - xMouse, y - yMouse);
     }//GEN-LAST:event_topBarPanelMouseDragged
-
+    
     public JPanel getExitPanel() {
         return exitPanel;
     }
-
+    
     public JLabel getExitLabel() {
         return exitLabel;
+    }
+    
+    public String getUserText() {
+        return userTextField.getText();
     }
     
     public void setUserText(String text) {
         this.userTextField.setText(text);
     }
     
+    public void setValidUser(boolean valid) {
+        if (valid) {
+            this.userTextField.setForeground(Color.BLACK);
+        } else {
+            this.userTextField.setForeground(new Color(204, 204, 204));
+        }
+    }
+    
+    public String getPassText() {
+        return passwordField.getText();
+    }
+    
     public void setPassText(String text) {
         this.passwordField.setText(text);
     }
-
+    
+    public void setValidPass(boolean valid) {
+        if (valid) {
+            this.passwordField.setForeground(Color.BLACK);
+        } else {
+            this.passwordField.setForeground(new Color(204, 204, 204));
+        }
+    }
+    
     public void addTopBarPanelListener(MouseAdapter listener) {
         this.topBarPanel.addMouseListener(listener);
     }
-
+    
     public void addExitLabelListener(MouseAdapter listener) {
         this.exitLabel.addMouseListener(listener);
     }
-
+    
     public void addLoginButtonLabelListener(MouseAdapter listener) {
         this.loginButtonLabel.addMouseListener(listener);
     }
@@ -216,7 +241,7 @@ public class LoginView extends javax.swing.JFrame {
     
     public void addPasswordTextFieldListener(FocusListener listener) {
         this.passwordField.addFocusListener(listener);
-    } 
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -1,18 +1,25 @@
-package controller.account;
+package controller.app;
 
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JPanel;
 import view.app.AppView;
+import view.panelViews.HomeView;
+import view.panelViews.RRHHView;
 
-public class AccountController {
+public class AppController {
 
     private final AppView view;
+    private JPanel currentView;
 
-    public AccountController(AppView view) {
+    public AppController(AppView view) {
         this.view = view;
         this.view.addExitLabelListener(this.getExitLabelMouseListener());
         this.view.addRRHHLabelListener(this.getRRHHLabelMouseListener());
+        this.view.addHomeLabelListener(getHomeLabelMouseListener());
+        currentView = new HomeView();
+        view.setView(currentView);
     }
 
     private MouseAdapter getExitLabelMouseListener() {
@@ -39,12 +46,27 @@ public class AccountController {
         return adapter;
     }
 
+    private MouseAdapter getHomeLabelMouseListener() {
+        MouseAdapter adapter = new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    currentView = new HomeView();
+                    view.setView(currentView);
+                }
+            }
+
+        };
+        return adapter;
+    }
+
     private MouseAdapter getRRHHLabelMouseListener() {
         MouseAdapter adapter = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                   
+                    currentView = new RRHHView();
+                    view.setView(currentView);
                 }
             }
         };
