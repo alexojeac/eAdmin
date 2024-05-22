@@ -29,7 +29,7 @@
     <Component class="javax.swing.JLabel" name="nameAccountLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Roboto" size="12" style="0"/>
+          <Font name="Roboto" size="12" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Nombre"/>
       </Properties>
@@ -42,7 +42,7 @@
     <Component class="javax.swing.JLabel" name="lastName1AccountLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Roboto" size="12" style="0"/>
+          <Font name="Roboto" size="12" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Apellido1"/>
       </Properties>
@@ -55,7 +55,7 @@
     <Component class="javax.swing.JLabel" name="lastName2AccountLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Roboto" size="12" style="0"/>
+          <Font name="Roboto" size="12" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Apellido2"/>
       </Properties>
@@ -68,7 +68,7 @@
     <Component class="javax.swing.JLabel" name="departmentAccountLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Roboto" size="12" style="0"/>
+          <Font name="Roboto" size="12" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Departamento: "/>
       </Properties>
@@ -84,7 +84,7 @@
           <Color blue="be" green="86" red="0" type="rgb"/>
         </Property>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Roboto" size="12" style="0"/>
+          <Font name="Roboto" size="12" style="1"/>
         </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -115,7 +115,7 @@
     <Component class="javax.swing.JLabel" name="inputLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Roboto" size="12" style="0"/>
+          <Font name="Roboto" size="12" style="1"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="Entrada:"/>
@@ -141,7 +141,7 @@
     <Component class="javax.swing.JLabel" name="outputLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Roboto" size="12" style="0"/>
+          <Font name="Roboto" size="12" style="1"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="Salida:"/>
@@ -170,7 +170,7 @@
               <Font name="Roboto" size="12" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="4" rowCount="1">
+              <Table columnCount="4" rowCount="0">
                 <Column editable="true" title="Fecha" type="java.lang.String"/>
                 <Column editable="true" title="Entrada" type="java.lang.String"/>
                 <Column editable="true" title="Salida" type="java.lang.String"/>

@@ -1,12 +1,14 @@
 
 package view.panelViews;
 
+import java.awt.event.ActionListener;
+import java.util.Date;
+
 public class HomeView extends javax.swing.JPanel {
 
     public HomeView() {
         initComponents();
     }
-
   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -29,24 +31,24 @@ public class HomeView extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(590, 470));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        nameAccountLabel.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        nameAccountLabel.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         nameAccountLabel.setText("Nombre");
         add(nameAccountLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 130, 30));
 
-        lastName1AccountLabel.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        lastName1AccountLabel.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         lastName1AccountLabel.setText("Apellido1");
         add(lastName1AccountLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 130, 30));
 
-        lastName2AccountLabel.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        lastName2AccountLabel.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         lastName2AccountLabel.setText("Apellido2");
         add(lastName2AccountLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 130, 30));
 
-        departmentAccountLabel.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        departmentAccountLabel.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         departmentAccountLabel.setText("Departamento: ");
         add(departmentAccountLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, 130, 30));
 
         onTimeButton.setBackground(new java.awt.Color(0, 134, 190));
-        onTimeButton.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        onTimeButton.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         onTimeButton.setForeground(new java.awt.Color(255, 255, 255));
         onTimeButton.setText("Fichar");
         onTimeButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -55,7 +57,7 @@ public class HomeView extends javax.swing.JPanel {
         inputDateChooser.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         add(inputDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, 110, 30));
 
-        inputLabel.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        inputLabel.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         inputLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         inputLabel.setText("Entrada:");
         add(inputLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 60, 30));
@@ -63,7 +65,7 @@ public class HomeView extends javax.swing.JPanel {
         outputDateChooser.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         add(outputDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, 110, 30));
 
-        outputLabel.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        outputLabel.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         outputLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         outputLabel.setText("Salida:");
         add(outputLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, 60, 30));
@@ -71,7 +73,7 @@ public class HomeView extends javax.swing.JPanel {
         onTimesTable.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         onTimesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null}
+
             },
             new String [] {
                 "Fecha", "Entrada", "Salida", "Horas"
@@ -93,6 +95,33 @@ public class HomeView extends javax.swing.JPanel {
         add(dataSeparator, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 520, 10));
     }// </editor-fold>//GEN-END:initComponents
 
+    public void setUserName(String name) {
+        this.nameAccountLabel.setText(name);
+    }
+    
+    public void setUserLastName1(String name) {
+        this.lastName1AccountLabel.setText(name);
+    }
+    
+    public void setUserLastName2(String name) {
+        this.lastName2AccountLabel.setText(name);
+    }
+    
+    public void setDepartment(String dept) {
+        this.departmentAccountLabel.setText(this.departmentAccountLabel.getText().concat(dept));
+    }
+    
+    public Date getInputDate() {
+        return this.inputDateChooser.getDate();
+    }
+    
+    public Date getOutputDate() {
+        return this.outputDateChooser.getDate();
+    }
+    
+    public void addOnTimeButtonListenner(ActionListener listener) {
+        this.onTimeButton.addActionListener(listener);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSeparator dataSeparator;

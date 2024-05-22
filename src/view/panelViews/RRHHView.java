@@ -33,6 +33,7 @@ public class RRHHView extends javax.swing.JPanel {
         nameTextField = new javax.swing.JTextField();
         surnameTextField = new javax.swing.JTextField();
         phoneTextField = new javax.swing.JTextField();
+        AddButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -64,10 +65,18 @@ public class RRHHView extends javax.swing.JPanel {
         phoneTextField.setForeground(new java.awt.Color(204, 204, 204));
         phoneTextField.setText("Tlf.");
         add(phoneTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 50, 110, 30));
+
+        AddButton.setBackground(new java.awt.Color(0, 134, 190));
+        AddButton.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        AddButton.setForeground(new java.awt.Color(255, 255, 255));
+        AddButton.setText("Añadir");
+        AddButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        add(AddButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 100, 110, 30));
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AddButton;
     private javax.swing.JLabel addEmployeeLabel;
     private javax.swing.JSeparator addEmployeeSeparator;
     private javax.swing.JTextField mailTextField;
