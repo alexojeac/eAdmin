@@ -1,25 +1,26 @@
 package controller.app;
 
+import controller.views.DeptController;
+import controller.views.RRHHController;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JPanel;
 import view.app.AppView;
+import view.panelViews.DeptView;
 import view.panelViews.HomeView;
 import view.panelViews.RRHHView;
 
 public class AppController {
 
     private final AppView view;
-    private JPanel currentView;
 
     public AppController(AppView view) {
         this.view = view;
         this.view.addExitLabelListener(this.getExitLabelMouseListener());
         this.view.addRRHHLabelListener(this.getRRHHLabelMouseListener());
         this.view.addHomeLabelListener(getHomeLabelMouseListener());
-        currentView = new HomeView();
-        view.setView(currentView);
+        this.view.addDeptosLabelListener(this.getDeptosLabelMouseListener());
+        view.setView(new HomeView());
     }
 
     private MouseAdapter getExitLabelMouseListener() {
@@ -51,7 +52,7 @@ public class AppController {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    currentView = new HomeView();
+                    HomeView currentView = new HomeView();
                     view.setView(currentView);
                 }
             }
@@ -65,7 +66,22 @@ public class AppController {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    currentView = new RRHHView();
+                    RRHHView currentView = new RRHHView();
+                    RRHHController controller = new RRHHController(currentView);
+                    view.setView(currentView);
+                }
+            }
+        };
+        return adapter;
+    }
+    
+     private MouseAdapter getDeptosLabelMouseListener() {
+        MouseAdapter adapter = new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    DeptView currentView = new DeptView();
+                    DeptController controller = new DeptController(currentView);
                     view.setView(currentView);
                 }
             }

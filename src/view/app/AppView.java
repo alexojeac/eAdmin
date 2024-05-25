@@ -1,7 +1,6 @@
 package view.app;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -57,7 +56,7 @@ public class AppView extends javax.swing.JDialog {
         nameLabel.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
         nameLabel.setForeground(new java.awt.Color(255, 255, 255));
         nameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        nameLabel.setText("Nombre Empleado");
+        nameLabel.setText("id empleado");
         nameLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         navPanel.add(nameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 210, 40));
 
@@ -204,6 +203,10 @@ public class AppView extends javax.swing.JDialog {
 
     public void addRRHHLabelListener(MouseAdapter listener) {
         this.rrhhLabel.addMouseListener(listener);
+    }
+    
+    public void addDeptosLabelListener(MouseAdapter listener) {
+        this.departmentsLabel.addMouseListener(listener);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
