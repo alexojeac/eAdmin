@@ -1,3 +1,4 @@
-![eAdmin_logo](https://github.com/alexojeac/eAdmin/assets/115101058/64bd1f19-c278-4aad-94f6-e1cfebcad299)
+![EADMIN](https://github.com/alexojeac/eAdmin/assets/115101058/ebd19767-e840-4783-ae90-fa76ad663be6)
 
+#eAdmin 
 Aplicación de escritorio para gestionar trabajadores en una empresa.
