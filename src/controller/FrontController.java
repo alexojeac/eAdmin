@@ -8,10 +8,15 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import view.login.LoginView;
 import view.app.AppView;
+import java.sql.Connection;
+import javax.swing.JOptionPane;
+import utils.Constantes;
+import utils.DatabaseConnector;
 
 public class FrontController {
 
     private final LoginView view;
+    private Connection connection;
 
     public FrontController(LoginView view) {
         this.view = view;
@@ -51,11 +56,21 @@ public class FrontController {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    view.dispose();
-                    AppView accountView = new AppView(view, true);
-                    AppController controller = new AppController(accountView);
+                    /*try {
+                        DatabaseConnector.connect(Constantes.DB_HOST, Constantes.DB_USER_NAME, Constantes.DB_PASSWORD);
+                        connection = DatabaseConnector.getConnection();
+                        QueryProccesor query = new QueryProcessor(connection);
+                    */
 
-                    accountView.setVisible(true);
+                        view.dispose();
+                        AppView accountView = new AppView(view, true);
+                        AppController controller = new AppController(accountView, connection);
+
+                        accountView.setVisible(true);
+                   /* } catch (Exception err) {
+                        JOptionPane.showMessageDialog(view, Constantes.ACCES_ERROR, "Error", JOptionPane.WARNING_MESSAGE);
+                    }*/
+
                 }
             }
         };
@@ -103,5 +118,9 @@ public class FrontController {
             }
         };
         return listener;
+    }
+    
+    private void checkAuth() {
+        //TODO
     }
 }

@@ -9,18 +9,26 @@ import view.app.AppView;
 import view.panelViews.DeptView;
 import view.panelViews.HomeView;
 import view.panelViews.RRHHView;
+import java.sql.Connection;
 
 public class AppController {
 
     private final AppView view;
+    private final Connection connection;
 
-    public AppController(AppView view) {
+    public AppController(AppView view, Connection connection) {
         this.view = view;
+        this.connection = connection;
         this.view.addExitLabelListener(this.getExitLabelMouseListener());
         this.view.addRRHHLabelListener(this.getRRHHLabelMouseListener());
         this.view.addHomeLabelListener(getHomeLabelMouseListener());
         this.view.addDeptosLabelListener(this.getDeptosLabelMouseListener());
         view.setView(new HomeView());
+        this.setIdNav();
+    }
+    
+    private void setIdNav() {
+        //TODO
     }
 
     private MouseAdapter getExitLabelMouseListener() {
@@ -67,7 +75,7 @@ public class AppController {
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     RRHHView currentView = new RRHHView();
-                    RRHHController controller = new RRHHController(currentView);
+                    RRHHController controller = new RRHHController(currentView, connection);
                     view.setView(currentView);
                 }
             }
@@ -81,7 +89,7 @@ public class AppController {
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     DeptView currentView = new DeptView();
-                    DeptController controller = new DeptController(currentView);
+                    DeptController controller = new DeptController(currentView, connection);
                     view.setView(currentView);
                 }
             }

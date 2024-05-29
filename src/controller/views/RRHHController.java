@@ -3,12 +3,15 @@ package controller.views;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import view.panelViews.RRHHView;
+import java.sql.Connection;
 
 public class RRHHController {
-    RRHHView view;
+    private final RRHHView view;
+    private final Connection connection;
 
-    public RRHHController(RRHHView view) {
+    public RRHHController(RRHHView view, Connection connection) {
         this.view = view;
+        this.connection = connection;
         this.view.addNameTextFieldListener(this.getNameTextFieldFocusListener());
         this.view.addSurnameTextFieldListener(getSurnameameTextFieldFocusListener());
         this.view.addSurname2TextFieldListener(this.getSurnameame2TextFieldFocusListener());

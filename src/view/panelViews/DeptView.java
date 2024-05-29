@@ -60,7 +60,7 @@ public class DeptView extends javax.swing.JPanel {
 
         searchDeptLabel.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         searchDeptLabel.setText("Buscar departamento");
-        add(searchDeptLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 150, 30));
+        add(searchDeptLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 170, 30));
 
         searchDeptSeparator.setBackground(new java.awt.Color(0, 134, 190));
         searchDeptSeparator.setForeground(new java.awt.Color(0, 134, 190));
@@ -106,7 +106,7 @@ public class DeptView extends javax.swing.JPanel {
         addToDeptButton.setForeground(new java.awt.Color(255, 255, 255));
         addToDeptButton.setText("Añadir a departamento");
         addToDeptButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        add(addToDeptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 340, 160, 30));
+        add(addToDeptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 340, 180, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     public void setValid(JTextField text, boolean valid) {

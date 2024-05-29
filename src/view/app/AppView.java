@@ -22,7 +22,7 @@ public class AppView extends javax.swing.JDialog {
         navPanel = new javax.swing.JPanel();
         imageLogoLabel = new javax.swing.JLabel();
         adminLabel = new javax.swing.JLabel();
-        nameLabel = new javax.swing.JLabel();
+        userIdLabel = new javax.swing.JLabel();
         rrhhLabel = new javax.swing.JLabel();
         departmentsLabel = new javax.swing.JLabel();
         accountLabel = new javax.swing.JLabel();
@@ -53,12 +53,12 @@ public class AppView extends javax.swing.JDialog {
         adminLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         navPanel.add(adminLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 210, 40));
 
-        nameLabel.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
-        nameLabel.setForeground(new java.awt.Color(255, 255, 255));
-        nameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        nameLabel.setText("id empleado");
-        nameLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        navPanel.add(nameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 210, 40));
+        userIdLabel.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
+        userIdLabel.setForeground(new java.awt.Color(255, 255, 255));
+        userIdLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        userIdLabel.setText("id empleado");
+        userIdLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        navPanel.add(userIdLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 210, 40));
 
         rrhhLabel.setFont(new java.awt.Font("Roboto Medium", 1, 14)); // NOI18N
         rrhhLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -188,7 +188,11 @@ public class AppView extends javax.swing.JDialog {
         this.contentPanel.revalidate();
         this.contentPanel.repaint();
     }
-
+    
+    public void setUserIdLabel(String id) {
+        this.userIdLabel.setText(id);
+    }
+    
     public void addTopBarPanelListener(MouseAdapter listener) {
         this.topBarPanel.addMouseListener(listener);
     }
@@ -218,9 +222,9 @@ public class AppView extends javax.swing.JDialog {
     private javax.swing.JLabel exitLabel;
     private javax.swing.JPanel exitPanel;
     private javax.swing.JLabel imageLogoLabel;
-    private javax.swing.JLabel nameLabel;
     private javax.swing.JPanel navPanel;
     private javax.swing.JLabel rrhhLabel;
     private javax.swing.JPanel topBarPanel;
+    private javax.swing.JLabel userIdLabel;
     // End of variables declaration//GEN-END:variables
 }

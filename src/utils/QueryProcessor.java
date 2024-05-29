@@ -1,0 +1,75 @@
+package utils;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.*;
+import java.util.ArrayList;
+
+public class QueryProcessor {
+     private final Connection connection;
+
+    public QueryProcessor(Connection connection) {
+        this.connection = connection;
+    }
+
+    public void executeStatement(String sql) {
+        try {
+            Statement statement = connection.createStatement();
+            statement.execute(sql);
+            statement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void executeQuery(String sql) throws Exception {
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery(sql);
+        print(rs, sql);
+    }
+
+    public void queryFromFile(String pathStr) throws Exception {
+        Path path = Paths.get(pathStr);
+        String sql = Files.readString(path);
+        executeQuery(sql);
+    }
+
+    private void print(ResultSet rs, String sql) throws Exception {
+        System.out.printf("%s%s   %n%s%s%-25s%n", ANSI.YELLOW_BACKGROUND, ANSI.BLACK, ANSI.RESET, ANSI.PURPLE, sql, ANSI.RESET);
+        ArrayList<String> columns = getColumnNames(rs);
+        System.out.println(getHeaderRow(columns));
+
+        while (rs.next()) {
+            String row = "";
+            for (int i = 1; i <= columns.size(); i++) {
+                row += String.format("%-25s  ", rs.getObject(i));
+            }
+            System.out.println(row);
+        }
+
+        System.out.println("\n");
+    }
+
+    private ArrayList<String> getColumnNames(ResultSet resultSet) throws Exception {
+        ArrayList<String> names = new ArrayList<>();
+        ResultSetMetaData metadata = resultSet.getMetaData();
+        int columns = metadata.getColumnCount();
+
+        for (int i = 1; i <= columns; i++) {
+            String name = metadata.getColumnLabel(i);
+            names.add(name);
+        }
+
+        return names;
+    }
+
+    private String getHeaderRow(ArrayList<String> columnNames) {
+        String str = ANSI.YELLOW_BACKGROUND + ANSI.BLACK;
+        for (String colName : columnNames) {
+            str += String.format("%-14s  ", colName);
+        }
+        return str + ANSI.RESET;
+    }
+}

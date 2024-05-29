@@ -4,12 +4,15 @@ package controller.views;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import view.panelViews.DeptView;
+import java.sql.Connection;
 
 public class DeptController {
-    DeptView view;
+    private final DeptView view;
+    private final Connection connection;
 
-    public DeptController(DeptView view) {
+    public DeptController(DeptView view, Connection connection) {
         this.view = view;
+        this.connection = connection;
         this.view.addNameTextFieldListener(this.getNameTextFieldFocusListener());
         this.view.addPhoneTextFieldListener(this.getPhoneTextFieldFocusListener());
         this.view.addNameSearchTextFieldListener(this.getSearchNameTextFieldFocusListener());
