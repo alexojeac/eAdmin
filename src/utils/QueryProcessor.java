@@ -21,7 +21,6 @@ public class QueryProcessor {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public void executeQuery(String sql) throws Exception {

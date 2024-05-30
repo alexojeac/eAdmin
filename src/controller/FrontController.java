@@ -12,6 +12,7 @@ import java.sql.Connection;
 import javax.swing.JOptionPane;
 import utils.Constantes;
 import utils.DatabaseConnector;
+import utils.QueryProcessor;
 
 public class FrontController {
 
@@ -56,20 +57,19 @@ public class FrontController {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    /*try {
+                    try {
                         DatabaseConnector.connect(Constantes.DB_HOST, Constantes.DB_USER_NAME, Constantes.DB_PASSWORD);
                         connection = DatabaseConnector.getConnection();
-                        QueryProccesor query = new QueryProcessor(connection);
-                    */
-
+                        QueryProcessor query = new QueryProcessor(connection);
+                    
                         view.dispose();
                         AppView accountView = new AppView(view, true);
                         AppController controller = new AppController(accountView, connection);
 
                         accountView.setVisible(true);
-                   /* } catch (Exception err) {
+                    } catch (Exception err) {
                         JOptionPane.showMessageDialog(view, Constantes.ACCES_ERROR, "Error", JOptionPane.WARNING_MESSAGE);
-                    }*/
+                    }
 
                 }
             }
