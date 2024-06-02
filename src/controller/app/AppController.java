@@ -10,13 +10,15 @@ import view.panelViews.DeptView;
 import view.panelViews.HomeView;
 import view.panelViews.RRHHView;
 import java.sql.Connection;
+import model.Employee;
 
 public class AppController {
 
     private final AppView view;
     private final Connection connection;
+    // private Employee currentlyEmployee;
 
-    public AppController(AppView view, Connection connection) {
+    public AppController(AppView view, Connection connection, String employee) {
         this.view = view;
         this.connection = connection;
         this.view.addExitLabelListener(this.getExitLabelMouseListener());

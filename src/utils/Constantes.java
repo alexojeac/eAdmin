@@ -9,4 +9,5 @@ public class Constantes {
 
     // Mensajes ERROR
     public static final String ACCES_ERROR = "Error al intentar acceder a la base de datos";
+    public static final String LOGIN_ERROR = "Usuario y/o contraseña incorrectos";
 }

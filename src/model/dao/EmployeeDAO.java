@@ -7,5 +7,5 @@ public interface EmployeeDAO {
 
     public HashMap<Integer, Employee> getAll();
 
-    public Employee getById();
+    public Employee getById(int id);
 }

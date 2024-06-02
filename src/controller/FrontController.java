@@ -15,10 +15,10 @@ import utils.DatabaseConnector;
 import utils.QueryProcessor;
 
 public class FrontController {
-
+    
     private final LoginView view;
     private Connection connection;
-
+    
     public FrontController(LoginView view) {
         this.view = view;
         this.view.addExitLabelListener(this.getExitLabelMouseListener());
@@ -26,7 +26,7 @@ public class FrontController {
         this.view.addUserTextFieldListener(this.getUserTextFieldFocusListener());
         this.view.addPasswordTextFieldListener(this.getPasswordTextFieldFocusListener());
     }
-
+    
     private MouseAdapter getExitLabelMouseListener() {
         MouseAdapter adapter = new MouseAdapter() {
             @Override
@@ -36,13 +36,13 @@ public class FrontController {
                     System.out.println("Exit pulsado");
                 }
             }
-
+            
             @Override
             public void mouseEntered(MouseEvent e) {
                 view.getExitPanel().setBackground(Color.red);
                 view.getExitLabel().setForeground(Color.white);
             }
-
+            
             @Override
             public void mouseExited(MouseEvent evt) {
                 view.getExitPanel().setBackground(Color.white);
@@ -51,7 +51,7 @@ public class FrontController {
         };
         return adapter;
     }
-
+    
     private MouseAdapter getLoginButtonLabelMouseListener() {
         MouseAdapter adapter = new MouseAdapter() {
             @Override
@@ -61,22 +61,26 @@ public class FrontController {
                         DatabaseConnector.connect(Constantes.DB_HOST, Constantes.DB_USER_NAME, Constantes.DB_PASSWORD);
                         connection = DatabaseConnector.getConnection();
                         QueryProcessor query = new QueryProcessor(connection);
-                    
-                        view.dispose();
-                        AppView accountView = new AppView(view, true);
-                        AppController controller = new AppController(accountView, connection);
-
-                        accountView.setVisible(true);
+                        
+                        if (query.checkUser(view.getUserText(), view.getPassText())) {
+                            view.dispose();
+                            AppView accountView = new AppView(view, true);
+                            AppController controller = new AppController(accountView, connection, query.getEmployee(view.getUserText()));
+                            accountView.setVisible(true);
+                        } else {
+                            JOptionPane.showMessageDialog(view, Constantes.LOGIN_ERROR, "Error al iniciar sesión", JOptionPane.ERROR_MESSAGE);
+                        }
+                        
                     } catch (Exception err) {
                         JOptionPane.showMessageDialog(view, Constantes.ACCES_ERROR, "Error", JOptionPane.WARNING_MESSAGE);
                     }
-
+                    
                 }
             }
         };
         return adapter;
     }
-
+    
     private FocusListener getUserTextFieldFocusListener() {
         FocusListener listener = new FocusListener() {
             @Override
@@ -86,7 +90,7 @@ public class FrontController {
                     view.setValidUser(true);
                 }
             }
-
+            
             @Override
             public void focusLost(FocusEvent e) {
                 if (view.getUserText().equals("")) {
@@ -97,7 +101,7 @@ public class FrontController {
         };
         return listener;
     }
-
+    
     private FocusListener getPasswordTextFieldFocusListener() {
         FocusListener listener = new FocusListener() {
             @Override
@@ -106,9 +110,9 @@ public class FrontController {
                     view.setPassText("");
                     view.setValidPass(true);
                 }
-
+                
             }
-
+            
             @Override
             public void focusLost(FocusEvent e) {
                 if (view.getPassText().equals("")) {

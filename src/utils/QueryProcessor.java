@@ -5,12 +5,17 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class QueryProcessor {
-     private final Connection connection;
+
+    private final Connection connection;
 
     public QueryProcessor(Connection connection) {
         this.connection = connection;
+        executeStatement("USE EADMIN");
     }
 
     public void executeStatement(String sql) {
@@ -23,10 +28,39 @@ public class QueryProcessor {
         }
     }
 
-    public void executeQuery(String sql) throws Exception {
+    public ResultSet executeQuery(String sql) throws Exception {
         Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery(sql);
-        print(rs, sql);
+        
+        return rs;
+    }
+
+    public boolean checkUser(String user, String pass) {
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT clave FROM CUENTAS WHERE nombre_usuario = '" + user + "'");
+            rs.next();
+            String viewPass = rs.getString("clave");
+
+            return viewPass.equals(pass);
+        } catch (SQLException ex) {
+            Logger.getLogger(QueryProcessor.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, Constantes.LOGIN_ERROR, "Erro de inicio de sesión", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+
+    public String getEmployee(String user) {
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT nombre FROM empleados WHERE emp_id = (SELECT emp_id FROM cuentas WHERE nombre_usuario = '" + user + "')");
+            rs.next();
+            return rs.getString("nombre");
+
+        } catch (SQLException ex) {
+            Logger.getLogger(QueryProcessor.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 
     public void queryFromFile(String pathStr) throws Exception {

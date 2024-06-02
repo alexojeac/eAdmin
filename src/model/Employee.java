@@ -7,7 +7,7 @@ public class Employee {
     private String lastname2;
     private String bornDate;
     private String contractDate;
-    private int salary;
+    private double salary;
     private String mail;
     private String telephone;
     private String address;
@@ -76,11 +76,11 @@ public class Employee {
         this.contractDate = contractDate;
     }
 
-    public int getSalary() {
+    public double getSalary() {
         return salary;
     }
 
-    public void setSalary(int salary) {
+    public void setSalary(double salary) {
         this.salary = salary;
     }
 
