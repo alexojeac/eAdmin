@@ -1,5 +1,6 @@
 package controller.app;
 
+import controller.FrontController;
 import controller.views.DeptController;
 import controller.views.RRHHController;
 import java.awt.Color;
@@ -10,27 +11,49 @@ import view.panelViews.DeptView;
 import view.panelViews.HomeView;
 import view.panelViews.RRHHView;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Employee;
+import utils.QueryProcessor;
 
 public class AppController {
 
     private final AppView view;
     private final Connection connection;
-    // private Employee currentlyEmployee;
+    private final Employee currentlyEmployee;
 
-    public AppController(AppView view, Connection connection, String employee) {
+    public AppController(AppView view, Connection connection, Employee employee) {
         this.view = view;
         this.connection = connection;
+        this.currentlyEmployee = employee;
         this.view.addExitLabelListener(this.getExitLabelMouseListener());
         this.view.addRRHHLabelListener(this.getRRHHLabelMouseListener());
         this.view.addHomeLabelListener(getHomeLabelMouseListener());
         this.view.addDeptosLabelListener(this.getDeptosLabelMouseListener());
         view.setView(new HomeView());
         this.setIdNav();
+        this.checkPermits(currentlyEmployee.getId()); //TODO
     }
     
     private void setIdNav() {
-        //TODO
+        this.view.setUserIdLabel(currentlyEmployee.getName() + ": " + currentlyEmployee.getId());
+    }
+    
+    private int checkPermits(int id) {
+        QueryProcessor query2 = new QueryProcessor(connection);
+        try {
+            ResultSet rs = query2.executeQuery("SELECT permisos FROM departamentos WHERE dept_id = (SELECT departamento_id FROM empleados WHERE emp_id = " + id + ")");
+
+            if (rs.next()) {
+                return rs.getInt("permisos");
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return 0;
     }
 
     private MouseAdapter getExitLabelMouseListener() {

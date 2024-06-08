@@ -11,7 +11,7 @@ import java.sql.*;
 public class EmployeeDAOImpl implements EmployeeDAO {
 
     private final String getAll = "SELECT * FROM empleados",
-            getById = "SELECT * FROM empleados WHERE id = ";
+            getById = "SELECT * FROM empleados WHERE emp_id = ";
 
     private final HashMap<Integer, Employee> employees;
     private Connection connection;
@@ -27,7 +27,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     public HashMap<Integer, Employee> getAll() {
         try {
             ResultSet rs = query.executeQuery(getAll);
-            if (rs.next()) {
+            while (rs.next()) {
                 Employee emp = new Employee();
                 emp.setId(rs.getInt("emp_id"));
                 emp.setName(rs.getString("nombre"));
@@ -57,7 +57,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     @Override
     public Employee getById(int id) {
         try {
-            ResultSet rs = query.executeQuery(getAll);
+            ResultSet rs = query.executeQuery(getById);
 
             if (rs.next()) {
                 Employee emp = new Employee();
@@ -75,7 +75,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
                 emp.setCp(rs.getString("codigo_postal"));
                 emp.setCountry(rs.getString("pais"));
                 emp.setDept_id(rs.getInt("departamento_id"));
-                employees.put(emp.getId(), emp);
+                
                 return emp;
             }
             

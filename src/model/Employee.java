@@ -1,6 +1,7 @@
 package model;
 
 public class Employee {
+
     private int id;
     private String name;
     private String lastname1;
@@ -17,6 +18,11 @@ public class Employee {
     private int dept_id;
 
     public Employee() {
+    }
+
+    public Employee(int id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public Employee(int id, String name, String lastname1, String contractDate, String mail, String telephone) {
@@ -139,5 +145,5 @@ public class Employee {
     public void setDept_id(int dept_id) {
         this.dept_id = dept_id;
     }
-    
+
 }
