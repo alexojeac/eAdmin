@@ -30,6 +30,7 @@ public class RRHHView extends javax.swing.JPanel {
         employeesScrollPane = new javax.swing.JScrollPane();
         employeesTable = new javax.swing.JTable();
         showInfoButton = new javax.swing.JButton();
+        departmentsComboBox = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -42,22 +43,27 @@ public class RRHHView extends javax.swing.JPanel {
         addEmployeeSeparator.setForeground(new java.awt.Color(0, 134, 190));
         add(addEmployeeSeparator, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 410, 10));
 
+        surname2TextField.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         surname2TextField.setForeground(new java.awt.Color(204, 204, 204));
         surname2TextField.setText("Apellido2");
         add(surname2TextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 50, 110, 30));
 
+        mailTextField.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         mailTextField.setForeground(new java.awt.Color(204, 204, 204));
         mailTextField.setText("email");
-        add(mailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 370, 30));
+        add(mailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 240, 30));
 
+        nameTextField.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         nameTextField.setForeground(new java.awt.Color(204, 204, 204));
         nameTextField.setText("Nombre");
         add(nameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 110, 30));
 
+        surnameTextField.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         surnameTextField.setForeground(new java.awt.Color(204, 204, 204));
         surnameTextField.setText("Apellido1");
         add(surnameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, 110, 30));
 
+        phoneTextField.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         phoneTextField.setForeground(new java.awt.Color(204, 204, 204));
         phoneTextField.setText("Tlf.");
         add(phoneTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 50, 110, 30));
@@ -77,6 +83,7 @@ public class RRHHView extends javax.swing.JPanel {
         searchEmployeeSeparator.setForeground(new java.awt.Color(0, 134, 190));
         add(searchEmployeeSeparator, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 410, 10));
 
+        surnameSearchTextField.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         surnameSearchTextField.setForeground(new java.awt.Color(204, 204, 204));
         surnameSearchTextField.setText("Apellido");
         add(surnameSearchTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 150, 30));
@@ -106,6 +113,9 @@ public class RRHHView extends javax.swing.JPanel {
         showInfoButton.setText("Ver info");
         showInfoButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         add(showInfoButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 330, 110, 30));
+
+        departmentsComboBox.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        add(departmentsComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 100, 110, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     public void setValid(JTextField text, boolean valid) {
@@ -176,6 +186,14 @@ public class RRHHView extends javax.swing.JPanel {
         return this.mailTextField;
     }
     
+    public String getDepartment() {
+        return String.valueOf(this.departmentsComboBox.getSelectedItem());
+    }
+    
+    public void addDepartmentItem(String dept) {
+        this.departmentsComboBox.addItem(dept);
+    }
+    
     public void setSurnameSearchText(String surname) {
         this.surnameSearchTextField.setText(surname);
     }
@@ -228,6 +246,7 @@ public class RRHHView extends javax.swing.JPanel {
     private javax.swing.JButton AddButton;
     private javax.swing.JLabel addEmployeeLabel;
     private javax.swing.JSeparator addEmployeeSeparator;
+    private javax.swing.JComboBox<String> departmentsComboBox;
     private javax.swing.JScrollPane employeesScrollPane;
     private javax.swing.JTable employeesTable;
     private javax.swing.JTextField mailTextField;

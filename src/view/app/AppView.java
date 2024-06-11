@@ -189,6 +189,22 @@ public class AppView extends javax.swing.JDialog {
         this.contentPanel.repaint();
     }
     
+    public void setAccountLabelVisible(boolean visible) {
+        this.accountLabel.setVisible(visible);
+    }
+    
+    public void setRRHHLabelVisible(boolean visible) {
+        this.rrhhLabel.setVisible(visible);
+    }
+    
+    public void setDepartmentLabelVisible(boolean visible) {
+        this.departmentsLabel.setVisible(visible);
+    }
+    
+    public void setAdminLabelVisible(boolean visible) {
+        this.adminLabel.setVisible(visible);
+    }
+    
     public void setUserIdLabel(String id) {
         this.userIdLabel.setText(id);
     }

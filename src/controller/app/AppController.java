@@ -33,11 +33,25 @@ public class AppController {
         this.view.addDeptosLabelListener(this.getDeptosLabelMouseListener());
         view.setView(new HomeView());
         this.setIdNav();
-        this.checkPermits(currentlyEmployee.getId()); //TODO
+        this.checkRol(this.checkPermits(currentlyEmployee.getId()));
     }
     
     private void setIdNav() {
         this.view.setUserIdLabel(currentlyEmployee.getName() + ": " + currentlyEmployee.getId());
+    }
+    
+    private void checkRol(int dept) {
+        switch (dept) {
+            case 1:
+                view.setAdminLabelVisible(false);
+                break;
+            case 2:
+                break;
+            default:
+                view.setRRHHLabelVisible(false);
+                view.setDepartmentLabelVisible(false);
+                view.setAdminLabelVisible(false);
+        }
     }
     
     private int checkPermits(int id) {

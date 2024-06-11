@@ -21,10 +21,14 @@ import utils.QueryProcessor;
 public class FrontController {
 
     private final LoginView view;
-    private Connection connection;
+    private final Connection connection;
+    private final QueryProcessor query;
 
     public FrontController(LoginView view) {
         this.view = view;
+        DatabaseConnector.connect(Constantes.DB_HOST, Constantes.DB_USER_NAME, Constantes.DB_PASSWORD);
+        this.connection = DatabaseConnector.getConnection();
+        this.query = new QueryProcessor(connection);
         this.view.addExitLabelListener(this.getExitLabelMouseListener());
         this.view.addLoginButtonLabelListener(this.getLoginButtonLabelMouseListener());
         this.view.addUserTextFieldListener(this.getUserTextFieldFocusListener());
@@ -37,7 +41,6 @@ public class FrontController {
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     System.exit(0);
-                    System.out.println("Exit pulsado");
                 }
             }
 
@@ -62,10 +65,6 @@ public class FrontController {
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     try {
-                        DatabaseConnector.connect(Constantes.DB_HOST, Constantes.DB_USER_NAME, Constantes.DB_PASSWORD);
-                        connection = DatabaseConnector.getConnection();
-                        QueryProcessor query = new QueryProcessor(connection);
-
                         if (query.checkUser(view.getUserText(), view.getPassText())) {
                             view.dispose();
                             AppView accountView = new AppView(view, true);
@@ -139,7 +138,7 @@ public class FrontController {
                     Employee emp = new Employee(rs.getInt("emp_id"), rs.getString("nombre"));
                     return emp;
                 } else {
-                    return new Employee(rs.getInt("emp_id"), rs.getString("name"), rs.getString("apellido1"), String.valueOf(rs.getDate("fecha_contrato")), rs.getString("correo"), rs.getString("tlf"));
+                    return new Employee(rs.getInt("emp_id"), rs.getString("nombre"), rs.getString("apellido1"), String.valueOf(rs.getDate("fecha_contrato")), rs.getString("correo"), rs.getString("tlf"));
 
                 }
             }
@@ -152,5 +151,4 @@ public class FrontController {
         return null;
     }
 
-    
 }
