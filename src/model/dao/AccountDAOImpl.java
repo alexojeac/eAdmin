@@ -16,7 +16,7 @@ public class AccountDAOImpl implements AccountDAO {
     private Connection connection;
     private final QueryProcessor query;
 
-    public AccountDAOImpl(Connection connection) {
+    public AccountDAOImpl(Connection connection) throws SQLException {
         this.connection = connection;
         this.accounts = new HashMap<>();
         this.query = new QueryProcessor(connection);

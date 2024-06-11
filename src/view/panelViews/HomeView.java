@@ -2,7 +2,8 @@
 package view.panelViews;
 
 import java.awt.event.ActionListener;
-import java.util.Date;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
 
 public class HomeView extends javax.swing.JPanel {
 
@@ -15,60 +16,43 @@ public class HomeView extends javax.swing.JPanel {
     private void initComponents() {
 
         nameAccountLabel = new javax.swing.JLabel();
-        lastName1AccountLabel = new javax.swing.JLabel();
-        lastName2AccountLabel = new javax.swing.JLabel();
         departmentAccountLabel = new javax.swing.JLabel();
-        onTimeButton = new javax.swing.JButton();
-        inputDateChooser = new com.toedter.calendar.JDateChooser();
+        onTimeButtonOut = new javax.swing.JButton();
         inputLabel = new javax.swing.JLabel();
-        outputDateChooser = new com.toedter.calendar.JDateChooser();
         outputLabel = new javax.swing.JLabel();
         onTimesScrollPane = new javax.swing.JScrollPane();
         onTimesTable = new javax.swing.JTable();
         dataSeparator = new javax.swing.JSeparator();
+        onTimeButtonIn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(590, 470));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        nameAccountLabel.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        nameAccountLabel.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         nameAccountLabel.setText("Nombre");
-        add(nameAccountLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 130, 30));
+        add(nameAccountLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 520, 30));
 
-        lastName1AccountLabel.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        lastName1AccountLabel.setText("Apellido1");
-        add(lastName1AccountLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 130, 30));
-
-        lastName2AccountLabel.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        lastName2AccountLabel.setText("Apellido2");
-        add(lastName2AccountLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 130, 30));
-
-        departmentAccountLabel.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        departmentAccountLabel.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         departmentAccountLabel.setText("Departamento: ");
-        add(departmentAccountLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, 130, 30));
+        add(departmentAccountLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 320, 30));
 
-        onTimeButton.setBackground(new java.awt.Color(0, 134, 190));
-        onTimeButton.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        onTimeButton.setForeground(new java.awt.Color(255, 255, 255));
-        onTimeButton.setText("Fichar");
-        onTimeButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        add(onTimeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 140, 100, 30));
-
-        inputDateChooser.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        add(inputDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, 110, 30));
+        onTimeButtonOut.setBackground(new java.awt.Color(0, 134, 190));
+        onTimeButtonOut.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        onTimeButtonOut.setForeground(new java.awt.Color(255, 255, 255));
+        onTimeButtonOut.setText("Fichar");
+        onTimeButtonOut.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        add(onTimeButtonOut, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 140, 100, 30));
 
         inputLabel.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         inputLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         inputLabel.setText("Entrada:");
-        add(inputLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 60, 30));
-
-        outputDateChooser.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        add(outputDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, 110, 30));
+        add(inputLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, 60, 30));
 
         outputLabel.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         outputLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         outputLabel.setText("Salida:");
-        add(outputLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, 60, 30));
+        add(outputLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 140, 60, 30));
 
         onTimesTable.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         onTimesTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -76,11 +60,11 @@ public class HomeView extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Fecha", "Entrada", "Salida", "Horas"
+                "Fecha", "Entrada", "Salida"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -89,52 +73,57 @@ public class HomeView extends javax.swing.JPanel {
         });
         onTimesScrollPane.setViewportView(onTimesTable);
 
-        add(onTimesScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 490, 230));
+        add(onTimesScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 490, 140));
 
         dataSeparator.setForeground(new java.awt.Color(0, 134, 190));
         add(dataSeparator, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 520, 10));
+
+        onTimeButtonIn.setBackground(new java.awt.Color(0, 134, 190));
+        onTimeButtonIn.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        onTimeButtonIn.setForeground(new java.awt.Color(255, 255, 255));
+        onTimeButtonIn.setText("Fichar");
+        onTimeButtonIn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        add(onTimeButtonIn, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 100, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     public void setUserName(String name) {
         this.nameAccountLabel.setText(name);
     }
     
-    public void setUserLastName1(String name) {
-        this.lastName1AccountLabel.setText(name);
-    }
-    
-    public void setUserLastName2(String name) {
-        this.lastName2AccountLabel.setText(name);
-    }
-    
     public void setDepartment(String dept) {
         this.departmentAccountLabel.setText(this.departmentAccountLabel.getText().concat(dept));
     }
     
-    public Date getInputDate() {
-        return this.inputDateChooser.getDate();
+    public void removeDataTable() {
+        DefaultTableModel model = (DefaultTableModel) onTimesTable.getModel();
+        model.setRowCount(0);
+        onTimesTable.clearSelection();
+        onTimesTable.revalidate();
+        onTimesTable.repaint();
+    }
+
+    public void addRowTable(Vector row) {
+        DefaultTableModel model = (DefaultTableModel) onTimesTable.getModel();
+        model.addRow(row);
     }
     
-    public Date getOutputDate() {
-        return this.outputDateChooser.getDate();
+    public void addOnTimeButtonInListenner(ActionListener listener) {
+        this.onTimeButtonIn.addActionListener(listener);
     }
     
-    public void addOnTimeButtonListenner(ActionListener listener) {
-        this.onTimeButton.addActionListener(listener);
+    public void addOnTimeButtonOutListenner(ActionListener listener) {
+        this.onTimeButtonOut.addActionListener(listener);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSeparator dataSeparator;
     private javax.swing.JLabel departmentAccountLabel;
-    private com.toedter.calendar.JDateChooser inputDateChooser;
     private javax.swing.JLabel inputLabel;
-    private javax.swing.JLabel lastName1AccountLabel;
-    private javax.swing.JLabel lastName2AccountLabel;
     private javax.swing.JLabel nameAccountLabel;
-    private javax.swing.JButton onTimeButton;
+    private javax.swing.JButton onTimeButtonIn;
+    private javax.swing.JButton onTimeButtonOut;
     private javax.swing.JScrollPane onTimesScrollPane;
     private javax.swing.JTable onTimesTable;
-    private com.toedter.calendar.JDateChooser outputDateChooser;
     private javax.swing.JLabel outputLabel;
     // End of variables declaration//GEN-END:variables
 }

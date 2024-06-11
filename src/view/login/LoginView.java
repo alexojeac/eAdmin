@@ -2,6 +2,7 @@ package view.login;
 
 import java.awt.Color;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.MouseAdapter;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -241,6 +242,10 @@ public class LoginView extends javax.swing.JFrame {
     
     public void addPasswordTextFieldListener(FocusListener listener) {
         this.passwordField.addFocusListener(listener);
+    }
+    
+    public void addPasswordTextFieldEnterListener (KeyAdapter listener) {
+        this.passwordField.addKeyListener(listener);
     }
 
 

@@ -3,7 +3,9 @@ package view.panelViews;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
+import java.util.Vector;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 public class DeptView extends javax.swing.JPanel {
 
@@ -18,7 +20,6 @@ public class DeptView extends javax.swing.JPanel {
         addDeptLabel = new javax.swing.JLabel();
         addDeptSeparator = new javax.swing.JSeparator();
         nameTextField = new javax.swing.JTextField();
-        phoneTextField = new javax.swing.JTextField();
         AddButton = new javax.swing.JButton();
         searchDeptLabel = new javax.swing.JLabel();
         searchDeptSeparator = new javax.swing.JSeparator();
@@ -47,16 +48,12 @@ public class DeptView extends javax.swing.JPanel {
         nameTextField.setText("Nombre depto");
         add(nameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 110, 30));
 
-        phoneTextField.setForeground(new java.awt.Color(204, 204, 204));
-        phoneTextField.setText("Tlf.");
-        add(phoneTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, 110, 30));
-
         AddButton.setBackground(new java.awt.Color(0, 134, 190));
         AddButton.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         AddButton.setForeground(new java.awt.Color(255, 255, 255));
         AddButton.setText("Añadir");
         AddButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        add(AddButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 50, 110, 30));
+        add(AddButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, 110, 30));
 
         searchDeptLabel.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         searchDeptLabel.setText("Buscar departamento");
@@ -82,12 +79,12 @@ public class DeptView extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Id depto", "Nombre", "tlf"
+                "Id depto", "Nombre"
             }
         ));
         deptScrollPane.setViewportView(deptTable);
 
-        add(deptScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 160, 330, 130));
+        add(deptScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 160, 300, 130));
 
         searchEmployeeLabel.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         searchEmployeeLabel.setText("Buscar empleado");
@@ -129,18 +126,6 @@ public class DeptView extends javax.swing.JPanel {
         return this.nameTextField;
     }
     
-    public void setPhoneText(String phone) {
-        this.phoneTextField.setText(phone);
-    }
-    
-    public String getPhoneText() {
-        return this.phoneTextField.getText();
-    }
-    
-    public JTextField getPhoneTextFieldComponent() {
-        return this.phoneTextField;
-    }
-    
     public void setSearchNameText(String phone) {
         this.searchNameTextField.setText(phone);
     }
@@ -165,12 +150,32 @@ public class DeptView extends javax.swing.JPanel {
         return this.idTextField;
     }
     
-    public void addNameTextFieldListener(FocusListener listener) {
-        this.nameTextField.addFocusListener(listener);
+    public void removeDataTable() {
+        DefaultTableModel model = (DefaultTableModel) deptTable.getModel();
+        model.setRowCount(0);
+        deptTable.clearSelection();
+        deptTable.revalidate();
+        deptTable.repaint();
+    }
+
+    public void addRowTable(Vector row) {
+        DefaultTableModel model = (DefaultTableModel) deptTable.getModel();
+        model.addRow(row);
     }
     
-    public void addPhoneTextFieldListener(FocusListener listener) {
-        this.phoneTextField.addFocusListener(listener);
+    public int getSelectedDepartmentId() {
+        int id = -1;
+        int row = this.deptTable.getSelectedRow();
+        int col = this.deptTable.getSelectedColumn();
+
+        if (col >= 0 && row >= 0) {
+            id = (int) this.deptTable.getModel().getValueAt(row, 0);
+        }
+        return id;
+    }
+    
+    public void addNameTextFieldListener(FocusListener listener) {
+        this.nameTextField.addFocusListener(listener);
     }
     
     public void addNameSearchTextFieldListener(FocusListener listener) {
@@ -189,6 +194,10 @@ public class DeptView extends javax.swing.JPanel {
         this.searchButton.addActionListener(listener);
     }
     
+    public void addAddToDeptButtonListener(ActionListener listener) {
+        this.addToDeptButton.addActionListener(listener);
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddButton;
@@ -199,7 +208,6 @@ public class DeptView extends javax.swing.JPanel {
     private javax.swing.JTable deptTable;
     private javax.swing.JTextField idTextField;
     private javax.swing.JTextField nameTextField;
-    private javax.swing.JTextField phoneTextField;
     private javax.swing.JButton searchButton;
     private javax.swing.JLabel searchDeptLabel;
     private javax.swing.JSeparator searchDeptSeparator;

@@ -2,6 +2,7 @@ package model.dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,7 +17,7 @@ public class DepartmentDAOImpl implements DepartmentDAO{
     private Connection connection;
     private final QueryProcessor query;
 
-    public DepartmentDAOImpl(Connection connection) {
+    public DepartmentDAOImpl(Connection connection) throws SQLException {
         this.connection = connection;
         this.departments = new HashMap<>();
         this.query = new QueryProcessor(connection);

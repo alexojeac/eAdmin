@@ -53,7 +53,7 @@ public class AppView extends javax.swing.JDialog {
         adminLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         navPanel.add(adminLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 210, 40));
 
-        userIdLabel.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
+        userIdLabel.setFont(new java.awt.Font("Roboto Medium", 1, 14)); // NOI18N
         userIdLabel.setForeground(new java.awt.Color(255, 255, 255));
         userIdLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         userIdLabel.setText("id empleado");

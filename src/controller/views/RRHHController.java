@@ -7,10 +7,13 @@ import java.awt.event.FocusListener;
 import view.panelViews.RRHHView;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import model.Account;
+import model.Employee;
 import utils.Constantes;
 import utils.QueryProcessor;
 
@@ -19,8 +22,9 @@ public class RRHHController {
     private final RRHHView view;
     private final Connection connection;
     private final QueryProcessor query;
+    private ArrayList<Employee> searchedEmployees;
 
-    public RRHHController(RRHHView view, Connection connection) {
+    public RRHHController(RRHHView view, Connection connection) throws SQLException {
         this.view = view;
         this.connection = connection;
         this.query = new QueryProcessor(connection);
@@ -31,7 +35,10 @@ public class RRHHController {
         this.view.addMailTextFieldListener(this.getMailTextFieldFocusListener());
         this.view.addSurnameSearchTextFieldListener(this.getSurnameSearchTextFieldFocusListener());
         this.view.addAddButtonListener(this.getAddButtonActionListener());
+        this.view.addSearchButtonListener(this.getSearchButtonActionListener());
+        this.view.addDeleteButtonListener(this.getDeleteButtonActionListener());
         this.coverDeptCombo();
+        this.coverEmployees();
     }
 
     private void coverDeptCombo() {
@@ -178,9 +185,71 @@ public class RRHHController {
             public void actionPerformed(ActionEvent e) {
                 addUserSQL();
                 addAccountSQL();
+                coverEmployees();
             }
         };
         return al;
+    }
+
+    private ActionListener getSearchButtonActionListener() {
+        ActionListener al = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (view.getSurnameSearchText().equals("Apellido")) {
+                    coverEmployees();
+                } else {
+                    try {
+                        searchedEmployees = new ArrayList<>();
+                        ResultSet rs = query.executeQuery("SELECT emp_id, nombre, apellido1, apellido2 FROM empleados WHERE apellido1 = '" + view.getSurnameSearchText() + "'");
+
+                        while (rs.next()) {
+                            searchedEmployees.add(new Employee(rs.getInt("emp_id"), rs.getString("nombre"), rs.getString("apellido1"), rs.getString("apellido2")));
+                        }
+
+                        repaintTable(searchedEmployees);
+                    } catch (Exception ex) {
+                        Logger.getLogger(RRHHController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        };
+        return al;
+    }
+
+    private ActionListener getDeleteButtonActionListener() {
+        ActionListener al = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    int option = JOptionPane.showConfirmDialog(view, "Borrar usuario?", "Borrar", JOptionPane.YES_NO_OPTION);
+
+                    if (option == 0) {
+                        query.executeStatement("DELETE FROM cuentas WHERE emp_id = " + view.getSelectedEmployeeId());
+                        query.executeStatement("DELETE FROM empleados WHERE emp_id = " + view.getSelectedEmployeeId());
+                    }
+
+                    coverEmployees();
+                } catch (Exception ex) {
+                    Logger.getLogger(RRHHController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        };
+        return al;
+    }
+
+    private void coverEmployees() {
+        try {
+            searchedEmployees = new ArrayList<>();
+            ResultSet rs = query.executeQuery("SELECT emp_id, nombre, apellido1, apellido2 FROM empleados");
+
+            while (rs.next()) {
+                searchedEmployees.add(new Employee(rs.getInt("emp_id"), rs.getString("nombre"), rs.getString("apellido1"), rs.getString("apellido2")));
+            }
+
+            repaintTable(searchedEmployees);
+        } catch (Exception ex) {
+            Logger.getLogger(RRHHController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void addUserSQL() {
@@ -224,7 +293,7 @@ public class RRHHController {
 
             query.executeStatement(sql.toString());
 
-            JOptionPane.showMessageDialog(view, Constantes.ACTION_CONFIRM, "Añadido empleado", JOptionPane.PLAIN_MESSAGE);
+            JOptionPane.showMessageDialog(view, Constantes.ACTION_CONFIRM, "Añadido empleado", JOptionPane.INFORMATION_MESSAGE);
             setDefault();
         } catch (Exception ex) {
             Logger.getLogger(RRHHController.class.getName()).log(Level.SEVERE, null, ex);
@@ -243,5 +312,20 @@ public class RRHHController {
         view.setValid(view.getPhoneTextFieldComponent(), false);
         view.setMailText("correo");
         view.setValid(view.getMailTextFieldComponent(), false);
+    }
+
+    private void repaintTable(ArrayList<Employee> employees) {
+        view.removeDataTable();
+
+        for (Employee e : employees) {
+            Vector row = new Vector();
+
+            row.add(e.getId());
+            row.add(e.getName());
+            row.add(e.getLastname1());
+            row.add(e.getLastname2());
+
+            view.addRowTable(row);
+        }
     }
 }

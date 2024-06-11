@@ -13,6 +13,10 @@ public class Constantes {
 
     // Mensajes ERROR
     public static final String ADD_USER_ERROR = "Es necesario cubrir todos los datos para añadir un empleado";
+    public static final String CHANGE_DEPT_USER = "Ha ocurrido un error. No es posible encontrar el usuario indicado.";
+    
+    // Mensajes WARNING
+    public static final String CHANGE_ADMIN_WAR = "No se puede cambiar el departamento de este usuario";
     
     // Mensajes CONFIRM
     public static final String ACTION_CONFIRM = "Acción realizada correctamente";

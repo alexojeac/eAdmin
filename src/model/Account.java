@@ -9,6 +9,11 @@ public class Account {
     private String pass;
     private int user_id;
 
+    public Account(String userName, String pass) {
+        this.userName = userName;
+        this.pass = pass;
+    }
+    
     public Account(String userName, String pass, int user_id) {
         this.userName = userName;
         this.setCryptPass(pass);
@@ -54,8 +59,8 @@ public class Account {
         this.user_id = user_id;
     }
 
-    public Boolean checkPass(String cryptPass) {
-        return BCrypt.checkpw(cryptPass, pass);
+    public Boolean checkPass(String password) {
+        return BCrypt.checkpw(password, pass);
     }
 
     public void setCryptPass(String pass) {

@@ -25,6 +25,13 @@ public class Employee {
         this.name = name;
     }
 
+    public Employee(int id, String name, String lastname1, String lastname2) {
+        this.id = id;
+        this.name = name;
+        this.lastname1 = lastname1;
+        this.lastname2 = lastname2;
+    }
+
     public Employee(int id, String name, String lastname1, String contractDate, String mail, String telephone) {
         this.id = id;
         this.name = name;

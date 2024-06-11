@@ -13,25 +13,21 @@ public class QueryProcessor {
 
     private final Connection connection;
 
-    public QueryProcessor(Connection connection) {
+    public QueryProcessor(Connection connection) throws SQLException {
         this.connection = connection;
         executeStatement("USE EADMIN");
     }
 
-    public void executeStatement(String sql) {
-        try {
-            Statement statement = connection.createStatement();
-            statement.execute(sql);
-            statement.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public void executeStatement(String sql) throws SQLException {
+        Statement statement = connection.createStatement();
+        statement.execute(sql);
+        statement.close();
     }
 
     public ResultSet executeQuery(String sql) throws Exception {
         Statement statement = connection.createStatement();
         ResultSet rs = statement.executeQuery(sql);
-        
+
         return rs;
     }
 

@@ -3,7 +3,9 @@ package view.panelViews;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
+import java.util.Vector;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 public class RRHHView extends javax.swing.JPanel {
 
@@ -29,7 +31,7 @@ public class RRHHView extends javax.swing.JPanel {
         searchButton = new javax.swing.JButton();
         employeesScrollPane = new javax.swing.JScrollPane();
         employeesTable = new javax.swing.JTable();
-        showInfoButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
         departmentsComboBox = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -107,12 +109,12 @@ public class RRHHView extends javax.swing.JPanel {
 
         add(employeesScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 190, 330, 130));
 
-        showInfoButton.setBackground(new java.awt.Color(0, 134, 190));
-        showInfoButton.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        showInfoButton.setForeground(new java.awt.Color(255, 255, 255));
-        showInfoButton.setText("Ver info");
-        showInfoButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        add(showInfoButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 330, 110, 30));
+        deleteButton.setBackground(new java.awt.Color(0, 134, 190));
+        deleteButton.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        deleteButton.setForeground(new java.awt.Color(255, 255, 255));
+        deleteButton.setText("Eliminar");
+        deleteButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        add(deleteButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 330, 110, 30));
 
         departmentsComboBox.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         add(departmentsComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 100, 110, 30));
@@ -125,127 +127,152 @@ public class RRHHView extends javax.swing.JPanel {
             text.setForeground(new Color(204, 204, 204));
         }
     }
-    
+
     public void setNameText(String name) {
         this.nameTextField.setText(name);
     }
-    
+
     public String getNameText() {
         return this.nameTextField.getText();
     }
-    
+
     public JTextField getNameTextFieldComponent() {
         return this.nameTextField;
     }
-    
+
     public void setSurnameText(String surname) {
         this.surnameTextField.setText(surname);
     }
-    
+
     public String getSurnameText() {
         return this.surnameTextField.getText();
     }
-    
+
     public JTextField getSurnameTextFieldComponent() {
         return this.surnameTextField;
     }
-    
+
     public void setSurname2Text(String surname) {
         this.surname2TextField.setText(surname);
     }
-    
+
     public String getSurname2Text() {
         return this.surname2TextField.getText();
     }
-    
+
     public JTextField getSurname2TextFieldComponent() {
         return this.surname2TextField;
     }
-    
+
     public void setPhoneText(String phone) {
         this.phoneTextField.setText(phone);
     }
-    
+
     public String getPhoneText() {
         return this.phoneTextField.getText();
     }
-    
+
     public JTextField getPhoneTextFieldComponent() {
         return this.phoneTextField;
     }
-    
+
     public void setMailText(String mail) {
         this.mailTextField.setText(mail);
     }
-    
+
     public String getMailText() {
         return this.mailTextField.getText();
     }
-    
+
     public JTextField getMailTextFieldComponent() {
         return this.mailTextField;
     }
-    
+
     public String getDepartment() {
         return String.valueOf(this.departmentsComboBox.getSelectedItem());
     }
-    
+
     public void addDepartmentItem(String dept) {
         this.departmentsComboBox.addItem(dept);
     }
-    
+
     public void setSurnameSearchText(String surname) {
         this.surnameSearchTextField.setText(surname);
     }
-    
+
     public String getSurnameSearchText() {
         return this.surnameSearchTextField.getText();
     }
-    
+
     public JTextField getSurnameSearchTextFieldComponent() {
         return this.surnameSearchTextField;
     }
-    
+
+    public void removeDataTable() {
+        DefaultTableModel model = (DefaultTableModel) employeesTable.getModel();
+        model.setRowCount(0);
+        employeesTable.clearSelection();
+        employeesTable.revalidate();
+        employeesTable.repaint();
+    }
+
+    public void addRowTable(Vector row) {
+        DefaultTableModel model = (DefaultTableModel) employeesTable.getModel();
+        model.addRow(row);
+    }
+
+    public int getSelectedEmployeeId() {
+        int id = -1;
+        int row = this.employeesTable.getSelectedRow();
+        int col = this.employeesTable.getSelectedColumn();
+
+        if (col >= 0 && row >= 0) {
+            id = (int) this.employeesTable.getModel().getValueAt(row, 0);
+        }
+        return id;
+    }
+
     public void addNameTextFieldListener(FocusListener listener) {
         this.nameTextField.addFocusListener(listener);
     }
-    
+
     public void addSurnameTextFieldListener(FocusListener listener) {
         this.surnameTextField.addFocusListener(listener);
     }
-    
+
     public void addSurname2TextFieldListener(FocusListener listener) {
         this.surname2TextField.addFocusListener(listener);
     }
-    
+
     public void addPhoneTextFieldListener(FocusListener listener) {
         this.phoneTextField.addFocusListener(listener);
     }
-    
+
     public void addMailTextFieldListener(FocusListener listener) {
         this.mailTextField.addFocusListener(listener);
     }
-    
+
     public void addSurnameSearchTextFieldListener(FocusListener listener) {
         this.surnameSearchTextField.addFocusListener(listener);
     }
-    
+
     public void addAddButtonListener(ActionListener listener) {
         this.AddButton.addActionListener(listener);
     }
-    
+
     public void addSearchButtonListener(ActionListener listener) {
         this.searchButton.addActionListener(listener);
     }
-    
-    public void addShowInfoButtonListener(ActionListener listener) {
-        this.showInfoButton.addActionListener(listener);
+
+    public void addDeleteButtonListener(ActionListener listener) {
+        this.deleteButton.addActionListener(listener);
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddButton;
     private javax.swing.JLabel addEmployeeLabel;
     private javax.swing.JSeparator addEmployeeSeparator;
+    private javax.swing.JButton deleteButton;
     private javax.swing.JComboBox<String> departmentsComboBox;
     private javax.swing.JScrollPane employeesScrollPane;
     private javax.swing.JTable employeesTable;
@@ -255,7 +282,6 @@ public class RRHHView extends javax.swing.JPanel {
     private javax.swing.JButton searchButton;
     private javax.swing.JLabel searchEmployeeLabel;
     private javax.swing.JSeparator searchEmployeeSeparator;
-    private javax.swing.JButton showInfoButton;
     private javax.swing.JTextField surname2TextField;
     private javax.swing.JTextField surnameSearchTextField;
     private javax.swing.JTextField surnameTextField;

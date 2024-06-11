@@ -17,7 +17,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     private Connection connection;
     private final QueryProcessor query;
 
-    public EmployeeDAOImpl(Connection connection) {
+    public EmployeeDAOImpl(Connection connection) throws SQLException {
         this.connection = connection;
         this.employees = new HashMap<>();
         this.query = new QueryProcessor(connection);

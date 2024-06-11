@@ -2,6 +2,7 @@ package controller.app;
 
 import controller.FrontController;
 import controller.views.DeptController;
+import controller.views.HomeController;
 import controller.views.RRHHController;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
@@ -12,8 +13,11 @@ import view.panelViews.HomeView;
 import view.panelViews.RRHHView;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import model.Employee;
 import utils.QueryProcessor;
 
@@ -22,24 +26,28 @@ public class AppController {
     private final AppView view;
     private final Connection connection;
     private final Employee currentlyEmployee;
+    private final QueryProcessor query;
 
-    public AppController(AppView view, Connection connection, Employee employee) {
+    public AppController(AppView view, Connection connection, Employee employee) throws SQLException {
         this.view = view;
         this.connection = connection;
+        query = new QueryProcessor(connection);
         this.currentlyEmployee = employee;
         this.view.addExitLabelListener(this.getExitLabelMouseListener());
         this.view.addRRHHLabelListener(this.getRRHHLabelMouseListener());
         this.view.addHomeLabelListener(getHomeLabelMouseListener());
         this.view.addDeptosLabelListener(this.getDeptosLabelMouseListener());
-        view.setView(new HomeView());
+        HomeView currentView = new HomeView();
+        HomeController controller = new HomeController(currentView, connection, currentlyEmployee);
+        view.setView(currentView);
         this.setIdNav();
         this.checkRol(this.checkPermits(currentlyEmployee.getId()));
     }
-    
+
     private void setIdNav() {
-        this.view.setUserIdLabel(currentlyEmployee.getName() + ": " + currentlyEmployee.getId());
+        this.view.setUserIdLabel(currentlyEmployee.getName().toLowerCase() + "." + currentlyEmployee.getLastname1().toLowerCase() + ": " + currentlyEmployee.getId());
     }
-    
+
     private void checkRol(int dept) {
         switch (dept) {
             case 1:
@@ -53,11 +61,10 @@ public class AppController {
                 view.setAdminLabelVisible(false);
         }
     }
-    
+
     private int checkPermits(int id) {
-        QueryProcessor query2 = new QueryProcessor(connection);
         try {
-            ResultSet rs = query2.executeQuery("SELECT permisos FROM departamentos WHERE dept_id = (SELECT departamento_id FROM empleados WHERE emp_id = " + id + ")");
+            ResultSet rs = query.executeQuery("SELECT permisos FROM departamentos WHERE dept_id = (SELECT departamento_id FROM empleados WHERE emp_id = " + id + ")");
 
             if (rs.next()) {
                 return rs.getInt("permisos");
@@ -100,6 +107,11 @@ public class AppController {
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     HomeView currentView = new HomeView();
+                    try {
+                        HomeController controller = new HomeController(currentView, connection, currentlyEmployee);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(AppController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     view.setView(currentView);
                 }
             }
@@ -114,21 +126,29 @@ public class AppController {
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     RRHHView currentView = new RRHHView();
-                    RRHHController controller = new RRHHController(currentView, connection);
+                    try {
+                        RRHHController controller = new RRHHController(currentView, connection);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(AppController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     view.setView(currentView);
                 }
             }
         };
         return adapter;
     }
-    
-     private MouseAdapter getDeptosLabelMouseListener() {
+
+    private MouseAdapter getDeptosLabelMouseListener() {
         MouseAdapter adapter = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     DeptView currentView = new DeptView();
-                    DeptController controller = new DeptController(currentView, connection);
+                    try {
+                        DeptController controller = new DeptController(currentView, connection);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(AppController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     view.setView(currentView);
                 }
             }
