@@ -24,11 +24,12 @@ import utils.DatabaseConnector;
 import utils.QueryProcessor;
 
 public class FrontController {
-    
+
     private final LoginView view;
     private final Connection connection;
     private final QueryProcessor query;
-    
+    private HashMap<Integer, Account> accounts;
+
     public FrontController(LoginView view) throws SQLException {
         this.view = view;
         DatabaseConnector.connect(Constantes.DB_HOST, Constantes.DB_USER_NAME, Constantes.DB_PASSWORD);
@@ -39,8 +40,9 @@ public class FrontController {
         this.view.addUserTextFieldListener(this.getUserTextFieldFocusListener());
         this.view.addPasswordTextFieldListener(this.getPasswordTextFieldFocusListener());
         this.view.addPasswordTextFieldEnterListener(this.getPasswordTextFieldEnterKeyListener());
+        getAllAccounts();
     }
-    
+
     private MouseAdapter getExitLabelMouseListener() {
         MouseAdapter adapter = new MouseAdapter() {
             @Override
@@ -49,13 +51,13 @@ public class FrontController {
                     System.exit(0);
                 }
             }
-            
+
             @Override
             public void mouseEntered(MouseEvent e) {
                 view.getExitPanel().setBackground(Color.red);
                 view.getExitLabel().setForeground(Color.white);
             }
-            
+
             @Override
             public void mouseExited(MouseEvent evt) {
                 view.getExitPanel().setBackground(Color.white);
@@ -64,7 +66,7 @@ public class FrontController {
         };
         return adapter;
     }
-    
+
     private MouseAdapter getLoginButtonLabelMouseListener() {
         MouseAdapter adapter = new MouseAdapter() {
             @Override
@@ -76,7 +78,7 @@ public class FrontController {
         };
         return adapter;
     }
-    
+
     private KeyAdapter getPasswordTextFieldEnterKeyListener() {
         KeyAdapter ka = new KeyAdapter() {
             @Override
@@ -88,7 +90,7 @@ public class FrontController {
         };
         return ka;
     }
-    
+
     private boolean isNew() {
         try {
             ResultSet rs = query.executeQuery("SELECT nuevo FROM cuentas WHERE nombre_usuario = '" + view.getUserText() + "'");
@@ -98,30 +100,75 @@ public class FrontController {
             return false;
         }
     }
-    
-    private void appAcces() {
+
+    private HashMap<Integer, Account> getAllAccounts() {
+        accounts = new HashMap<>();
         try {
-            if (query.checkUser(view.getUserText(), view.getPassText())) {
-                if (isNew()) {
-                    String pass = JOptionPane.showInputDialog(view, "Introduce la contraseña para elnuevo ususario");
-                    query.executeStatement("UPDATE cuentas SET clave = '" + pass + "' WHERE nombre_usuario = '" + view.getUserText() + "'");
-                    query.executeStatement("UPDATE cuentas SET nuevo = 1 WHERE nombre_usuario = '" + view.getUserText() + "'");
-                }
-                view.dispose();
-                AppView appView = new AppView(view, true);
-                AppController controller = new AppController(appView, connection, checkEmployee());
-                JOptionPane.showMessageDialog(appView, "La sección de Administración está actualmente en mantenimiento",
-                        "Aviso", JOptionPane.WARNING_MESSAGE);
-                appView.setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(view, Constantes.LOGIN_ERROR, "Error al iniciar sesión", JOptionPane.ERROR_MESSAGE);
+            ResultSet rs = query.executeQuery("SELECT * FROM cuentas");
+
+            while (rs.next()) {
+                Account account = new Account(rs.getString("nombre_usuario"), rs.getString("clave"));
+                accounts.put(account.getUser_id(), account);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return accounts;
+    }
+    
+    private boolean checkUser() {
+        boolean check = false;
+        try {
+            ResultSet rs = query.executeQuery("SELECT * FROM cuentas WHERE nombre_usuario = '" + view.getUserText() + "'");
+            
+            if(rs.next()) {
+                Account account = new Account(rs.getString("nombre_usuario"), rs.getString("clave"));
+                check = account.checkPass(view.getPassText(), account.getPass());
             }
             
+        } catch (Exception ex) {
+            Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return check;
+    }
+
+    private void appAcces() {
+        try {
+
+            if (view.getUserText().equals("admin")) {
+                if (query.checkUser(view.getUserText(), view.getPassText())) {
+                    view.dispose();
+                    AppView appView = new AppView(view, true);
+                    AppController controller = new AppController(appView, connection, checkEmployee());
+                    JOptionPane.showMessageDialog(appView, "La sección de Administración está actualmente en mantenimiento",
+                            "Aviso", JOptionPane.WARNING_MESSAGE);
+                    appView.setVisible(true);
+                }
+            } else {
+                if (checkUser()) {
+                    if (isNew()) {
+                        String pass = JOptionPane.showInputDialog(view, "Introduce la contraseña para elnuevo ususario");
+                        Account account = new Account(pass);
+                        query.executeStatement("UPDATE cuentas SET clave = '" + account.getPass() + "' WHERE nombre_usuario = '" + view.getUserText() + "'");
+                        query.executeStatement("UPDATE cuentas SET nuevo = 1 WHERE nombre_usuario = '" + view.getUserText() + "'");
+                    }
+                    view.dispose();
+                    AppView appView = new AppView(view, true);
+                    AppController controller = new AppController(appView, connection, checkEmployee());
+                    JOptionPane.showMessageDialog(appView, "La sección de Administración está actualmente en mantenimiento",
+                            "Aviso", JOptionPane.WARNING_MESSAGE);
+                    appView.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(view, Constantes.LOGIN_ERROR, "Error al iniciar sesión", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+
         } catch (Exception err) {
             JOptionPane.showMessageDialog(view, Constantes.ACCES_ERROR, "Error", JOptionPane.WARNING_MESSAGE);
         }
     }
-    
+
     private FocusListener getUserTextFieldFocusListener() {
         FocusListener listener = new FocusListener() {
             @Override
@@ -131,7 +178,7 @@ public class FrontController {
                     view.setValidUser(true);
                 }
             }
-            
+
             @Override
             public void focusLost(FocusEvent e) {
                 if (view.getUserText().equals("")) {
@@ -142,7 +189,7 @@ public class FrontController {
         };
         return listener;
     }
-    
+
     private FocusListener getPasswordTextFieldFocusListener() {
         FocusListener listener = new FocusListener() {
             @Override
@@ -151,9 +198,9 @@ public class FrontController {
                     view.setPassText("");
                     view.setValidPass(true);
                 }
-                
+
             }
-            
+
             @Override
             public void focusLost(FocusEvent e) {
                 if (view.getPassText().equals("")) {
@@ -164,11 +211,11 @@ public class FrontController {
         };
         return listener;
     }
-    
+
     private Employee checkEmployee() {
         try {
             ResultSet rs = query.executeQuery("SELECT * FROM empleados WHERE emp_id = (SELECT emp_id FROM cuentas WHERE nombre_usuario = '" + view.getUserText() + "')");
-            
+
             if (rs.next()) {
                 if (rs.getInt("emp_id") == 1) {
                     Employee emp = new Employee(rs.getInt("emp_id"), rs.getString("nombre"), rs.getString("apellido1"), rs.getString("apellido2"));
@@ -182,8 +229,8 @@ public class FrontController {
         } catch (Exception ex) {
             Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return null;
     }
-    
+
 }

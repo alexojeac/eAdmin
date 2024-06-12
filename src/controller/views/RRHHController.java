@@ -13,6 +13,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import model.Account;
 import model.Employee;
 import utils.Constantes;
 import utils.QueryProcessor;
@@ -224,6 +225,7 @@ public class RRHHController {
                     int option = JOptionPane.showConfirmDialog(view, "Borrar usuario?", "Borrar", JOptionPane.YES_NO_OPTION);
 
                     if (option == 0) {
+                        query.executeStatement("DELETE FROM fichadas WHERE emp_id = " + view.getSelectedEmployeeId());
                         query.executeStatement("DELETE FROM cuentas WHERE emp_id = " + view.getSelectedEmployeeId());
                         query.executeStatement("DELETE FROM empleados WHERE emp_id = " + view.getSelectedEmployeeId());
                     }
@@ -278,23 +280,26 @@ public class RRHHController {
     }
 
     private void addAccountSQL() {
-        int idEmp = 0;
+        Account account;
         try {
             ResultSet rs = query.executeQuery("SELECT emp_id FROM empleados WHERE correo = '" + view.getMailText() + "'");
             if (rs.next()) {
-                idEmp = rs.getInt("emp_id");
+                account = new Account(view.getNameText().toLowerCase() + "." + view.getSurnameText().toLowerCase(), "abc123.", rs.getInt("emp_id"));
+                System.out.println("HASH de app: " + account.getPass());
+                final StringBuilder sql = new StringBuilder("INSERT ");
+                sql.append("INTO CUENTAS (nombre_usuario, clave, emp_id) ");
+                sql.append("VALUES ('");
+                sql.append(account.getUserName()).append("','");
+                sql.append(account.getPass()).append("',");
+                sql.append(account.getUser_id()).append(")");
+
+                System.out.println(sql.toString());
+                query.executeStatement(sql.toString());
+
+                JOptionPane.showMessageDialog(view, Constantes.ACTION_CONFIRM, "Añadido empleado", JOptionPane.INFORMATION_MESSAGE);
+                setDefault();
             }
-            final StringBuilder sql = new StringBuilder("INSERT ");
-            sql.append("INTO CUENTAS (nombre_usuario, clave, emp_id) ");
-            sql.append("VALUES ('");
-            sql.append(view.getNameText().toLowerCase()).append(".").append(view.getSurnameText().toLowerCase()).append("', '");
-            sql.append("abc123.', ");
-            sql.append(idEmp).append(")");
 
-            query.executeStatement(sql.toString());
-
-            JOptionPane.showMessageDialog(view, Constantes.ACTION_CONFIRM, "Añadido empleado", JOptionPane.INFORMATION_MESSAGE);
-            setDefault();
         } catch (Exception ex) {
             Logger.getLogger(RRHHController.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(view, Constantes.ADD_USER_ERROR, "Error", JOptionPane.ERROR_MESSAGE);
