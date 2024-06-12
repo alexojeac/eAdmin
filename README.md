@@ -1,3 +1,13 @@
-# eAdmin 
+# eAdmin v1.0.0
 Aplicación de escritorio para gestionar trabajadores en una empresa.
-![EADMIN](https://github.com/alexojeac/eAdmin/assets/115101058/ebd19767-e840-4783-ae90-fa76ad663be6)
+
+> [!NOTE]
+> Aplicación desarrolada en formación del ciclo de grado superior Desarrollo de Aplicaciones Multiplataforma (DAM).
+
+eAdmin implementa un login que determinará el rol de usuario iniciado, por lo tanto lo que está o no visible dentro de la aplicación. También implementa funcionalidades como:
+
+* Sistema de fichadas para los empleados.
+* Sistema de gestión de usuario.
+* Sitema de gestión de departamentos.
+
+![EADMIN_logo](src/images/EADMIN.png)
