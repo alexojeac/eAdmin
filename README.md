@@ -1,4 +1,4 @@
-# eAdmin v1.0.0
+# eAdmin v1.1.0
 Aplicación de escritorio para gestionar trabajadores en una empresa.
 
 > [!NOTE]
