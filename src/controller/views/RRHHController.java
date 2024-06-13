@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import model.Account;
 import model.Employee;
@@ -28,7 +30,7 @@ public class RRHHController {
     public RRHHController(RRHHView view, Connection connection) throws SQLException {
         this.view = view;
         this.connection = connection;
-        this.query = new QueryProcessor(connection);
+        this.query = new QueryProcessor(this.connection);
         this.view.addNameTextFieldListener(this.getNameTextFieldFocusListener());
         this.view.addSurnameTextFieldListener(getSurnameameTextFieldFocusListener());
         this.view.addSurname2TextFieldListener(this.getSurnameame2TextFieldFocusListener());
@@ -184,9 +186,21 @@ public class RRHHController {
         ActionListener al = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                addUserSQL();
-                addAccountSQL();
-                coverEmployees();
+                if (isTextFieldCover()) {
+                    if (isValidPhone(view.getPhoneText())) {
+                        if (isValidMail(view.getMailText())) {
+                            addUserSQL();
+                            addAccountSQL();
+                            coverEmployees();
+                        } else {
+                            JOptionPane.showMessageDialog(view, Constantes.MAIL_ERROR, Constantes.ERROR, JOptionPane.WARNING_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(view, Constantes.PHONE_ERROR, Constantes.ERROR, JOptionPane.WARNING_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(view, Constantes.ADD_USER_ERROR, Constantes.ERROR, JOptionPane.WARNING_MESSAGE);
+                }
             }
         };
         return al;
@@ -221,18 +235,22 @@ public class RRHHController {
         ActionListener al = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    int option = JOptionPane.showConfirmDialog(view, "Borrar usuario?", "Borrar", JOptionPane.YES_NO_OPTION);
+                if (view.getSelectedEmployeeId() == -1) {
+                    JOptionPane.showMessageDialog(view, Constantes.DELETE_USER_ERROR, "Borrar", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    try {
+                        int option = JOptionPane.showConfirmDialog(view, "Borrar usuario?", "Borrar", JOptionPane.YES_NO_OPTION);
 
-                    if (option == 0) {
-                        query.executeStatement("DELETE FROM fichadas WHERE emp_id = " + view.getSelectedEmployeeId());
-                        query.executeStatement("DELETE FROM cuentas WHERE emp_id = " + view.getSelectedEmployeeId());
-                        query.executeStatement("DELETE FROM empleados WHERE emp_id = " + view.getSelectedEmployeeId());
+                        if (option == 0) {
+                            query.executeStatement("DELETE FROM fichadas WHERE emp_id = " + view.getSelectedEmployeeId());
+                            query.executeStatement("DELETE FROM cuentas WHERE emp_id = " + view.getSelectedEmployeeId());
+                            query.executeStatement("DELETE FROM empleados WHERE emp_id = " + view.getSelectedEmployeeId());
+                        }
+
+                        coverEmployees();
+                    } catch (Exception ex) {
+                        Logger.getLogger(RRHHController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-
-                    coverEmployees();
-                } catch (Exception ex) {
-                    Logger.getLogger(RRHHController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         };
@@ -275,7 +293,7 @@ public class RRHHController {
             query.executeStatement(sql.toString());
         } catch (Exception ex) {
             Logger.getLogger(RRHHController.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(view, Constantes.ADD_USER_ERROR, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(view, Constantes.ADD_USER_ERROR, Constantes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -285,7 +303,6 @@ public class RRHHController {
             ResultSet rs = query.executeQuery("SELECT emp_id FROM empleados WHERE correo = '" + view.getMailText() + "'");
             if (rs.next()) {
                 account = new Account(view.getNameText().toLowerCase() + "." + view.getSurnameText().toLowerCase(), "abc123.", rs.getInt("emp_id"));
-                System.out.println("HASH de app: " + account.getPass());
                 final StringBuilder sql = new StringBuilder("INSERT ");
                 sql.append("INTO CUENTAS (nombre_usuario, clave, emp_id) ");
                 sql.append("VALUES ('");
@@ -293,7 +310,6 @@ public class RRHHController {
                 sql.append(account.getPass()).append("',");
                 sql.append(account.getUser_id()).append(")");
 
-                System.out.println(sql.toString());
                 query.executeStatement(sql.toString());
 
                 JOptionPane.showMessageDialog(view, Constantes.ACTION_CONFIRM, "Añadido empleado", JOptionPane.INFORMATION_MESSAGE);
@@ -302,7 +318,7 @@ public class RRHHController {
 
         } catch (Exception ex) {
             Logger.getLogger(RRHHController.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(view, Constantes.ADD_USER_ERROR, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(view, Constantes.ADD_USER_ERROR, Constantes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -332,5 +348,37 @@ public class RRHHController {
 
             view.addRowTable(row);
         }
+    }
+
+    private boolean isTextFieldCover() {
+        return !((view.getNameText().trim().equals("") || view.getNameText().trim().equals("Nombre"))
+                && (view.getSurnameText().trim().equals("") || view.getSurnameText().trim().equals("Apellido1"))
+                && (view.getSurname2Text().trim().equals("") || view.getSurname2Text().trim().equals("Apellido2"))
+                && (view.getPhoneText().trim().equals("") || view.getPhoneText().trim().equals("Tlf."))
+                && (view.getMailText().trim().equals("")) || view.getMailText().trim().equals("email"));
+    }
+
+    private boolean isValidMail(String mail) {
+        String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
+
+        Pattern pattern = java.util.regex.Pattern.compile(emailRegex);
+        if (mail == null) {
+            return false;
+        }
+
+        Matcher matcher = pattern.matcher(mail);
+        return matcher.matches();
+    }
+
+    private boolean isValidPhone(String phone) {
+        String phoneRegex = "^\\+?[1-9]\\d{1,14}$";
+
+        Pattern pattern = java.util.regex.Pattern.compile(phoneRegex);
+        if (phone == null) {
+            return false;
+        }
+
+        Matcher matcher = pattern.matcher(phone);
+        return matcher.matches();
     }
 }

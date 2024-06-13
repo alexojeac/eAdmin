@@ -31,7 +31,7 @@ public class QueryProcessor {
         return rs;
     }
 
-    public boolean checkUser(String user, String pass) {
+    public boolean chekAdmin(String user, String pass) {
         try {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT clave FROM CUENTAS WHERE nombre_usuario = '" + user + "'");

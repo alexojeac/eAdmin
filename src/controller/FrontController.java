@@ -1,7 +1,10 @@
 package controller;
 
 import controller.app.AppController;
+import controller.views.PasswordInputPaneController;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
@@ -13,22 +16,22 @@ import view.app.AppView;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import model.Account;
 import model.Employee;
 import utils.Constantes;
 import utils.DatabaseConnector;
 import utils.QueryProcessor;
+import view.panelViews.PasswordInputPane;
 
 public class FrontController {
 
     private final LoginView view;
     private final Connection connection;
     private final QueryProcessor query;
-    private HashMap<Integer, Account> accounts;
 
     public FrontController(LoginView view) throws SQLException {
         this.view = view;
@@ -40,7 +43,6 @@ public class FrontController {
         this.view.addUserTextFieldListener(this.getUserTextFieldFocusListener());
         this.view.addPasswordTextFieldListener(this.getPasswordTextFieldFocusListener());
         this.view.addPasswordTextFieldEnterListener(this.getPasswordTextFieldEnterKeyListener());
-        getAllAccounts();
     }
 
     private MouseAdapter getExitLabelMouseListener() {
@@ -101,35 +103,20 @@ public class FrontController {
         }
     }
 
-    private HashMap<Integer, Account> getAllAccounts() {
-        accounts = new HashMap<>();
-        try {
-            ResultSet rs = query.executeQuery("SELECT * FROM cuentas");
-
-            while (rs.next()) {
-                Account account = new Account(rs.getString("nombre_usuario"), rs.getString("clave"));
-                accounts.put(account.getUser_id(), account);
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return accounts;
-    }
-    
     private boolean checkUser() {
         boolean check = false;
         try {
             ResultSet rs = query.executeQuery("SELECT * FROM cuentas WHERE nombre_usuario = '" + view.getUserText() + "'");
-            
-            if(rs.next()) {
+
+            if (rs.next()) {
                 Account account = new Account(rs.getString("nombre_usuario"), rs.getString("clave"));
                 check = account.checkPass(view.getPassText(), account.getPass());
             }
-            
+
         } catch (Exception ex) {
             Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return check;
     }
 
@@ -137,7 +124,7 @@ public class FrontController {
         try {
 
             if (view.getUserText().equals("admin")) {
-                if (query.checkUser(view.getUserText(), view.getPassText())) {
+                if (query.chekAdmin(view.getUserText(), view.getPassText())) {
                     view.dispose();
                     AppView appView = new AppView(view, true);
                     AppController controller = new AppController(appView, connection, checkEmployee());
@@ -148,10 +135,9 @@ public class FrontController {
             } else {
                 if (checkUser()) {
                     if (isNew()) {
-                        String pass = JOptionPane.showInputDialog(view, "Introduce la contraseña para elnuevo ususario");
-                        Account account = new Account(pass);
-                        query.executeStatement("UPDATE cuentas SET clave = '" + account.getPass() + "' WHERE nombre_usuario = '" + view.getUserText() + "'");
-                        query.executeStatement("UPDATE cuentas SET nuevo = 1 WHERE nombre_usuario = '" + view.getUserText() + "'");
+                        PasswordInputPane newPass = new PasswordInputPane(view, true);
+                        PasswordInputPaneController newPassController = new PasswordInputPaneController(newPass, connection, view.getUserText());
+                        newPass.setVisible(true);
                     }
                     view.dispose();
                     AppView appView = new AppView(view, true);

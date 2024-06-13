@@ -102,17 +102,22 @@ public class DeptController {
         ActionListener al = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    query.executeStatement("INSERT INTO departamentos (nombre) VALUES ('" + view.getNameText() + "')");
+                if (isValidDepto()) {
+                    try {
+                        query.executeStatement("INSERT INTO departamentos (nombre) VALUES ('" + view.getNameText() + "')");
 
-                    JOptionPane.showMessageDialog(view, Constantes.ACTION_CONFIRM, "Departamento añadido", JOptionPane.INFORMATION_MESSAGE);
-                    view.setNameText("Nombre depto");
-                    view.setValid(view.getNameTextFieldComponent(), false);
-                    coverDeptos();
+                        JOptionPane.showMessageDialog(view, Constantes.ACTION_CONFIRM, "Departamento añadido", JOptionPane.INFORMATION_MESSAGE);
+                        view.setNameText("Nombre depto");
+                        view.setValid(view.getNameTextFieldComponent(), false);
+                        coverDeptos();
 
-                } catch (Exception ex) {
-                    Logger.getLogger(DeptController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (Exception ex) {
+                        Logger.getLogger(DeptController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(view, Constantes.DEPTO_ERROR, Constantes.ERROR, JOptionPane.WARNING_MESSAGE);
                 }
+
             }
         };
         return al;
@@ -151,25 +156,29 @@ public class DeptController {
             public void actionPerformed(ActionEvent e) {
                 try {
                     if (view.getIdText().equals("1")) {
-                        JOptionPane.showMessageDialog(view, Constantes.CHANGE_ADMIN_WAR, "Error", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(view, Constantes.CHANGE_ADMIN_WAR, Constantes.ERROR, JOptionPane.WARNING_MESSAGE);
                         view.setIdText("id empleado");
                         view.setValid(view.getIdTextFieldComponent(), false);
                         return;
                     }
 
-                    int option = JOptionPane.showConfirmDialog(view, "Cambiar el departamento de este usuario?",
-                            "Cambio dept", JOptionPane.YES_NO_OPTION);
+                    if (isValidDeptoChange() && view.getSelectedDepartmentId() != -1) {
+                        int option = JOptionPane.showConfirmDialog(view, "Cambiar el departamento de este usuario?",
+                                "Cambio dept", JOptionPane.YES_NO_OPTION);
 
-                    if (option == 0) {
-                        query.executeStatement("UPDATE empleados SET departamento_id = " + view.getSelectedDepartmentId() + " WHERE emp_id = " + view.getIdText());
+                        if (option == 0) {
+                            query.executeStatement("UPDATE empleados SET departamento_id = " + view.getSelectedDepartmentId() + " WHERE emp_id = " + view.getIdText());
+                        }
+
+                        view.setIdText("id empleado");
+                        view.setValid(view.getIdTextFieldComponent(), false);
+                    } else {
+                        JOptionPane.showMessageDialog(view, Constantes.INVALID_CHANGE_ERROR, Constantes.ERROR, JOptionPane.WARNING_MESSAGE);
                     }
-
-                    view.setIdText("id empleado");
-                    view.setValid(view.getIdTextFieldComponent(), false);
 
                 } catch (SQLException ex) {
                     Logger.getLogger(DeptController.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(view, Constantes.CHANGE_DEPT_USER, "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(view, Constantes.CHANGE_DEPT_USER, Constantes.ERROR, JOptionPane.ERROR_MESSAGE);
                 }
             }
         };
@@ -202,5 +211,13 @@ public class DeptController {
 
             view.addRowTable(row);
         }
+    }
+
+    private boolean isValidDepto() {
+        return !(view.getNameText().trim().equals("Nombre depto") || view.getNameText().trim().equals(""));
+    }
+
+    private boolean isValidDeptoChange() {
+        return !(view.getIdText().trim().equals("") || view.getIdText().trim().equals("id empleado"));
     }
 }
