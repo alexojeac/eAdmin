@@ -21,6 +21,8 @@ public class LoginView extends javax.swing.JFrame {
     private void initComponents() {
 
         background = new javax.swing.JPanel();
+        logoLabel = new javax.swing.JLabel();
+        bannerLabel = new javax.swing.JLabel();
         titleLabel = new javax.swing.JLabel();
         userLabel = new javax.swing.JLabel();
         userTextField = new javax.swing.JTextField();
@@ -42,15 +44,23 @@ public class LoginView extends javax.swing.JFrame {
         background.setBackground(new java.awt.Color(255, 255, 255));
         background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        titleLabel.setFont(new java.awt.Font("Roboto Medium", 1, 24)); // NOI18N
+        logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo_new.png"))); // NOI18N
+        background.add(logoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 90, 300, -1));
+
+        bannerLabel.setBackground(new java.awt.Color(255, 255, 255));
+        bannerLabel.setForeground(new java.awt.Color(255, 255, 255));
+        bannerLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/city.png"))); // NOI18N
+        background.add(bannerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 0, 290, 460));
+
+        titleLabel.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         titleLabel.setText("INICIAR SESIÓN");
         background.add(titleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 250, 80));
 
-        userLabel.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
+        userLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         userLabel.setText("Usuario");
         background.add(userLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 120, 30));
 
-        userTextField.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        userTextField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         userTextField.setForeground(new java.awt.Color(204, 204, 204));
         userTextField.setText("Ingrese su nombre");
         userTextField.setBorder(null);
@@ -60,7 +70,7 @@ public class LoginView extends javax.swing.JFrame {
         userSeparator.setForeground(new java.awt.Color(0, 134, 190));
         background.add(userSeparator, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 400, 10));
 
-        passLabel.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
+        passLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         passLabel.setText("Contraseña");
         background.add(passLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 120, 30));
 
@@ -76,7 +86,7 @@ public class LoginView extends javax.swing.JFrame {
 
         loginButtonPanel.setBackground(new java.awt.Color(0, 134, 190));
 
-        loginButtonLabel.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        loginButtonLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         loginButtonLabel.setForeground(new java.awt.Color(255, 255, 255));
         loginButtonLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         loginButtonLabel.setText("ENTRA");
@@ -86,14 +96,18 @@ public class LoginView extends javax.swing.JFrame {
         loginButtonPanel.setLayout(loginButtonPanelLayout);
         loginButtonPanelLayout.setHorizontalGroup(
             loginButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(loginButtonLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginButtonPanelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(loginButtonLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         loginButtonPanelLayout.setVerticalGroup(
             loginButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(loginButtonLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginButtonPanelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(loginButtonLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        background.add(loginButtonPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 410, 120, 50));
+        background.add(loginButtonPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 390, 120, 50));
 
         topBarPanel.setBackground(new java.awt.Color(255, 255, 255));
         topBarPanel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -131,13 +145,13 @@ public class LoginView extends javax.swing.JFrame {
             topBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(topBarPanelLayout.createSequentialGroup()
                 .addComponent(exitPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 755, Short.MAX_VALUE))
+                .addContainerGap(755, Short.MAX_VALUE))
         );
         topBarPanelLayout.setVerticalGroup(
             topBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(topBarPanelLayout.createSequentialGroup()
                 .addComponent(exitPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1, Short.MAX_VALUE))
+                .addGap(431, 431, 431))
         );
 
         background.add(topBarPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 30));
@@ -234,10 +248,12 @@ public class LoginView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background;
+    private javax.swing.JLabel bannerLabel;
     private javax.swing.JLabel exitLabel;
     private javax.swing.JPanel exitPanel;
     private javax.swing.JLabel loginButtonLabel;
     private javax.swing.JPanel loginButtonPanel;
+    private javax.swing.JLabel logoLabel;
     private javax.swing.JLabel passLabel;
     private javax.swing.JSeparator passSeparator;
     private javax.swing.JPasswordField passwordField;
