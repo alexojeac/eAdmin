@@ -34,6 +34,7 @@ public class NavigationView extends javax.swing.JDialog {
         topPanel = new javax.swing.JPanel();
         defaultLogoLabel = new javax.swing.JLabel();
         currentSectionLabel = new javax.swing.JLabel();
+        containerPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -232,28 +233,39 @@ public class NavigationView extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topPanelLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(currentSectionLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 702, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 357, Short.MAX_VALUE)
                 .addComponent(defaultLogoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
         );
         topPanelLayout.setVerticalGroup(
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topPanelLayout.createSequentialGroup()
-                .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(topPanelLayout.createSequentialGroup()
-                        .addGap(0, 26, Short.MAX_VALUE)
-                        .addComponent(currentSectionLabel))
-                    .addComponent(defaultLogoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(0, 26, Short.MAX_VALUE)
+                .addComponent(currentSectionLabel)
                 .addContainerGap())
+            .addComponent(defaultLogoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
-        backgroundPanel.add(topPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 1020, 80));
+        backgroundPanel.add(topPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 675, 80));
+
+        javax.swing.GroupLayout containerPanelLayout = new javax.swing.GroupLayout(containerPanel);
+        containerPanel.setLayout(containerPanelLayout);
+        containerPanelLayout.setHorizontalGroup(
+            containerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 675, Short.MAX_VALUE)
+        );
+        containerPanelLayout.setVerticalGroup(
+            containerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 500, Short.MAX_VALUE)
+        );
+
+        backgroundPanel.add(containerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, 675, 500));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(backgroundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(backgroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -272,6 +284,7 @@ public class NavigationView extends javax.swing.JDialog {
     private javax.swing.JPanel backgroundPanel;
     private javax.swing.JLabel cityLabel;
     private javax.swing.JLabel cityLabel2;
+    private javax.swing.JPanel containerPanel;
     private javax.swing.JLabel currentSectionLabel;
     private javax.swing.JLabel defaultLogoLabel;
     private javax.swing.JPanel departmentPanel;
