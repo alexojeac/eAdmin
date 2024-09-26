@@ -13,6 +13,9 @@ public class NavigationView extends javax.swing.JDialog {
 
         backgroundPanel = new javax.swing.JPanel();
         navPanel = new javax.swing.JPanel();
+        exitPanel = new javax.swing.JPanel();
+        exitIconLabel = new javax.swing.JLabel();
+        exitTitleLabel = new javax.swing.JLabel();
         digitalClock = new clock.Clock();
         personalPanel = new javax.swing.JPanel();
         homeTitleLabel = new javax.swing.JLabel();
@@ -39,6 +42,38 @@ public class NavigationView extends javax.swing.JDialog {
 
         navPanel.setBackground(new java.awt.Color(0, 134, 190));
         navPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        exitPanel.setBackground(new java.awt.Color(0, 153, 204));
+        exitPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        exitIconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/exit_icon.png"))); // NOI18N
+
+        exitTitleLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        exitTitleLabel.setForeground(new java.awt.Color(255, 255, 255));
+        exitTitleLabel.setText("Salir");
+
+        javax.swing.GroupLayout exitPanelLayout = new javax.swing.GroupLayout(exitPanel);
+        exitPanel.setLayout(exitPanelLayout);
+        exitPanelLayout.setHorizontalGroup(
+            exitPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(exitPanelLayout.createSequentialGroup()
+                .addGap(71, 71, 71)
+                .addComponent(exitIconLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(exitTitleLabel)
+                .addContainerGap(80, Short.MAX_VALUE))
+        );
+        exitPanelLayout.setVerticalGroup(
+            exitPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(exitPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(exitPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(exitTitleLabel)
+                    .addComponent(exitIconLabel))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        navPanel.add(exitPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 200, -1));
         navPanel.add(digitalClock, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 80, 40));
 
         personalPanel.setBackground(new java.awt.Color(0, 134, 190));
@@ -65,7 +100,7 @@ public class NavigationView extends javax.swing.JDialog {
             personalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(personalPanelLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(personalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(personalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(homeTitleLabel)
                     .addComponent(homeIconLabel))
                 .addContainerGap(22, Short.MAX_VALUE))
@@ -167,10 +202,10 @@ public class NavigationView extends javax.swing.JDialog {
                 .addGroup(adminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(adminTitleLabel)
                     .addComponent(adminIconLabel))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
-        navPanel.add(adminPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 200, -1));
+        navPanel.add(adminPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 200, 60));
 
         cityLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/city.png"))); // NOI18N
         cityLabel.setText("navBackgroundLabel");
@@ -243,6 +278,9 @@ public class NavigationView extends javax.swing.JDialog {
     private javax.swing.JLabel deptIconLabel;
     private javax.swing.JLabel deptTitleLabel;
     private clock.Clock digitalClock;
+    private javax.swing.JLabel exitIconLabel;
+    private javax.swing.JPanel exitPanel;
+    private javax.swing.JLabel exitTitleLabel;
     private javax.swing.JLabel homeIconLabel;
     private javax.swing.JLabel homeTitleLabel;
     private javax.swing.JPanel hrPanel;
