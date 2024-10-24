@@ -2,8 +2,8 @@ package utils;
 
 public class Constants {
      // Acceso BD
-    public static final String DB_HOST = "127.0.0.1:3306";
-    public static final String DB_USER_NAME = "root";
+    public static final String DB_HOST = "192.168.1.53:3307";
+    public static final String DB_USER_NAME = "eadmin";
     public static final String DB_PASSWORD = "abc123.";
     
      public static final String ERROR = "Error";

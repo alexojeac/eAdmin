@@ -1,6 +1,13 @@
 package views;
 
+import java.awt.BorderLayout;
+import java.awt.event.MouseAdapter;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 public class NavigationView extends javax.swing.JDialog {
+
+    private int xMouse, yMouse;
 
     public NavigationView(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -233,7 +240,7 @@ public class NavigationView extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topPanelLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(currentSectionLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 357, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 482, Short.MAX_VALUE)
                 .addComponent(defaultLogoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
         );
@@ -246,20 +253,10 @@ public class NavigationView extends javax.swing.JDialog {
             .addComponent(defaultLogoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
-        backgroundPanel.add(topPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 675, 80));
+        backgroundPanel.add(topPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 800, 80));
 
-        javax.swing.GroupLayout containerPanelLayout = new javax.swing.GroupLayout(containerPanel);
-        containerPanel.setLayout(containerPanelLayout);
-        containerPanelLayout.setHorizontalGroup(
-            containerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 675, Short.MAX_VALUE)
-        );
-        containerPanelLayout.setVerticalGroup(
-            containerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
-        );
-
-        backgroundPanel.add(containerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, 675, 500));
+        containerPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        backgroundPanel.add(containerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, 800, 500));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -275,7 +272,78 @@ public class NavigationView extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+    private void topBarPanelMouseDragged(java.awt.event.MouseEvent evt) {
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xMouse, y - yMouse);
+    }
+
+    private void topBarPanelMousePressed(java.awt.event.MouseEvent evt) {
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+    }
+
+    public JPanel getExitPanel() {
+        return exitPanel;
+    }
+
+    public JLabel getExitLabel() {
+        return exitIconLabel;
+    }
+
+    public void setView(JPanel view) {
+        if (view == null) {
+            throw new IllegalArgumentException("El panel view no puede ser nulo");
+        }
+
+        view.setSize(590, 470);
+        view.setLocation(0, 0);
+
+        if (!(this.containerPanel.getLayout() instanceof BorderLayout)) {
+            this.containerPanel.setLayout(new BorderLayout());
+        }
+
+        this.containerPanel.removeAll();
+        this.containerPanel.add(view, BorderLayout.CENTER);
+        this.containerPanel.revalidate();
+        this.containerPanel.repaint();
+    }
+
+    public void setAccountLabelVisible(boolean visible) {
+        this.homeTitleLabel.setVisible(visible);
+    }
+
+    public void setRRHHLabelVisible(boolean visible) {
+        this.rhTitleLabel.setVisible(visible);
+    }
+
+    public void setDepartmentLabelVisible(boolean visible) {
+        this.deptTitleLabel.setVisible(visible);
+    }
+
+    public void setAdminLabelVisible(boolean visible) {
+        this.adminTitleLabel.setVisible(visible);
+    }
+
+    public void addTopBarPanelListener(MouseAdapter listener) {
+        this.topPanel.addMouseListener(listener);
+    }
+
+    public void addExitLabelListener(MouseAdapter listener) {
+        this.exitTitleLabel.addMouseListener(listener);
+    }
+
+    public void addHomeLabelListener(MouseAdapter listener) {
+        this.homeTitleLabel.addMouseListener(listener);
+    }
+
+    public void addRRHHLabelListener(MouseAdapter listener) {
+        this.rhTitleLabel.addMouseListener(listener);
+    }
+
+    public void addDeptosLabelListener(MouseAdapter listener) {
+        this.deptTitleLabel.addMouseListener(listener);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel adminIconLabel;

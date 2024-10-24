@@ -9,7 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import utils.ANSI;
-import utils.Constantes;
+import utils.Constants;
 
 public final class QueryProcessor {
     
@@ -17,7 +17,7 @@ public final class QueryProcessor {
 
     public QueryProcessor(Connection connection) throws SQLException {
         this.connection = connection;
-        executeStatement("USE EADMIN");
+        executeStatement("USE eadminbd");
     }
 
     public void executeStatement(String sql) throws SQLException {
@@ -43,7 +43,7 @@ public final class QueryProcessor {
             return viewPass.equals(pass);
         } catch (SQLException ex) {
             Logger.getLogger(QueryProcessor.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, Constantes.LOGIN_ERROR, "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Constants.LOGIN_ERROR, "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
             return false;
         }
     }
@@ -51,7 +51,7 @@ public final class QueryProcessor {
     public String getEmployee(String user) {
         try {
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT nombre FROM empleados WHERE emp_id = (SELECT emp_id FROM cuentas WHERE nombre_usuario = '" + user + "')");
+            ResultSet rs = statement.executeQuery("SELECT nombre FROM EMPLEADOS WHERE emp_id = (SELECT emp_id FROM CUENTAS WHERE nombre_usuario = '" + user + "')");
             rs.next();
             return rs.getString("nombre");
 

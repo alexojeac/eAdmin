@@ -1,5 +1,6 @@
 package controller;
 
+import db.QueryProcessor;
 import java.awt.Color;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -7,19 +8,28 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import utils.Constants;
 import views.LoginView;
+import model.DatabaseConnection;
+import java.sql.*;
+import java.util.logging.*;
+import javax.swing.JOptionPane;
+import model.Account;
+import model.Employee;
+import views.NavigationView;
+import views.panel_views.PasswordInputPane;
 
 
 public class FrontController {
     private final LoginView view;
-    //private final Connection connection;
-    //private final QueryProcessor query;
+    private final Connection connection;
+    private final QueryProcessor query;
 
-    public FrontController(LoginView view) {
+    public FrontController(LoginView view) throws SQLException {
         this.view = view;
-        //DatabaseConnector.connect(Constantes.DB_HOST, Constantes.DB_USER_NAME, Constantes.DB_PASSWORD);
-        //this.connection = DatabaseConnector.getConnection();
-        //this.query = new QueryProcessor(connection);
+        DatabaseConnection.connect(Constants.DB_HOST, Constants.DB_USER_NAME, Constants.DB_PASSWORD);
+        this.connection = DatabaseConnection.getConnection();
+        this.query = new QueryProcessor(connection);
         this.view.addExitLabelListener(this.getExitLabelMouseListener());
         this.view.addLoginButtonLabelListener(this.getLoginButtonLabelMouseListener());
         this.view.addUserTextFieldListener(this.getUserTextFieldFocusListener());
@@ -56,7 +66,7 @@ public class FrontController {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    //appAcces();
+                    appAcces();
                 }
             }
         };
@@ -68,27 +78,27 @@ public class FrontController {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    //ppAcces();
+                    appAcces();
                 }
             }
         };
         return ka;
     }
 
-    /*private boolean isNew() {
+    private boolean isNew() {
         try {
-            ResultSet rs = query.executeQuery("SELECT nuevo FROM cuentas WHERE nombre_usuario = '" + view.getUserText() + "'");
+            ResultSet rs = query.executeQuery("SELECT nuevo FROM CUENTAS WHERE nombre_usuario = '" + view.getUserText() + "'");
             return (rs.next() && rs.getInt("nuevo") == 0);
         } catch (Exception ex) {
             Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
-    }*/
+    }
 
-    /*private boolean checkUser() {
+    private boolean checkUser() {
         boolean check = false;
         try {
-            ResultSet rs = query.executeQuery("SELECT * FROM cuentas WHERE nombre_usuario = '" + view.getUserText() + "'");
+            ResultSet rs = query.executeQuery("SELECT * FROM CUENTAS WHERE nombre_usuario = '" + view.getUserText() + "'");
 
             if (rs.next()) {
                 Account account = new Account(rs.getString("nombre_usuario"), rs.getString("clave"));
@@ -100,18 +110,15 @@ public class FrontController {
         }
 
         return check;
-    }*/
+    }
 
-    /*private void appAcces() {
+    private void appAcces() {
         try {
-
             if (view.getUserText().equals("admin")) {
                 if (query.chekAdmin(view.getUserText(), view.getPassText())) {
                     view.dispose();
-                    AppView appView = new AppView(view, true);
-                    AppController controller = new AppController(appView, connection, checkEmployee());
-                    JOptionPane.showMessageDialog(appView, "La sección de Administración está actualmente en mantenimiento",
-                            "Aviso", JOptionPane.WARNING_MESSAGE);
+                    NavigationView appView = new NavigationView(view, true);
+                    NavigationController controller = new NavigationController(appView, connection, checkEmployee());
                     appView.setVisible(true);
                 }
             } else {
@@ -122,20 +129,18 @@ public class FrontController {
                         newPass.setVisible(true);
                     }
                     view.dispose();
-                    AppView appView = new AppView(view, true);
-                    AppController controller = new AppController(appView, connection, checkEmployee());
-                    JOptionPane.showMessageDialog(appView, "La sección de Administración está actualmente en mantenimiento",
-                            "Aviso", JOptionPane.WARNING_MESSAGE);
+                    NavigationView appView = new NavigationView(view, true);
+                    NavigationController controller = new NavigationController(appView, connection, checkEmployee());
                     appView.setVisible(true);
                 } else {
-                    JOptionPane.showMessageDialog(view, Constantes.LOGIN_ERROR, "Error al iniciar sesión", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(view, Constants.LOGIN_ERROR, "Error al iniciar sesión", JOptionPane.ERROR_MESSAGE);
                 }
             }
 
         } catch (Exception err) {
-            JOptionPane.showMessageDialog(view, Constantes.ACCES_ERROR, "Error", JOptionPane.WARNING_MESSAGE);
+            err.printStackTrace();
         }
-    }*/
+    }
 
     private FocusListener getUserTextFieldFocusListener() {
         FocusListener listener = new FocusListener() {
@@ -180,9 +185,9 @@ public class FrontController {
         return listener;
     }
 
-    /*private Employee checkEmployee() {
+    private Employee checkEmployee() {
         try {
-            ResultSet rs = query.executeQuery("SELECT * FROM empleados WHERE emp_id = (SELECT emp_id FROM cuentas WHERE nombre_usuario = '" + view.getUserText() + "')");
+            ResultSet rs = query.executeQuery("SELECT * FROM EMPLEADOS WHERE emp_id = (SELECT emp_id FROM CUENTAS WHERE nombre_usuario = '" + view.getUserText() + "')");
 
             if (rs.next()) {
                 if (rs.getInt("emp_id") == 1) {
@@ -199,5 +204,5 @@ public class FrontController {
         }
 
         return null;
-    }*/
+    }
 }

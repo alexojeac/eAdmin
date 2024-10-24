@@ -33,13 +33,15 @@ public class HomeView extends javax.swing.JPanel {
         jSeparator3 = new javax.swing.JSeparator();
         signInButton = new javax.swing.JButton();
         signOutButton = new javax.swing.JButton();
-        signInLabel = new javax.swing.JLabel();
-        signOutLabel = new javax.swing.JLabel();
 
+        setMaximumSize(new java.awt.Dimension(800, 500));
+        setMinimumSize(new java.awt.Dimension(800, 500));
         setPreferredSize(new java.awt.Dimension(800, 500));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         listTitleLabel.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
         listTitleLabel.setText("Listado Entradas/Salidas");
+        add(listTitleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 12, -1, 25));
 
         onTimeTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -59,154 +61,67 @@ public class HomeView extends javax.swing.JPanel {
         });
         onTimeScrollPane.setViewportView(onTimeTable);
 
+        add(onTimeScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 43, 622, 251));
+
         notesTextArea.setColumns(20);
         notesTextArea.setRows(5);
         notesScrollPane.setViewportView(notesTextArea);
 
+        add(notesScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(237, 351, 300, 133));
+
         noteTitleLabel.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
         noteTitleLabel.setText("Notas");
+        add(noteTitleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(237, 320, -1, 25));
+        add(fromDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(259, 12, 110, 25));
+        add(untilDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(444, 12, 120, 25));
 
         fromLabel.setText("Desde");
+        add(fromLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(221, 12, -1, 25));
 
         untilLabel.setText("Hasta");
+        add(untilLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(408, 12, -1, 25));
 
         refreshButton.setBackground(new java.awt.Color(0, 134, 190));
         refreshButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/refresh_icon.png"))); // NOI18N
+        add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(582, 12, 52, -1));
 
         saveNoteButton.setBackground(new java.awt.Color(0, 134, 190));
         saveNoteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save_icon.png"))); // NOI18N
+        add(saveNoteButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(486, 320, 51, -1));
+        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 306, 788, 10));
 
         requestVacationsLabel.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
         requestVacationsLabel.setText("Solicitar vacaciones");
+        add(requestVacationsLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, -1, -1));
 
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(207, 320, -1, 164));
+        add(requestFromDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(58, 376, 110, -1));
+        add(requestUntilDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(56, 416, 112, -1));
 
         requestFromLabel.setText("Desde");
+        add(requestFromLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 376, -1, 22));
 
         requestUntilLabel.setText("Hasta");
+        add(requestUntilLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 416, -1, 22));
 
         requestButton.setBackground(new java.awt.Color(0, 134, 190));
         requestButton.setForeground(new java.awt.Color(255, 255, 255));
         requestButton.setText("Solicitar");
+        add(requestButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(96, 456, -1, -1));
 
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(555, 320, -1, 164));
 
         signInButton.setBackground(new java.awt.Color(0, 134, 190));
-        signInButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/sign_icon.png"))); // NOI18N
+        signInButton.setForeground(new java.awt.Color(255, 255, 255));
+        signInButton.setText("Fichar entrada");
+        add(signInButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(576, 320, -1, 40));
 
         signOutButton.setBackground(new java.awt.Color(0, 134, 190));
-        signOutButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/sign_icon.png"))); // NOI18N
-
-        signInLabel.setText("Entrada");
-
-        signOutLabel.setText("Salida");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 622, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(listTitleLabel)
-                                .addGap(51, 51, 51)
-                                .addComponent(fromLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(fromDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(39, 39, 39)
-                                .addComponent(untilLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(untilDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(refreshButton, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(onTimeScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 622, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(requestUntilLabel)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(requestVacationsLabel)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(requestFromLabel)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(requestFromDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(requestUntilDateChooser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(requestButton, javax.swing.GroupLayout.Alignment.TRAILING)))
-                                .addGap(39, 39, 39)
-                                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(27, 27, 27)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(notesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(noteTitleLabel)
-                                        .addGap(213, 213, 213)
-                                        .addComponent(saveNoteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(signInLabel)
-                                    .addComponent(signOutLabel)
-                                    .addComponent(signInButton, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
-                                    .addComponent(signOutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
-                .addContainerGap(14, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(refreshButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(fromLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(fromDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(untilLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(untilDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(listTitleLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(onTimeScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(requestVacationsLabel)
-                                .addGap(39, 39, 39)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(requestFromDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(requestFromLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(requestUntilDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(requestUntilLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addComponent(requestButton))
-                            .addComponent(jSeparator2)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(saveNoteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(noteTitleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(notesScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE))
-                            .addComponent(jSeparator3)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(signInLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(signInButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(signOutLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(signOutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(11, 11, 11)))
-                .addContainerGap(16, Short.MAX_VALUE))
-        );
+        signOutButton.setForeground(new java.awt.Color(255, 255, 255));
+        signOutButton.setText("Fichar salida");
+        add(signOutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(576, 444, 105, 40));
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -231,9 +146,7 @@ public class HomeView extends javax.swing.JPanel {
     private javax.swing.JLabel requestVacationsLabel;
     private javax.swing.JButton saveNoteButton;
     private javax.swing.JButton signInButton;
-    private javax.swing.JLabel signInLabel;
     private javax.swing.JButton signOutButton;
-    private javax.swing.JLabel signOutLabel;
     private com.toedter.calendar.JDateChooser untilDateChooser;
     private javax.swing.JLabel untilLabel;
     // End of variables declaration//GEN-END:variables

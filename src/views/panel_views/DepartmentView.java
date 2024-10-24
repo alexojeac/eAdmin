@@ -37,20 +37,35 @@ public class DepartmentView extends javax.swing.JPanel {
         rightsComboBox = new javax.swing.JComboBox<>();
         addDeptButton = new javax.swing.JButton();
         separator2 = new javax.swing.JSeparator();
+        updateDeptLabel = new javax.swing.JLabel();
+        selectDeptComboBox = new javax.swing.JComboBox<>();
+        newNameTextField = new javax.swing.JTextField();
+        newRightComboBox = new javax.swing.JComboBox<>();
+        updateDeptButton = new javax.swing.JButton();
+        separator3 = new javax.swing.JSeparator();
+        deleteDeptLabel = new javax.swing.JLabel();
+        selectDeptDelComboBox = new javax.swing.JComboBox<>();
+        deleteDeptButton = new javax.swing.JButton();
+
+        setMaximumSize(new java.awt.Dimension(800, 500));
+        setMinimumSize(new java.awt.Dimension(800, 500));
+        setPreferredSize(new java.awt.Dimension(800, 500));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         empListLabel.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
         empListLabel.setText("Listado empleados");
+        add(empListLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 17, -1, -1));
 
         empTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nombre", "Apellidos", "Fecha contrato"
+                "Nombre", "Apellidos", "Fecha contrato", "Dirección", "Teléfono"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -59,93 +74,85 @@ public class DepartmentView extends javax.swing.JPanel {
         });
         empScrollPane.setViewportView(empTable);
 
+        add(empScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 80, 777, 229));
+
+        add(deptsComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 46, 214, 28));
+
         refreshButton.setBackground(new java.awt.Color(0, 134, 190));
         refreshButton.setForeground(new java.awt.Color(255, 255, 255));
         refreshButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/refresh_icon.png"))); // NOI18N
+        add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(243, 46, 50, 28));
+        add(separator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 324, 777, 10));
 
         newDeptLabel.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
         newDeptLabel.setText("Nuevo departamento");
+        add(newDeptLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 340, -1, -1));
 
         newDeptTextField.setText("Nombre");
+        add(newDeptTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 369, 175, 30));
+
+        add(rightsComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 405, 175, 30));
 
         addDeptButton.setBackground(new java.awt.Color(0, 134, 190));
         addDeptButton.setForeground(new java.awt.Color(255, 255, 255));
         addDeptButton.setText("Añadir departamento");
+        add(addDeptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 441, 175, 31));
 
         separator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        add(separator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 349, -1, 145));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(separator1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(empListLabel)
-                                    .addComponent(empScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 653, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(deptsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(refreshButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 135, Short.MAX_VALUE)))
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(newDeptLabel)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(addDeptButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
-                                .addComponent(rightsComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(newDeptTextField, javax.swing.GroupLayout.Alignment.LEADING)))
-                        .addGap(35, 35, 35)
-                        .addComponent(separator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(empListLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(refreshButton, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
-                    .addComponent(deptsComboBox))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(empScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(separator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(newDeptLabel)
-                .addGap(12, 12, 12)
-                .addComponent(newDeptTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rightsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(addDeptButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(separator2, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        updateDeptLabel.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        updateDeptLabel.setText("Modificar departamento");
+        add(updateDeptLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(225, 340, 159, -1));
+
+        add(selectDeptComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(225, 369, 175, 30));
+
+        newNameTextField.setText("Nuevo nombre");
+        add(newNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(406, 405, 150, 30));
+
+        add(newRightComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(225, 405, 175, 30));
+
+        updateDeptButton.setBackground(new java.awt.Color(0, 134, 190));
+        updateDeptButton.setForeground(new java.awt.Color(255, 255, 255));
+        updateDeptButton.setText("Modificar departamento");
+        add(updateDeptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(225, 441, 175, 31));
+
+        separator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        add(separator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(568, 340, -1, 145));
+
+        deleteDeptLabel.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        deleteDeptLabel.setText("Eliminar departamento");
+        add(deleteDeptLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(577, 340, -1, -1));
+
+        add(selectDeptDelComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(577, 369, 175, 30));
+
+        deleteDeptButton.setBackground(new java.awt.Color(255, 0, 0));
+        deleteDeptButton.setForeground(new java.awt.Color(255, 255, 255));
+        deleteDeptButton.setText("Eliminar departamento");
+        add(deleteDeptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(577, 405, 175, 31));
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addDeptButton;
+    private javax.swing.JButton deleteDeptButton;
+    private javax.swing.JLabel deleteDeptLabel;
     private javax.swing.JComboBox<String> deptsComboBox;
     private javax.swing.JLabel empListLabel;
     private javax.swing.JScrollPane empScrollPane;
     private javax.swing.JTable empTable;
     private javax.swing.JLabel newDeptLabel;
     private javax.swing.JTextField newDeptTextField;
+    private javax.swing.JTextField newNameTextField;
+    private javax.swing.JComboBox<String> newRightComboBox;
     private javax.swing.JButton refreshButton;
     private javax.swing.JComboBox<String> rightsComboBox;
+    private javax.swing.JComboBox<String> selectDeptComboBox;
+    private javax.swing.JComboBox<String> selectDeptDelComboBox;
     private javax.swing.JSeparator separator1;
     private javax.swing.JSeparator separator2;
+    private javax.swing.JSeparator separator3;
+    private javax.swing.JButton updateDeptButton;
+    private javax.swing.JLabel updateDeptLabel;
     // End of variables declaration//GEN-END:variables
 }

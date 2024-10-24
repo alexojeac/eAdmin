@@ -51,7 +51,7 @@ public class RRHHView extends javax.swing.JPanel {
         separator2 = new javax.swing.JSeparator();
         addEmpLabel = new javax.swing.JLabel();
         nameTextField = new javax.swing.JTextField();
-        lastnameTextField = new javax.swing.JTextField();
+        lastname1TextField = new javax.swing.JTextField();
         deptNewEmpComboBox = new javax.swing.JComboBox<>();
         emailTextField = new javax.swing.JTextField();
         deleteEmpButton1 = new javax.swing.JButton();
@@ -60,7 +60,12 @@ public class RRHHView extends javax.swing.JPanel {
         deleteEmpComboBox = new javax.swing.JComboBox<>();
         deleteTitleLabel = new javax.swing.JLabel();
         refreshButton = new javax.swing.JButton();
+        lastName2TextField = new javax.swing.JTextField();
+        phoneTextField = new javax.swing.JTextField();
+        addressTextField = new javax.swing.JTextField();
+        salaryTextField = new javax.swing.JTextField();
 
+        setMaximumSize(new java.awt.Dimension(800, 500));
         setMinimumSize(new java.awt.Dimension(800, 500));
         setPreferredSize(new java.awt.Dimension(800, 500));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -113,7 +118,7 @@ public class RRHHView extends javax.swing.JPanel {
         empScrollPane.setViewportView(empTable);
 
         add(empScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 610, 170));
-        add(separator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 780, 10));
+        add(separator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 760, 10));
 
         updateLabel.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
         updateLabel.setText("Modificar empleado:");
@@ -139,8 +144,8 @@ public class RRHHView extends javax.swing.JPanel {
         addEmpButton.setBackground(new java.awt.Color(0, 134, 190));
         addEmpButton.setForeground(new java.awt.Color(255, 255, 255));
         addEmpButton.setText("Añadir empleado");
-        add(addEmpButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 460, 140, 30));
-        add(separator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 780, 10));
+        add(addEmpButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 460, 140, 30));
+        add(separator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 760, 10));
 
         addEmpLabel.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
         addEmpLabel.setText("Añadir empleado");
@@ -149,10 +154,10 @@ public class RRHHView extends javax.swing.JPanel {
         nameTextField.setText("Nombre");
         add(nameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 420, 100, 30));
 
-        lastnameTextField.setText("Apellidos");
-        add(lastnameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 420, 100, 30));
+        lastname1TextField.setText("Apellido 1");
+        add(lastname1TextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 420, 100, 30));
 
-        add(deptNewEmpComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 420, 140, 30));
+        add(deptNewEmpComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 420, 140, 30));
 
         emailTextField.setText("email");
         add(emailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 460, 320, 30));
@@ -160,29 +165,42 @@ public class RRHHView extends javax.swing.JPanel {
         deleteEmpButton1.setBackground(new java.awt.Color(255, 0, 0));
         deleteEmpButton1.setForeground(new java.awt.Color(255, 255, 255));
         deleteEmpButton1.setText("Eliminar empleado");
-        add(deleteEmpButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 370, 130, 30));
+        add(deleteEmpButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 370, 130, 30));
 
         separator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
         add(separator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 290, 10, 110));
 
-        add(deptDeleteEmpComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 290, 150, 30));
+        add(deptDeleteEmpComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 290, 150, 30));
 
-        add(deleteEmpComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 330, 270, 30));
+        add(deleteEmpComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 330, 270, 30));
 
         deleteTitleLabel.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
         deleteTitleLabel.setText("Eliminar empleado");
-        add(deleteTitleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 290, -1, 30));
+        add(deleteTitleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 290, -1, 30));
 
         refreshButton.setBackground(new java.awt.Color(0, 134, 190));
         refreshButton.setForeground(new java.awt.Color(255, 255, 255));
         refreshButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/refresh_icon.png"))); // NOI18N
         add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 60, 80, 30));
+
+        lastName2TextField.setText("Apellido 2");
+        add(lastName2TextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 420, 100, 30));
+
+        phoneTextField.setText("tlf");
+        add(phoneTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 460, 100, 30));
+
+        addressTextField.setText("Dirección");
+        add(addressTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 460, 140, 30));
+
+        salaryTextField.setText("Salario");
+        add(salaryTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 420, 140, 30));
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addEmpButton;
     private javax.swing.JLabel addEmpLabel;
+    private javax.swing.JTextField addressTextField;
     private javax.swing.JButton deleteEmpButton1;
     private javax.swing.JComboBox<String> deleteEmpComboBox;
     private javax.swing.JLabel deleteTitleLabel;
@@ -200,14 +218,17 @@ public class RRHHView extends javax.swing.JPanel {
     private com.toedter.calendar.JDateChooser fromDateChooser;
     private javax.swing.JLabel fromLabel;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField lastnameTextField;
+    private javax.swing.JTextField lastName2TextField;
+    private javax.swing.JTextField lastname1TextField;
     private javax.swing.JTextField nameTextField;
     private javax.swing.JComboBox<String> newDeptComboBox;
     private javax.swing.JLabel newDeptLabel;
     private javax.swing.JTextField newMailTextField;
     private javax.swing.JComboBox<String> newRolComboBox;
     private javax.swing.JLabel newRolLabel;
+    private javax.swing.JTextField phoneTextField;
     private javax.swing.JButton refreshButton;
+    private javax.swing.JTextField salaryTextField;
     private javax.swing.JSeparator separator1;
     private javax.swing.JSeparator separator2;
     private javax.swing.JSeparator separator3;
