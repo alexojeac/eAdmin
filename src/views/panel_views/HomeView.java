@@ -41,7 +41,7 @@ public class HomeView extends javax.swing.JPanel {
 
         listTitleLabel.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
         listTitleLabel.setText("Listado Entradas/Salidas");
-        add(listTitleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 12, -1, 25));
+        add(listTitleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 12, -1, 30));
 
         onTimeTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -61,7 +61,7 @@ public class HomeView extends javax.swing.JPanel {
         });
         onTimeScrollPane.setViewportView(onTimeTable);
 
-        add(onTimeScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 43, 622, 251));
+        add(onTimeScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 54, 622, 240));
 
         notesTextArea.setColumns(20);
         notesTextArea.setRows(5);
@@ -72,18 +72,18 @@ public class HomeView extends javax.swing.JPanel {
         noteTitleLabel.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
         noteTitleLabel.setText("Notas");
         add(noteTitleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(237, 320, -1, 25));
-        add(fromDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(259, 12, 110, 25));
-        add(untilDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(444, 12, 120, 25));
+        add(fromDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(259, 12, 110, 30));
+        add(untilDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(444, 12, 120, 30));
 
         fromLabel.setText("Desde");
-        add(fromLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(221, 12, -1, 25));
+        add(fromLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(221, 12, -1, 30));
 
         untilLabel.setText("Hasta");
-        add(untilLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(408, 12, -1, 25));
+        add(untilLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(408, 12, -1, 30));
 
         refreshButton.setBackground(new java.awt.Color(0, 134, 190));
         refreshButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/refresh_icon.png"))); // NOI18N
-        add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(582, 12, 52, -1));
+        add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(582, 12, 52, 30));
 
         saveNoteButton.setBackground(new java.awt.Color(0, 134, 190));
         saveNoteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save_icon.png"))); // NOI18N
@@ -96,8 +96,8 @@ public class HomeView extends javax.swing.JPanel {
 
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
         add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(207, 320, -1, 164));
-        add(requestFromDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(58, 376, 110, -1));
-        add(requestUntilDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(56, 416, 112, -1));
+        add(requestFromDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(58, 376, 110, 30));
+        add(requestUntilDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(56, 416, 112, 30));
 
         requestFromLabel.setText("Desde");
         add(requestFromLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 376, -1, 22));
@@ -108,7 +108,7 @@ public class HomeView extends javax.swing.JPanel {
         requestButton.setBackground(new java.awt.Color(0, 134, 190));
         requestButton.setForeground(new java.awt.Color(255, 255, 255));
         requestButton.setText("Solicitar");
-        add(requestButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(96, 456, -1, -1));
+        add(requestButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(96, 456, -1, 30));
 
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
         add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(555, 320, -1, 164));

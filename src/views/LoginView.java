@@ -13,7 +13,6 @@ public class LoginView extends javax.swing.JFrame {
     
     public LoginView() {
         initComponents();
-        //this.eAdminLabel.grabFocus();
     }
     
     @SuppressWarnings("unchecked")
@@ -45,7 +44,7 @@ public class LoginView extends javax.swing.JFrame {
         background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo_new.png"))); // NOI18N
-        background.add(logoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 90, 300, -1));
+        background.add(logoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 90, 290, -1));
 
         bannerLabel.setBackground(new java.awt.Color(255, 255, 255));
         bannerLabel.setForeground(new java.awt.Color(255, 255, 255));

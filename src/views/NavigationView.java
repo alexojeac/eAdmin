@@ -38,12 +38,18 @@ public class NavigationView extends javax.swing.JDialog {
         adminTitleLabel = new javax.swing.JLabel();
         cityLabel = new javax.swing.JLabel();
         cityLabel2 = new javax.swing.JLabel();
+        topBarPanel = new javax.swing.JPanel();
         topPanel = new javax.swing.JPanel();
         defaultLogoLabel = new javax.swing.JLabel();
         currentSectionLabel = new javax.swing.JLabel();
+        closePanel = new javax.swing.JPanel();
+        closeLabel = new javax.swing.JLabel();
         containerPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setLocationByPlatform(true);
+        setUndecorated(true);
+        setResizable(false);
 
         backgroundPanel.setBackground(new java.awt.Color(255, 255, 255));
         backgroundPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -222,6 +228,30 @@ public class NavigationView extends javax.swing.JDialog {
         cityLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/city.png"))); // NOI18N
         navPanel.add(cityLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 316, 200, 260));
 
+        topBarPanel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                topBarPanelMouseDragged(evt);
+            }
+        });
+        topBarPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                topBarPanelMousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout topBarPanelLayout = new javax.swing.GroupLayout(topBarPanel);
+        topBarPanel.setLayout(topBarPanelLayout);
+        topBarPanelLayout.setHorizontalGroup(
+            topBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
+        );
+        topBarPanelLayout.setVerticalGroup(
+            topBarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        navPanel.add(topBarPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, -1));
+
         backgroundPanel.add(navPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 580));
 
         topPanel.setBackground(new java.awt.Color(0, 134, 190));
@@ -233,24 +263,53 @@ public class NavigationView extends javax.swing.JDialog {
         currentSectionLabel.setForeground(new java.awt.Color(204, 204, 204));
         currentSectionLabel.setText("Sección");
 
+        closePanel.setBackground(new java.awt.Color(0, 134, 190));
+
+        closeLabel.setBackground(new java.awt.Color(255, 255, 255));
+        closeLabel.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
+        closeLabel.setForeground(new java.awt.Color(255, 255, 255));
+        closeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        closeLabel.setText("X");
+        closeLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        javax.swing.GroupLayout closePanelLayout = new javax.swing.GroupLayout(closePanel);
+        closePanel.setLayout(closePanelLayout);
+        closePanelLayout.setHorizontalGroup(
+            closePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, closePanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(closeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        closePanelLayout.setVerticalGroup(
+            closePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(closePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(closeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
         topPanel.setLayout(topPanelLayout);
         topPanelLayout.setHorizontalGroup(
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topPanelLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addContainerGap()
                 .addComponent(currentSectionLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 482, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 467, Short.MAX_VALUE)
                 .addComponent(defaultLogoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(closePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         topPanelLayout.setVerticalGroup(
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topPanelLayout.createSequentialGroup()
-                .addGap(0, 26, Short.MAX_VALUE)
-                .addComponent(currentSectionLabel)
-                .addContainerGap())
             .addComponent(defaultLogoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addGroup(topPanelLayout.createSequentialGroup()
+                .addComponent(closePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topPanelLayout.createSequentialGroup()
+                .addGap(0, 38, Short.MAX_VALUE)
+                .addComponent(currentSectionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         backgroundPanel.add(topPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 800, 80));
@@ -272,16 +331,16 @@ public class NavigationView extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void topBarPanelMouseDragged(java.awt.event.MouseEvent evt) {
+    private void topBarPanelMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topBarPanelMouseDragged
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
         this.setLocation(x - xMouse, y - yMouse);
-    }
+    }//GEN-LAST:event_topBarPanelMouseDragged
 
-    private void topBarPanelMousePressed(java.awt.event.MouseEvent evt) {
+    private void topBarPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topBarPanelMousePressed
         xMouse = evt.getX();
         yMouse = evt.getY();
-    }
+    }//GEN-LAST:event_topBarPanelMousePressed
 
     public JPanel getExitPanel() {
         return exitPanel;
@@ -289,6 +348,18 @@ public class NavigationView extends javax.swing.JDialog {
 
     public JLabel getExitLabel() {
         return exitIconLabel;
+    }
+    
+    public JPanel getClosePanel() {
+        return closePanel;
+    }
+
+    public JLabel getCloseLabel() {
+        return closeLabel;
+    }
+    
+    public void setsectionLabelText(String section) {
+        this.currentSectionLabel.setText(section);
     }
 
     public void setView(JPanel view) {
@@ -332,6 +403,14 @@ public class NavigationView extends javax.swing.JDialog {
     public void addExitLabelListener(MouseAdapter listener) {
         this.exitTitleLabel.addMouseListener(listener);
     }
+    
+    public void addExitPanelListener(MouseAdapter listener) {
+        this.exitPanel.addMouseListener(listener);
+    }
+    
+    public void addCloseLabelListener(MouseAdapter listener) {
+        this.closeLabel.addMouseListener(listener);
+    }
 
     public void addHomeLabelListener(MouseAdapter listener) {
         this.homeTitleLabel.addMouseListener(listener);
@@ -352,6 +431,8 @@ public class NavigationView extends javax.swing.JDialog {
     private javax.swing.JPanel backgroundPanel;
     private javax.swing.JLabel cityLabel;
     private javax.swing.JLabel cityLabel2;
+    private javax.swing.JLabel closeLabel;
+    private javax.swing.JPanel closePanel;
     private javax.swing.JPanel containerPanel;
     private javax.swing.JLabel currentSectionLabel;
     private javax.swing.JLabel defaultLogoLabel;
@@ -369,6 +450,7 @@ public class NavigationView extends javax.swing.JDialog {
     private javax.swing.JPanel personalPanel;
     private javax.swing.JLabel rhIconLabel;
     private javax.swing.JLabel rhTitleLabel;
+    private javax.swing.JPanel topBarPanel;
     private javax.swing.JPanel topPanel;
     // End of variables declaration//GEN-END:variables
 }
