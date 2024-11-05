@@ -11,6 +11,7 @@ public class Employee {
     private String telephone;
     private String address;
     private int dept_id;
+    private String notes;
 
     public Employee() {
     }
@@ -31,6 +32,32 @@ public class Employee {
         this.id = id;
         this.name = name;
         this.lastname1 = lastname1;
+        this.contractDate = contractDate;
+        this.mail = mail;
+        this.telephone = telephone;
+    }
+
+    public Employee(int id, String name, String lastname1, String lastname2, String contractDate, double salary, String mail, String telephone, String address, int dept_id, String notes) {
+        this.id = id;
+        this.name = name;
+        this.lastname1 = lastname1;
+        this.lastname2 = lastname2;
+        this.contractDate = contractDate;
+        this.salary = salary;
+        this.mail = mail;
+        this.telephone = telephone;
+        this.address = address;
+        this.dept_id = dept_id;
+        this.notes = notes;
+    }
+    
+    
+    
+    public Employee(int id, String name, String lastname1, String lastname2, String contractDate, String mail, String telephone) {
+        this.id = id;
+        this.name = name;
+        this.lastname1 = lastname1;
+        this.lastname2 = lastname2;
         this.contractDate = contractDate;
         this.mail = mail;
         this.telephone = telephone;
@@ -115,4 +142,14 @@ public class Employee {
     public void setDept_id(int dept_id) {
         this.dept_id = dept_id;
     }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+    
+    
 }

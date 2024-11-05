@@ -3,10 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/alexo/OneDrive/Documentos/NetBeansProjects/eAdmin/src/views/NavigationView.java</file>
-            <file>file:/C:/Users/alexo/OneDrive/Documentos/NetBeansProjects/eAdmin/src/views/LoginView.java</file>
+            <file>file:/C:/Users/alexo/OneDrive/Documentos/NetBeansProjects/eAdmin/src/model/DAO/Impl/TimeRecordDAOImpl.java</file>
             <file>file:/C:/Users/alexo/OneDrive/Documentos/NetBeansProjects/eAdmin/src/views/panel_views/HomeView.java</file>
+            <file>file:/C:/Users/alexo/OneDrive/Documentos/NetBeansProjects/eAdmin/src/controller/FrontController.java</file>
             <file>file:/C:/Users/alexo/OneDrive/Documentos/NetBeansProjects/eAdmin/src/controller/NavigationController.java</file>
+            <file>file:/C:/Users/alexo/OneDrive/Documentos/NetBeansProjects/eAdmin/src/model/TimeRecord.java</file>
         </group>
     </open-files>
 </project-private>

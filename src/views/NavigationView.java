@@ -363,10 +363,6 @@ public class NavigationView extends javax.swing.JDialog {
     }
 
     public void setView(JPanel view) {
-        if (view == null) {
-            throw new IllegalArgumentException("El panel view no puede ser nulo");
-        }
-
         view.setSize(590, 470);
         view.setLocation(0, 0);
 
@@ -383,17 +379,49 @@ public class NavigationView extends javax.swing.JDialog {
     public void setAccountLabelVisible(boolean visible) {
         this.homeTitleLabel.setVisible(visible);
     }
+    
+    public void setAccountIconLabelVisible(boolean visible) {
+        this.homeIconLabel.setVisible(visible);
+    }
+    
+    public void setPersonalPanelVisible(boolean visible) {
+        this.personalPanel.setVisible(visible);
+    }
 
     public void setRRHHLabelVisible(boolean visible) {
         this.rhTitleLabel.setVisible(visible);
+    }
+    
+    public void setRRHHIconLabelVisible(boolean visible) {
+        this.rhIconLabel.setVisible(visible);
+    }
+    
+    public void setRRHHPanelVisible(boolean visible) {
+        this.hrPanel.setVisible(visible);
     }
 
     public void setDepartmentLabelVisible(boolean visible) {
         this.deptTitleLabel.setVisible(visible);
     }
+    
+    public void setDepartmentIConLabelVisible(boolean visible) {
+        this.deptIconLabel.setVisible(visible);
+    }
+    
+    public void setDepartmentPanelVisible(boolean visible) {
+        this.departmentPanel.setVisible(visible);
+    }
 
     public void setAdminLabelVisible(boolean visible) {
         this.adminTitleLabel.setVisible(visible);
+    }
+    
+    public void setAdminIconLabelVisible(boolean visible) {
+        this.adminIconLabel.setVisible(visible);
+    }
+    
+    public void setAdminPanelVisible(boolean visible) {
+        this.adminPanel.setVisible(visible);
     }
 
     public void addTopBarPanelListener(MouseAdapter listener) {

@@ -7,6 +7,10 @@ public final class Account {
     private String userName;
     private String passHash;
     private int user_id;
+    private int newAccount;
+
+    public Account() {
+    }
 
     public Account(String pass) {
         this.setCryptPass(pass);
@@ -23,11 +27,12 @@ public final class Account {
         this.user_id = user_id;
     }
 
-    public Account(int id, String userName, String pass, int user_id) {
+    public Account(int id, String userName, String pass, int user_id, int newAccount) {
         this.id = id;
         this.userName = userName;
         this.setCryptPass(pass);
         this.user_id = user_id;
+        this.newAccount = newAccount;
     }
 
     public int getId() {
@@ -60,6 +65,14 @@ public final class Account {
 
     public void setUser_id(int user_id) {
         this.user_id = user_id;
+    }
+
+    public int getNewAccount() {
+        return newAccount;
+    }
+
+    public void setnewAccount(int isNew) {
+        this.newAccount = isNew;
     }
 
     public Boolean checkPass(String password, String bdpass) {

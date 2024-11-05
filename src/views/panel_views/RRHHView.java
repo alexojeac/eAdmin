@@ -42,10 +42,7 @@ public class RRHHView extends javax.swing.JPanel {
         updateLabel = new javax.swing.JLabel();
         deptUpdateComboBox = new javax.swing.JComboBox<>();
         empUpdateComboBox = new javax.swing.JComboBox<>();
-        newDeptLabel = new javax.swing.JLabel();
         newDeptComboBox = new javax.swing.JComboBox<>();
-        newRolLabel = new javax.swing.JLabel();
-        newRolComboBox = new javax.swing.JComboBox<>();
         newMailTextField = new javax.swing.JTextField();
         addEmpButton = new javax.swing.JButton();
         separator2 = new javax.swing.JSeparator();
@@ -64,6 +61,10 @@ public class RRHHView extends javax.swing.JPanel {
         phoneTextField = new javax.swing.JTextField();
         addressTextField = new javax.swing.JTextField();
         salaryTextField = new javax.swing.JTextField();
+        newSalaryTextField = new javax.swing.JTextField();
+        updateButton = new javax.swing.JButton();
+        newAddressTextField = new javax.swing.JTextField();
+        newPhoneTextField = new javax.swing.JTextField();
 
         setMaximumSize(new java.awt.Dimension(800, 500));
         setMinimumSize(new java.awt.Dimension(800, 500));
@@ -128,18 +129,10 @@ public class RRHHView extends javax.swing.JPanel {
 
         add(empUpdateComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 290, 140, 30));
 
-        newDeptLabel.setText("Nuevo departamento");
-        add(newDeptLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, -1, -1));
-
-        add(newDeptComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 140, 30));
-
-        newRolLabel.setText("Nuevo rol");
-        add(newRolLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 330, -1, -1));
-
-        add(newRolComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 350, 140, 30));
+        add(newDeptComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 180, 30));
 
         newMailTextField.setText("Nuevo email");
-        add(newMailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 350, 140, 30));
+        add(newMailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 180, 30));
 
         addEmpButton.setBackground(new java.awt.Color(0, 134, 190));
         addEmpButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -194,6 +187,20 @@ public class RRHHView extends javax.swing.JPanel {
 
         salaryTextField.setText("Salario");
         add(salaryTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 420, 140, 30));
+
+        newSalaryTextField.setText("Nuevo salario");
+        add(newSalaryTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 330, 90, 30));
+
+        updateButton.setBackground(new java.awt.Color(0, 134, 190));
+        updateButton.setForeground(new java.awt.Color(255, 255, 255));
+        updateButton.setText("Modificar");
+        add(updateButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 370, -1, 30));
+
+        newAddressTextField.setText("Nueva dirección");
+        add(newAddressTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 330, 140, 30));
+
+        newPhoneTextField.setText("Nuevo tlf");
+        add(newPhoneTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 370, 90, 30));
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -221,11 +228,11 @@ public class RRHHView extends javax.swing.JPanel {
     private javax.swing.JTextField lastName2TextField;
     private javax.swing.JTextField lastname1TextField;
     private javax.swing.JTextField nameTextField;
+    private javax.swing.JTextField newAddressTextField;
     private javax.swing.JComboBox<String> newDeptComboBox;
-    private javax.swing.JLabel newDeptLabel;
     private javax.swing.JTextField newMailTextField;
-    private javax.swing.JComboBox<String> newRolComboBox;
-    private javax.swing.JLabel newRolLabel;
+    private javax.swing.JTextField newPhoneTextField;
+    private javax.swing.JTextField newSalaryTextField;
     private javax.swing.JTextField phoneTextField;
     private javax.swing.JButton refreshButton;
     private javax.swing.JTextField salaryTextField;
@@ -235,6 +242,7 @@ public class RRHHView extends javax.swing.JPanel {
     private javax.swing.JLabel titleLabel;
     private com.toedter.calendar.JDateChooser untilDateChooser;
     private javax.swing.JLabel untilLabel;
+    private javax.swing.JButton updateButton;
     private javax.swing.JLabel updateLabel;
     // End of variables declaration//GEN-END:variables
 }

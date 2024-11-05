@@ -1,12 +1,13 @@
 package controller;
 
-import db.QueryProcessor;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import views.NavigationView;
 import java.sql.*;
 import java.util.logging.*;
+import model.DAO.Impl.DepartmentDAOImpl;
+import model.DAO.Impl.EmployeeDAOImpl;
 import model.Employee;
 import views.LoginView;
 import views.panel_views.DepartmentView;
@@ -14,16 +15,19 @@ import views.panel_views.HomeView;
 import views.panel_views.RRHHView;
 
 public class NavigationController {
+
     private final NavigationView view;
     private Connection connection;
-    private final Employee currentlyEmployee;
-    private final QueryProcessor query;
+    private Employee currentlyEmployee;
+    private final DepartmentDAOImpl deptoDAO;
+    private final EmployeeDAOImpl empDAO;
 
     public NavigationController(NavigationView view, Connection connection, Employee employee) throws SQLException {
         this.view = view;
         this.connection = connection;
-        query = new QueryProcessor(connection);
         this.currentlyEmployee = employee;
+        this.deptoDAO = new DepartmentDAOImpl(connection);
+        this.empDAO = new EmployeeDAOImpl(connection);
         this.view.addExitLabelListener(this.getExitLabelMouseListener());
         this.view.addExitPanelListener(this.getExitPanelMouseListener());
         this.view.addCloseLabelListener(this.getCloseLabelMouseListener());
@@ -32,11 +36,11 @@ public class NavigationController {
         this.view.addDeptosLabelListener(this.getDeptosLabelMouseListener());
         HomeView currentView = new HomeView();
         this.view.setsectionLabelText("Área personal");
-        //HomeController controller = new HomeController(currentView, connection, currentlyEmployee);
+        HomeViewController controller = new HomeViewController(currentView, connection, currentlyEmployee);
         view.setView(currentView);
-        this.checkRol(this.checkPermits(currentlyEmployee.getId()));
+        this.checkRol(this.checkPermits(currentlyEmployee.getDept_id()));
     }
-    
+
     private MouseAdapter getCloseLabelMouseListener() {
         MouseAdapter adapter = new MouseAdapter() {
             @Override
@@ -53,12 +57,12 @@ public class NavigationController {
 
             @Override
             public void mouseExited(MouseEvent evt) {
-                view.getClosePanel().setBackground(new Color(0,134,190));
+                view.getClosePanel().setBackground(new Color(0, 134, 190));
             }
         };
         return adapter;
     }
-    
+
     private MouseAdapter getExitLabelMouseListener() {
         MouseAdapter adapter = new MouseAdapter() {
             @Override
@@ -82,12 +86,12 @@ public class NavigationController {
 
             @Override
             public void mouseExited(MouseEvent evt) {
-                view.getExitPanel().setBackground(new Color(0,153,204));
+                view.getExitPanel().setBackground(new Color(0, 153, 204));
             }
         };
         return adapter;
     }
-    
+
     private MouseAdapter getExitPanelMouseListener() {
         MouseAdapter adapter = new MouseAdapter() {
             @Override
@@ -111,42 +115,11 @@ public class NavigationController {
 
             @Override
             public void mouseExited(MouseEvent evt) {
-                view.getExitPanel().setBackground(new Color(0,153,204));
+                view.getExitPanel().setBackground(new Color(0, 153, 204));
             }
         };
         return adapter;
     }
-
-    private void checkRol(int dept) {
-        switch (dept) {
-            case 1:
-                view.setAdminLabelVisible(false);
-                break;
-            case 2:
-                break;
-            default:
-                view.setRRHHLabelVisible(false);
-                view.setDepartmentLabelVisible(false);
-                view.setAdminLabelVisible(false);
-        }
-    }
-
-    private int checkPermits(int id) {
-        try {
-            ResultSet rs = query.executeQuery("SELECT PERMISOS FROM DEPARTAMENTOS WHERE dept_id = (SELECT departamento_id FROM EMPLEADOS WHERE emp_id = " + id + ")");
-
-            if (rs.next()) {
-                return rs.getInt("permisos");
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return 0;
-    }
-
-    
 
     private MouseAdapter getHomeLabelMouseListener() {
         MouseAdapter adapter = new MouseAdapter() {
@@ -155,11 +128,12 @@ public class NavigationController {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     HomeView currentView = new HomeView();
                     view.setsectionLabelText("Área personal");
-                    /*try {
-                        HomeController controller = new HomeController(currentView, connection, currentlyEmployee);
+                    currentlyEmployee = empDAO.findById(currentlyEmployee.getId());
+                    try {
+                        HomeViewController controller = new HomeViewController(currentView, connection, currentlyEmployee);
                     } catch (SQLException ex) {
-                        Logger.getLogger(AppController.class.getName()).log(Level.SEVERE, null, ex);
-                    }*/
+                        Logger.getLogger(NavigationController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     view.setView(currentView);
                 }
             }
@@ -204,5 +178,31 @@ public class NavigationController {
             }
         };
         return adapter;
+    }
+
+    private void checkRol(int per) {
+        switch (per) {
+            case 1 -> {
+                view.setAdminLabelVisible(false);
+                view.setAdminIconLabelVisible(false);
+                view.setAdminPanelVisible(false);
+            }
+            case 0 -> {
+                view.setRRHHLabelVisible(false);
+                view.setRRHHIconLabelVisible(false);
+                view.setRRHHPanelVisible(false);
+                view.setDepartmentLabelVisible(false);
+                view.setDepartmentIConLabelVisible(false);
+                view.setDepartmentPanelVisible(false);
+                view.setAdminLabelVisible(false);
+                view.setAdminIconLabelVisible(false);
+                view.setAdminPanelVisible(false);
+            }
+
+        }
+    }
+
+    private int checkPermits(int id) {
+        return deptoDAO.findPermissionById(id);
     }
 }
