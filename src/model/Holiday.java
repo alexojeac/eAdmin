@@ -17,6 +17,13 @@ public class Holiday {
         this.finishDate = finishDate;
         this.accept = accept;
     }
+    
+    public Holiday(int emp_id, LocalDate initDay, LocalDate finishDate, int accept) {
+        this.emp_id = emp_id;
+        this.initDay = initDay;
+        this.finishDate = finishDate;
+        this.accept = accept;
+    }
 
     public int getId() {
         return id;

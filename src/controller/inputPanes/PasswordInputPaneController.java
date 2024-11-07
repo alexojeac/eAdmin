@@ -1,4 +1,4 @@
-package controller;
+package controller.inputPanes;
 
 import db.QueryProcessor;
 import java.awt.event.ActionEvent;
@@ -92,7 +92,7 @@ public class PasswordInputPaneController {
                         JOptionPane.showMessageDialog(view, Constants.PASS_MATCH_ERROR, Constants.ERROR, JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(view, Constants.PASS_VALID_ERROR, Constants.ERROR, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(view, Constants.PASS_MATCH_ERROR, Constants.ERROR, JOptionPane.ERROR_MESSAGE);
                 }
             }
         };

@@ -40,8 +40,8 @@ public class HomeView extends javax.swing.JPanel {
         signButton = new javax.swing.JButton();
         inOutComboBox = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        holidaysScrollPane = new javax.swing.JScrollPane();
+        holidaysTable = new javax.swing.JTable();
 
         setMaximumSize(new java.awt.Dimension(800, 500));
         setMinimumSize(new java.awt.Dimension(800, 500));
@@ -134,7 +134,7 @@ public class HomeView extends javax.swing.JPanel {
         jLabel1.setText("Vacaciones");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 320, -1, 20));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        holidaysTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -145,12 +145,12 @@ public class HomeView extends javax.swing.JPanel {
                 "Inicio", "Fin", "Aceptadas"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        holidaysScrollPane.setViewportView(holidaysTable);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 350, 320, 140));
+        add(holidaysScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 350, 320, 140));
     }// </editor-fold>//GEN-END:initComponents
 
-    public void removeDataTable() {
+    public void removeTimeRecordDataTable() {
         DefaultTableModel model = (DefaultTableModel) onTimeTable.getModel();
         model.setRowCount(0);
         onTimeTable.clearSelection();
@@ -158,21 +158,46 @@ public class HomeView extends javax.swing.JPanel {
         onTimeTable.repaint();
     }
 
-    public void addRowTable(Vector row) {
+    public void addTimeRecordRowTable(Vector row) {
         DefaultTableModel model = (DefaultTableModel) onTimeTable.getModel();
         model.addRow(row);
     }
     
+    public void removeHolidaysDataTable() {
+        DefaultTableModel model = (DefaultTableModel) holidaysTable.getModel();
+        model.setRowCount(0);
+        holidaysTable.clearSelection();
+        holidaysTable.revalidate();
+        holidaysTable.repaint();
+    }
+
+    public void addHolidaysRowTable(Vector row) {
+        DefaultTableModel model = (DefaultTableModel) holidaysTable.getModel();
+        model.addRow(row);
+    }
+    
     public LocalDate getDateFrom() {
-        return this.fromDateChooser.getDate().toInstant()
+        return this.fromDateChooser.getDate()!= null ? this.fromDateChooser.getDate().toInstant()
                     .atZone(ZoneId.systemDefault())
-                    .toLocalDate();
+                    .toLocalDate() : null;
     }
     
     public LocalDate getDateUntil() {
-        return this.untilDateChooser.getDate().toInstant()
+        return this.untilDateChooser.getDate()!= null ? this.untilDateChooser.getDate().toInstant()
                     .atZone(ZoneId.systemDefault())
-                    .toLocalDate();
+                    .toLocalDate() : null;
+    }
+    
+    public LocalDate getDateRequestFrom() {
+        return this.requestFromDateChooser.getDate()!= null ? this.requestFromDateChooser.getDate().toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate() : null;
+    }
+    
+    public LocalDate getDateRequestUntil() {
+        return this.requestUntilDateChooser.getDate()!= null ? this.requestUntilDateChooser.getDate().toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate() : null;
     }
     
     public String getNotes() {
@@ -207,16 +232,20 @@ public class HomeView extends javax.swing.JPanel {
         this.inOutComboBox.addActionListener(listener);
     }
     
+    public void addRequestButtonListener(ActionListener listener) {
+        this.requestButton.addActionListener(listener);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser fromDateChooser;
     private javax.swing.JLabel fromLabel;
+    private javax.swing.JScrollPane holidaysScrollPane;
+    private javax.swing.JTable holidaysTable;
     private javax.swing.JComboBox<String> inOutComboBox;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel listTitleLabel;
     private javax.swing.JLabel noteTitleLabel;
     private javax.swing.JScrollPane notesScrollPane;

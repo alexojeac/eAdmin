@@ -1,48 +1,48 @@
 package controller;
 
-import db.DatabaseConnection;
+import controller.panel_views.HomeViewController;
 import java.awt.Color;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import utils.Constants;
-import views.LoginView;
-import db.QueryProcessor;
+import views.NavigationView;
 import java.sql.*;
 import java.util.logging.*;
-import javax.swing.JOptionPane;
-import model.DAO.Impl.AccountDAOImpl;
+import model.DAO.Impl.DepartmentDAOImpl;
 import model.DAO.Impl.EmployeeDAOImpl;
 import model.Employee;
-import views.NavigationView;
-import views.panel_views.PasswordInputPane;
+import views.LoginView;
+import views.panel_views.DepartmentView;
+import views.panel_views.HomeView;
+import views.panel_views.RRHHView;
 
 public class FrontController {
 
-    private final LoginView view;
-    private final Connection connection;
-    private AccountDAOImpl accountDAO;
-    private EmployeeDAOImpl empDAO;
-    private QueryProcessor query;
+    private final NavigationView view;
+    private Connection connection;
+    private Employee currentlyEmployee;
+    private final DepartmentDAOImpl deptoDAO;
+    private final EmployeeDAOImpl empDAO;
 
-    public FrontController(LoginView view) throws SQLException {
+    public FrontController(NavigationView view, Connection connection, Employee employee) throws SQLException {
         this.view = view;
-        DatabaseConnection.connect(Constants.DB_HOST, Constants.DB_USER_NAME, Constants.DB_PASSWORD);
-        this.connection = DatabaseConnection.getConnection();
-        this.accountDAO = new AccountDAOImpl(connection);
+        this.connection = connection;
+        this.currentlyEmployee = employee;
+        this.deptoDAO = new DepartmentDAOImpl(connection);
         this.empDAO = new EmployeeDAOImpl(connection);
         this.view.addExitLabelListener(this.getExitLabelMouseListener());
-        this.view.addLoginButtonLabelListener(this.getLoginButtonLabelMouseListener());
-        this.view.addUserTextFieldListener(this.getUserTextFieldFocusListener());
-        this.view.addPasswordTextFieldListener(this.getPasswordTextFieldFocusListener());
-        this.view.addPasswordTextFieldEnterListener(this.getPasswordTextFieldEnterKeyListener());
-        this.query = new QueryProcessor(connection);
+        this.view.addExitPanelListener(this.getExitPanelMouseListener());
+        this.view.addCloseLabelListener(this.getCloseLabelMouseListener());
+        this.view.addRRHHLabelListener(this.getRRHHLabelMouseListener());
+        this.view.addHomeLabelListener(getHomeLabelMouseListener());
+        this.view.addDeptosLabelListener(this.getDeptosLabelMouseListener());
+        HomeView currentView = new HomeView();
+        this.view.setsectionLabelText("Área personal");
+        HomeViewController controller = new HomeViewController(currentView, connection, currentlyEmployee);
+        view.setView(currentView);
+        this.checkRol(this.checkPermits(currentlyEmployee.getDept_id()));
     }
 
-    private MouseAdapter getExitLabelMouseListener() {
+    private MouseAdapter getCloseLabelMouseListener() {
         MouseAdapter adapter = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -53,164 +53,157 @@ public class FrontController {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                view.getExitPanel().setBackground(Color.red);
-                view.getExitLabel().setForeground(Color.white);
+                view.getClosePanel().setBackground(Color.red);
             }
 
             @Override
             public void mouseExited(MouseEvent evt) {
-                view.getExitPanel().setBackground(Color.white);
-                view.getExitLabel().setForeground(Color.black);
+                view.getClosePanel().setBackground(new Color(0, 134, 190));
             }
         };
         return adapter;
     }
 
-    private MouseAdapter getLoginButtonLabelMouseListener() {
+    private MouseAdapter getExitLabelMouseListener() {
         MouseAdapter adapter = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    appAcces();
+                    try {
+                        view.dispose();
+                        LoginView login = new LoginView();
+                        LoginController controller = new LoginController(login);
+                        login.setVisible(true);
+                    } catch (SQLException ex) {
+                        //Logger.getLogger(NavigationController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                view.getExitPanel().setBackground(Color.red);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent evt) {
+                view.getExitPanel().setBackground(new Color(0, 153, 204));
+            }
+        };
+        return adapter;
+    }
+
+    private MouseAdapter getExitPanelMouseListener() {
+        MouseAdapter adapter = new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    try {
+                        view.dispose();
+                        LoginView login = new LoginView();
+                        LoginController controller = new LoginController(login);
+                        login.setVisible(true);
+                    } catch (SQLException ex) {
+                        //Logger.getLogger(NavigationController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                view.getExitPanel().setBackground(Color.red);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent evt) {
+                view.getExitPanel().setBackground(new Color(0, 153, 204));
+            }
+        };
+        return adapter;
+    }
+
+    private MouseAdapter getHomeLabelMouseListener() {
+        MouseAdapter adapter = new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    HomeView currentView = new HomeView();
+                    view.setsectionLabelText("Área personal");
+                    currentlyEmployee = empDAO.findById(currentlyEmployee.getId());
+                    try {
+                        HomeViewController controller = new HomeViewController(currentView, connection, currentlyEmployee);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    view.setView(currentView);
+                }
+            }
+
+        };
+        return adapter;
+    }
+
+    private MouseAdapter getRRHHLabelMouseListener() {
+        MouseAdapter adapter = new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    RRHHView currentView = new RRHHView();
+                    view.setsectionLabelText("RRHH");
+                    /*try {
+                        RRHHController controller = new RRHHController(currentView, connection);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(AppController.class.getName()).log(Level.SEVERE, null, ex);
+                    }*/
+                    view.setView(currentView);
                 }
             }
         };
         return adapter;
     }
 
-    private KeyAdapter getPasswordTextFieldEnterKeyListener() {
-        KeyAdapter ka = new KeyAdapter() {
+    private MouseAdapter getDeptosLabelMouseListener() {
+        MouseAdapter adapter = new MouseAdapter() {
             @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    appAcces();
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    DepartmentView currentView = new DepartmentView();
+                    view.setsectionLabelText("Departamentos");
+                    /*try {
+                        DeptController controller = new DeptController(currentView, connection);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(AppController.class.getName()).log(Level.SEVERE, null, ex);
+                    }*/
+                    view.setView(currentView);
                 }
             }
         };
-        return ka;
+        return adapter;
     }
 
-    private FocusListener getUserTextFieldFocusListener() {
-        FocusListener listener = new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (view.getUserText().equals("Ingrese su nombre")) {
-                    view.setUserText("");
-                    view.setValidUser(true);
-                }
+    private void checkRol(int per) {
+        switch (per) {
+            case 1 -> {
+                view.setAdminLabelVisible(false);
+                view.setAdminIconLabelVisible(false);
+                view.setAdminPanelVisible(false);
+            }
+            case 0 -> {
+                view.setRRHHLabelVisible(false);
+                view.setRRHHIconLabelVisible(false);
+                view.setRRHHPanelVisible(false);
+                view.setDepartmentLabelVisible(false);
+                view.setDepartmentIConLabelVisible(false);
+                view.setDepartmentPanelVisible(false);
+                view.setAdminLabelVisible(false);
+                view.setAdminIconLabelVisible(false);
+                view.setAdminPanelVisible(false);
             }
 
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (view.getUserText().equals("")) {
-                    view.setUserText("Ingrese su nombre");
-                    view.setValidUser(false);
-                }
-            }
-        };
-        return listener;
-    }
-
-    private FocusListener getPasswordTextFieldFocusListener() {
-        FocusListener listener = new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (view.getPassText().equals("jPasswordField1")) {
-                    view.setPassText("");
-                    view.setValidPass(true);
-                }
-
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (view.getPassText().equals("")) {
-                    view.setPassText("jPasswordField1");
-                    view.setValidPass(false);
-                }
-            }
-        };
-        return listener;
-    }
-
-    private Employee checkEmployee() {
-        /*try {
-            ResultSet rs = query.executeQuery("SELECT * FROM EMPLEADOS WHERE emp_id = (SELECT emp_id FROM CUENTAS WHERE nombre_usuario = '" + view.getUserText() + "')");
-
-            if (rs.next()) {
-                if (rs.getInt("emp_id") == 1) {
-                    Employee emp = new Employee(rs.getInt("emp_id"), rs.getString("nombre"), rs.getString("apellido1"), rs.getString("apellido2"));
-                    return emp;
-                } else {
-                    return new Employee(rs.getInt("emp_id"), rs.getString("nombre"), rs.getString("apellido1"),
-                            String.valueOf(rs.getDate("fecha_contrato")), rs.getString("correo"), rs.getString("tlf"));
-                }
-            }
-            return new Employee();
-        } catch (Exception ex) {
-            Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        return null;*/
-        return empDAO.findById(accountDAO.findByName(view.getUserText()).getUser_id());
     }
 
-    private boolean isNew() {
-        /*try {
-            ResultSet rs = query.executeQuery("SELECT nuevo FROM CUENTAS WHERE nombre_usuario = '" + view.getUserText() + "'");
-            return (rs.next() && rs.getInt("nuevo") == 0);
-        } catch (Exception ex) {
-            Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        }*/
-        return accountDAO.findByName(view.getUserText()).getNewAccount() == 0;
-    }
-
-    private boolean checkUser() {
-        /*boolean check = false;
-        try {
-            ResultSet rs = query.executeQuery("SELECT * FROM CUENTAS WHERE nombre_usuario = '" + view.getUserText() + "'");
-
-            if (rs.next()) {
-                Account account = new Account(rs.getString("nombre_usuario"), rs.getString("clave"));
-                check = account.checkPass(view.getPassText(), account.getPass());
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return check;*/
-        return accountDAO.findByName(view.getUserText()).checkPass(view.getPassText(), accountDAO.findByName(view.getUserText()).getPass());
-    }
-
-    private void appAcces() {
-        try {
-            if (view.getUserText().equals("admin")) {
-                if (query.chekAdmin(view.getUserText(), view.getPassText())) {
-                    view.dispose();
-                    NavigationView appView = new NavigationView(view, true);
-                    NavigationController controller = new NavigationController(appView, connection, checkEmployee());
-                    appView.setVisible(true);
-                }
-            } else {
-                if (checkUser()) {
-                    if (isNew()) {
-                        PasswordInputPane newPass = new PasswordInputPane(view, true);
-                        PasswordInputPaneController newPassController = new PasswordInputPaneController(newPass, connection, view.getUserText());
-                        newPass.setVisible(true);
-                    }
-                    view.dispose();
-                    NavigationView appView = new NavigationView(view, true);
-                    NavigationController controller = new NavigationController(appView, connection, checkEmployee());
-                    appView.setVisible(true);
-                } else {
-                    JOptionPane.showMessageDialog(view, Constants.LOGIN_ERROR, "Error al iniciar sesión", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-
-        } catch (Exception err) {
-            err.printStackTrace();
-        }
+    private int checkPermits(int id) {
+        return deptoDAO.findPermissionById(id);
     }
 }

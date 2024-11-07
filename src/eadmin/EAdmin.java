@@ -1,6 +1,6 @@
 package eadmin;
 
-import controller.FrontController;
+import controller.LoginController;
 import java.sql.SQLException;
 import views.LoginView;
 
@@ -8,7 +8,7 @@ public class EAdmin {
 
     public static void main(String[] args) throws SQLException {
         LoginView view = new LoginView();
-        FrontController controller = new FrontController(view);
+        LoginController controller = new LoginController(view);
         view.setVisible(true);
     }
     

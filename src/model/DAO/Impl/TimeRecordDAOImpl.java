@@ -40,9 +40,7 @@ public class TimeRecordDAOImpl implements TimeRecordDAO {
                         rs.getTime("entrada").toLocalTime(),
                         rs.getTime("salida") != null ? rs.getTime("salida").toLocalTime() : null));
             }
-            for (TimeRecord tr : trs) {
-                System.out.println(tr.getId()+ tr.getEmp_id()+ tr.getDate().toString()+ tr.getIn().toString()+tr.getOut().toString());
-            }
+
         } catch (Exception ex) {
             Logger.getLogger(DepartmentDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }

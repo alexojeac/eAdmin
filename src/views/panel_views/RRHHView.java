@@ -65,6 +65,10 @@ public class RRHHView extends javax.swing.JPanel {
         updateButton = new javax.swing.JButton();
         newAddressTextField = new javax.swing.JTextField();
         newPhoneTextField = new javax.swing.JTextField();
+        holidaysRequestScrollPane = new javax.swing.JScrollPane();
+        holidaysRequestList = new javax.swing.JList<>();
+        separator4 = new javax.swing.JSeparator();
+        holidaysRequestLabel = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(800, 500));
         setMinimumSize(new java.awt.Dimension(800, 500));
@@ -158,10 +162,10 @@ public class RRHHView extends javax.swing.JPanel {
         deleteEmpButton1.setBackground(new java.awt.Color(255, 0, 0));
         deleteEmpButton1.setForeground(new java.awt.Color(255, 255, 255));
         deleteEmpButton1.setText("Eliminar empleado");
-        add(deleteEmpButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 370, 130, 30));
+        add(deleteEmpButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 370, 170, 30));
 
         separator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        add(separator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 290, 10, 110));
+        add(separator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 290, 10, 110));
 
         add(deptDeleteEmpComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 290, 150, 30));
 
@@ -201,6 +205,16 @@ public class RRHHView extends javax.swing.JPanel {
 
         newPhoneTextField.setText("Nuevo tlf");
         add(newPhoneTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 370, 90, 30));
+
+        holidaysRequestScrollPane.setViewportView(holidaysRequestList);
+
+        add(holidaysRequestScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 90, 140, 180));
+
+        separator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        add(separator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 60, 10, 210));
+
+        holidaysRequestLabel.setText("Solicitud de vacacaiones");
+        add(holidaysRequestLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 60, 140, 30));
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -224,6 +238,9 @@ public class RRHHView extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> empUpdateComboBox;
     private com.toedter.calendar.JDateChooser fromDateChooser;
     private javax.swing.JLabel fromLabel;
+    private javax.swing.JLabel holidaysRequestLabel;
+    private javax.swing.JList<String> holidaysRequestList;
+    private javax.swing.JScrollPane holidaysRequestScrollPane;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField lastName2TextField;
     private javax.swing.JTextField lastname1TextField;
@@ -239,6 +256,7 @@ public class RRHHView extends javax.swing.JPanel {
     private javax.swing.JSeparator separator1;
     private javax.swing.JSeparator separator2;
     private javax.swing.JSeparator separator3;
+    private javax.swing.JSeparator separator4;
     private javax.swing.JLabel titleLabel;
     private com.toedter.calendar.JDateChooser untilDateChooser;
     private javax.swing.JLabel untilLabel;
