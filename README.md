@@ -14,12 +14,14 @@ App de escritotio de gestión empresarial, gestiona los empleados y departamento
 
 ## Uso
 Inicia la máquina virtual de Ubuntu Server.
-Ejecuta `sudo docker start mysql-container` para levantar en container de docker que aloja la base de datos.
+Ejecuta `sudo docker start mysql-container` para levantar el container de docker que aloja la base de datos.
 
 
 ## Licencia
 Todos los derechos reservados.
+
 Este código fuente está disponible en GitHub para referencia y revisión, pero no está autorizado para uso, modificación, ni distribución sin el consentimiento expreso del autor. Para obtener permisos de uso o licencia, contacta al autor.
+
 Copyright (c) 2024 Alejandro D. Ojea Corregidor.
 
 
