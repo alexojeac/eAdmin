@@ -136,6 +136,20 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             Logger.getLogger(EmployeeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    
+    @Override
+    public void updateDept(int id, int dept_id) {
+        final StringBuilder sql = new StringBuilder("UPDATE EMPLEADOS");
+        sql.append(" SET departamento_id = '").append(dept_id);
+        sql.append("' WHERE emp_id = ").append(id).append(";");
+        
+        try {
+            query.executeStatement(sql.toString());   
+        } catch (Exception ex) {
+            Logger.getLogger(EmployeeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     @Override
     public void delete(int id) {

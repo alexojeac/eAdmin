@@ -1,17 +1,23 @@
 package model;
 
 public class Department {
+
     private int id;
     private String name;
-    private int permission;
+    private int right;
 
     public Department() {
     }
 
-    public Department(int id, String name, int permission) {
+    public Department(int id, String name, int right) {
         this.id = id;
         this.name = name;
-        this.permission = permission;
+        this.right = right;
+    }
+
+    public Department(String name, int right) {
+        this.name = name;
+        this.right = right;
     }
 
     public int getId() {
@@ -30,13 +36,12 @@ public class Department {
         this.name = name;
     }
 
-    public int getPermission() {
-        return permission;
+    public int getRight() {
+        return right;
     }
 
-    public void setPermission(int permission) {
-        this.permission = permission;
+    public void setRight(int right) {
+        this.right = right;
     }
-    
-    
+
 }

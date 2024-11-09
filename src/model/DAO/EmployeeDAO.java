@@ -11,6 +11,7 @@ public interface EmployeeDAO {
     public void insert(Employee employee);
     public void update(Employee employee);
     public void updateNotes(int id, String notes);
+    public void updateDept(int id, int dept_id);
     public void delete(int id);
     
 }

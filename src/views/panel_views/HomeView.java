@@ -92,10 +92,12 @@ public class HomeView extends javax.swing.JPanel {
 
         refreshButton.setBackground(new java.awt.Color(0, 134, 190));
         refreshButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/refresh_icon.png"))); // NOI18N
+        refreshButton.setToolTipText("Cargar datos en l tabla");
         add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 20, 40, 30));
 
         saveNoteButton.setBackground(new java.awt.Color(0, 134, 190));
         saveNoteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save_icon.png"))); // NOI18N
+        saveNoteButton.setToolTipText("Guardar notas");
         add(saveNoteButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 25, 51, 30));
         add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 306, 788, 10));
 

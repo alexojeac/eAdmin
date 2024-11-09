@@ -12,11 +12,11 @@ import model.DAO.DepartmentDAO;
 import model.Department;
 
 public class DepartmentDAOImpl implements DepartmentDAO {
-    
+
     private Connection connection;
     private QueryProcessor query;
 
-    public DepartmentDAOImpl(Connection connection) throws SQLException{
+    public DepartmentDAOImpl(Connection connection) throws SQLException {
         this.connection = connection;
         this.query = new QueryProcessor(connection);
     }
@@ -39,7 +39,26 @@ public class DepartmentDAOImpl implements DepartmentDAO {
             Logger.getLogger(DepartmentDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return new Department();
-        
+    }
+
+    @Override
+    public Department findByName(String name) {
+        StringBuilder sql = new StringBuilder("SELECT");
+        sql.append(" dept_id, nombre, permisos");
+        sql.append(" FROM DEPARTAMENTOS");
+        sql.append(" WHERE nombre = '").append(name).append("';");
+
+        try {
+            ResultSet rs = query.executeQuery(sql.toString());
+
+            while (rs.next()) {
+                return (new Department(rs.getInt("dept_id"), rs.getString("nombre"), rs.getInt("permisos")));
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(DepartmentDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new Department();
     }
 
     @Override
@@ -62,7 +81,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
         }
         return deptos;
     }
-    
+
     @Override
     public int findPermissionById(int id) {
         StringBuilder sql = new StringBuilder("SELECT");
@@ -88,7 +107,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
         sql.append("(nombre, permisos) ");
         sql.append("VALUES ('")
                 .append(depto.getName()).append("', ")
-                .append(depto.getPermission()).append(");");
+                .append(depto.getRight()).append(");");
 
         try {
             query.executeStatement(sql.toString());
@@ -99,13 +118,14 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 
     @Override
     public void update(Department depto) {
-        final StringBuilder sql = new StringBuilder("UPDATE EMPLEADOS");
-        sql.append(" SET nombre = ").append(depto.getName());
-        sql.append(" , permisos = ").append(depto.getPermission());
-        sql.append("' WHERE dept_id = ").append(depto.getId()).append(";");
-        
+        final StringBuilder sql = new StringBuilder("UPDATE DEPARTAMENTOS SET ");
+
+        sql.append("nombre = '").append(depto.getName()).append("', ");
+        sql.append("permisos = ").append(depto.getRight()).append(" ");
+        sql.append("WHERE dept_id = ").append(depto.getId()).append(";");
+
         try {
-            query.executeStatement(sql.toString());   
+            query.executeStatement(sql.toString());
         } catch (Exception ex) {
             Logger.getLogger(DepartmentDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -123,5 +143,4 @@ public class DepartmentDAOImpl implements DepartmentDAO {
         }
     }
 
-    
 }

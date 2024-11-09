@@ -7,6 +7,7 @@ public class Constants {
     public static final String DB_PASSWORD = "abc123.";
     
      public static final String ERROR = "Error";
+     public static final String CONFIRM = "Confirmar";
 
     //DB messages
     public static final String ACCES_ERROR = "Error al intentar acceder a la base de datos";
@@ -16,14 +17,11 @@ public class Constants {
     public static final String DATE_NULL = "Las fechas son incorrectas";
     public static final String OVERLAP_DATE = "Existen vacaciones que coinciden en algún momento con este intervalo de fechas";
 
+    //Department View messages
+    public static final String ERROR_DEPT_NAME = "Debe indicar un nombre de departamento válido";
+    public static final String CONFIRM_DELETE_DEPT = "Seguro que quiere eliminar este departamento, lo empleados que pertenecen a este departamento serán reubicados en uno genérico";
+    
     //ERROR messages
-    public static final String ADD_USER_ERROR = "Es necesario cubrir todos los datos para añadir un empleado";
-    public static final String PHONE_ERROR = "El formato del teléfono introducido no es válido";
-    public static final String MAIL_ERROR = "El formato del correo introducido no es válido";
-    
-    public static final String DEPTO_ERROR = "Debe indicar el nombre del departamento para poder añadirlo";
-    public static final String CHANGE_DEPT_USER = "Ha ocurrido un error. No es posible encontrar el usuario indicado";
-    
     public static final String PASS_MATCH_ERROR = "La contraseña no es válida, debe tener al menos 6 caracteres y un símbolo especial";
 
     //CONFIRM messages

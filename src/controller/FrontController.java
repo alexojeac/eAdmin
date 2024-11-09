@@ -1,5 +1,6 @@
 package controller;
 
+import controller.panel_views.DepartmentViewController;
 import controller.panel_views.HomeViewController;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
@@ -104,7 +105,7 @@ public class FrontController {
                         LoginController controller = new LoginController(login);
                         login.setVisible(true);
                     } catch (SQLException ex) {
-                        //Logger.getLogger(NavigationController.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -153,7 +154,7 @@ public class FrontController {
                     /*try {
                         RRHHController controller = new RRHHController(currentView, connection);
                     } catch (SQLException ex) {
-                        Logger.getLogger(AppController.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
                     }*/
                     view.setView(currentView);
                 }
@@ -169,11 +170,11 @@ public class FrontController {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     DepartmentView currentView = new DepartmentView();
                     view.setsectionLabelText("Departamentos");
-                    /*try {
-                        DeptController controller = new DeptController(currentView, connection);
+                    try {
+                        DepartmentViewController controller = new DepartmentViewController(currentView, connection);
                     } catch (SQLException ex) {
-                        Logger.getLogger(AppController.class.getName()).log(Level.SEVERE, null, ex);
-                    }*/
+                        Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     view.setView(currentView);
                 }
             }
