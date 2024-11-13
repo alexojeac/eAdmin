@@ -16,9 +16,9 @@ public final class Account {
         this.setCryptPass(pass);
     }
 
-    public Account(String userName, String passHash) {
+    public Account(String userName, String pass) {
         this.userName = userName;
-        this.passHash = passHash;
+        this.setCryptPass(pass);
     }
 
     public Account(String userName, String pass, int user_id) {
@@ -30,7 +30,7 @@ public final class Account {
     public Account(int id, String userName, String pass, int user_id, int newAccount) {
         this.id = id;
         this.userName = userName;
-        this.setCryptPass(pass);
+        this.passHash = pass;
         this.user_id = user_id;
         this.newAccount = newAccount;
     }

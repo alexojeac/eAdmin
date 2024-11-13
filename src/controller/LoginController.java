@@ -1,6 +1,6 @@
 package controller;
 
-import controller.inputPanes.PasswordInputPaneController;
+import controller.option_pane.PasswordInputPaneController;
 import db.DatabaseConnection;
 import java.awt.Color;
 import java.awt.event.FocusEvent;
@@ -33,6 +33,7 @@ public class LoginController {
         this.view = view;
         DatabaseConnection.connect(Constants.DB_HOST, Constants.DB_USER_NAME, Constants.DB_PASSWORD);
         this.connection = DatabaseConnection.getConnection();
+        this.query = QueryProcessor.getInstance(connection);
         this.accountDAO = new AccountDAOImpl(connection);
         this.empDAO = new EmployeeDAOImpl(connection);
         this.view.addExitLabelListener(this.getExitLabelMouseListener());
@@ -40,7 +41,6 @@ public class LoginController {
         this.view.addUserTextFieldListener(this.getUserTextFieldFocusListener());
         this.view.addPasswordTextFieldListener(this.getPasswordTextFieldFocusListener());
         this.view.addPasswordTextFieldEnterListener(this.getPasswordTextFieldEnterKeyListener());
-        this.query = new QueryProcessor(connection);
     }
 
     private MouseAdapter getExitLabelMouseListener() {
@@ -135,84 +135,35 @@ public class LoginController {
     }
 
     private Employee checkEmployee() {
-        /*try {
-            ResultSet rs = query.executeQuery("SELECT * FROM EMPLEADOS WHERE emp_id = (SELECT emp_id FROM CUENTAS WHERE nombre_usuario = '" + view.getUserText() + "')");
-
-            if (rs.next()) {
-                if (rs.getInt("emp_id") == 1) {
-                    Employee emp = new Employee(rs.getInt("emp_id"), rs.getString("nombre"), rs.getString("apellido1"), rs.getString("apellido2"));
-                    return emp;
-                } else {
-                    return new Employee(rs.getInt("emp_id"), rs.getString("nombre"), rs.getString("apellido1"),
-                            String.valueOf(rs.getDate("fecha_contrato")), rs.getString("correo"), rs.getString("tlf"));
-                }
-            }
-            return new Employee();
-        } catch (Exception ex) {
-            Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return null;*/
         return empDAO.findById(accountDAO.findByName(view.getUserText()).getUser_id());
     }
 
     private boolean isNew() {
-        /*try {
-            ResultSet rs = query.executeQuery("SELECT nuevo FROM CUENTAS WHERE nombre_usuario = '" + view.getUserText() + "'");
-            return (rs.next() && rs.getInt("nuevo") == 0);
-        } catch (Exception ex) {
-            Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        }*/
         return accountDAO.findByName(view.getUserText()).getNewAccount() == 0;
     }
 
-    private boolean checkUser() {
-        /*boolean check = false;
-        try {
-            ResultSet rs = query.executeQuery("SELECT * FROM CUENTAS WHERE nombre_usuario = '" + view.getUserText() + "'");
-
-            if (rs.next()) {
-                Account account = new Account(rs.getString("nombre_usuario"), rs.getString("clave"));
-                check = account.checkPass(view.getPassText(), account.getPass());
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return check;*/
-        
+    public boolean checkUser() {
         return accountDAO.findByName(view.getUserText()).checkPass(view.getPassText(), accountDAO.findByName(view.getUserText()).getPass());
     }
 
     private void appAcces() {
         try {
-            if (view.getUserText().equals("admin")) {
-                if (query.chekAdmin(view.getUserText(), view.getPassText())) {
-                    view.dispose();
-                    NavigationView appView = new NavigationView(view, true);
-                    FrontController controller = new FrontController(appView, connection, checkEmployee());
-                    appView.setVisible(true);
+            if (checkUser()) {
+                if (isNew()) {
+                    PasswordInputPane newPass = new PasswordInputPane(view, true);
+                    PasswordInputPaneController newPassController = new PasswordInputPaneController(newPass, connection, view.getUserText());
+                    newPass.setVisible(true);
                 }
+                view.dispose();
+                NavigationView appView = new NavigationView(view, true);
+                FrontController controller = new FrontController(appView, connection, checkEmployee());
+                appView.setVisible(true);
             } else {
-                if (checkUser()) {
-                    if (isNew()) {
-                        PasswordInputPane newPass = new PasswordInputPane(view, true);
-                        PasswordInputPaneController newPassController = new PasswordInputPaneController(newPass, connection, view.getUserText());
-                        newPass.setVisible(true);
-                    }
-                    view.dispose();
-                    NavigationView appView = new NavigationView(view, true);
-                    FrontController controller = new FrontController(appView, connection, checkEmployee());
-                    appView.setVisible(true);
-                } else {
-                    JOptionPane.showMessageDialog(view, Constants.LOGIN_ERROR, "Error al iniciar sesión", JOptionPane.ERROR_MESSAGE);
-                }
+                JOptionPane.showMessageDialog(view, Constants.LOGIN_ERROR, "Error al iniciar sesión", JOptionPane.ERROR_MESSAGE);
             }
-
-        } catch (Exception err) {
-            err.printStackTrace();
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
 }

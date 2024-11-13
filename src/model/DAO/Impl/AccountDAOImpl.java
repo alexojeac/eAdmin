@@ -10,13 +10,13 @@ import model.Account;
 import model.DAO.AccountDAO;
 
 public class AccountDAOImpl implements AccountDAO {
-    
+
     private Connection connection;
     private QueryProcessor query;
-    
-    public AccountDAOImpl(Connection connection) throws SQLException{
+
+    public AccountDAOImpl(Connection connection) throws SQLException {
         this.connection = connection;
-        this.query = new QueryProcessor(connection);
+        this.query = QueryProcessor.getInstance(connection);
     }
 
     @Override
@@ -30,7 +30,8 @@ public class AccountDAOImpl implements AccountDAO {
             ResultSet rs = query.executeQuery(sql.toString());
 
             while (rs.next()) {
-                return (new Account(rs.getInt("id"), rs.getString("nombre_usuario"), rs.getString("clave"), rs.getInt("emp_id"), rs.getInt("nuevo")));
+                return (new Account(rs.getInt("id"), rs.getString("nombre_usuario"), rs.getString("clave"),
+                        rs.getInt("emp_id"), rs.getInt("nuevo")));
             }
 
         } catch (Exception ex) {
@@ -42,12 +43,12 @@ public class AccountDAOImpl implements AccountDAO {
     @Override
     public void insert(Account account) {
         StringBuilder sql = new StringBuilder("INSERT INTO CUENTAS ");
-        sql.append("(nombre_usuario, clave, emp_id) ");
+        sql.append("(nombre_usuario, clave, emp_id, nuevo) ");
         sql.append("VALUES ('")
                 .append(account.getUserName()).append("', '")
-                .append(account.getPass()).append("', '")
-                .append(account.getNewAccount()).append("', '")
-                .append(account.getUser_id()).append("');");
+                .append(account.getPass()).append("', ")
+                .append(account.getUser_id()).append(", ")
+                .append("0);");
 
         try {
             query.executeStatement(sql.toString());
@@ -58,14 +59,13 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public void update(Account account) {
-        final StringBuilder sql = new StringBuilder("UPDATE EMPLEADOS");
-        sql.append(" SET nombre_usuario = ").append(account.getUserName());
-        sql.append(" , clave = ").append(account.getPass());
-        sql.append(" , emp_id = ").append(account.getUser_id());
-        sql.append("' WHERE id = ").append(account.getId()).append(";");
-        
+        final StringBuilder sql = new StringBuilder("UPDATE CUENTAS");
+        sql.append(" SET clave = '").append(account.getPass());
+        sql.append("' , nuevo = 1");
+        sql.append(" WHERE id = ").append(account.getId()).append(";");
+
         try {
-            query.executeStatement(sql.toString());   
+            query.executeStatement(sql.toString());
         } catch (Exception ex) {
             Logger.getLogger(AccountDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -82,5 +82,5 @@ public class AccountDAOImpl implements AccountDAO {
             Logger.getLogger(AccountDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 }

@@ -1,29 +1,28 @@
-package controller.inputPanes;
+package controller.option_pane;
 
-import db.QueryProcessor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import views.panel_views.PasswordInputPane;
 import java.sql.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import utils.Validator;
 import javax.swing.JOptionPane;
 import model.Account;
+import model.DAO.Impl.AccountDAOImpl;
 import utils.Constants;
 
 public class PasswordInputPaneController {
     private final PasswordInputPane view;
     private final Connection connection;
-    private final QueryProcessor query;
     private final String user;
+    private final AccountDAOImpl accountDAO;
     
     public PasswordInputPaneController(PasswordInputPane view, Connection connection, String user) throws SQLException {
         this.view = view;
         this.connection = connection;
         this.user = user;
-        this.query = new QueryProcessor(this.connection);
+        this.accountDAO = new AccountDAOImpl(connection);
         this.view.addPasswordTextFieldListener(this.getPasswordTextFieldFocusListener());
         this.view.addRepeatPasswordTextFieldListener(this.getRepeatPasswordTextFieldFocusListener());
         this.view.addAcceptButtonListener(this.getAcceptButtonActionListener());
@@ -77,17 +76,12 @@ public class PasswordInputPaneController {
         ActionListener al = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (isValidPassword(view.getPassText())) {
+                if (Validator.isValidPassword(view.getPassText())) {
                     if (passwordsMatch()) {
-                        Account account = new Account(view.getPassText());
-                        try {
-                            query.executeStatement("UPDATE cuentas SET clave = '" + account.getPass() + "' WHERE nombre_usuario = '" + user + "'");
-                            query.executeStatement("UPDATE cuentas SET nuevo = 1 WHERE nombre_usuario = '" + user + "'");
-                            view.dispose();
-                        } catch (SQLException ex) {
-                            //Logger.getLogger(PasswordInputPaneController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        
+                        Account account = accountDAO.findByName(user);
+                        account.setCryptPass(view.getPassText());
+                        accountDAO.update(account);
+                        view.dispose();
                     } else {
                         JOptionPane.showMessageDialog(view, Constants.PASS_MATCH_ERROR, Constants.ERROR, JOptionPane.ERROR_MESSAGE);
                     }
@@ -102,17 +96,5 @@ public class PasswordInputPaneController {
     public boolean passwordsMatch() {
         return view.getPassText().equals(view.getRepeatPassText());
     }
-    
-    public static boolean isValidPassword(String password) {
-        String passwordRegex = "^(?=.*[!@#$%^&*(),.?\":{}|<>])[A-Za-z\\d!@#$%^&*(),.?\":{}|<>]{6,}$";
-        
-        Pattern pattern = java.util.regex.Pattern.compile(passwordRegex);
-        
-        if (password == null) {
-            return false;
-        }
-        
-        Matcher matcher = pattern.matcher(password);
-        return matcher.matches();
-    }
+
 }

@@ -21,7 +21,7 @@ public class TimeRecordDAOImpl implements TimeRecordDAO {
 
     public TimeRecordDAOImpl(Connection connection) throws SQLException {
         this.connection = connection;
-        this.query = new QueryProcessor(connection);
+        this.query = QueryProcessor.getInstance(connection);
     }
 
     @Override

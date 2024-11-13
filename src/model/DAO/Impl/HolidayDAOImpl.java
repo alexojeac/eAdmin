@@ -18,7 +18,7 @@ public class HolidayDAOImpl implements HolidayDAO {
 
     public HolidayDAOImpl(Connection connection) throws SQLException {
         this.connection = connection;
-        this.query = new QueryProcessor(connection);
+        this.query = QueryProcessor.getInstance(connection);
     }
 
     @Override

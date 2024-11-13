@@ -18,7 +18,7 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 
     public DepartmentDAOImpl(Connection connection) throws SQLException {
         this.connection = connection;
-        this.query = new QueryProcessor(connection);
+        this.query = QueryProcessor.getInstance(connection);
     }
 
     @Override

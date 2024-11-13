@@ -1,11 +1,14 @@
 package model;
 
+import java.time.LocalDate;
+
 public class Employee {
-     private int id;
+
+    private int id;
     private String name;
     private String lastname1;
     private String lastname2;
-    private String contractDate;
+    private LocalDate contractDate;
     private double salary;
     private String mail;
     private String telephone;
@@ -16,9 +19,12 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(int id, String name) {
-        this.id = id;
+    public Employee(String name, String lastname1, String mail, LocalDate contractDate, int dept_id) {
         this.name = name;
+        this.lastname1 = lastname1;
+        this.mail = mail;
+        this.dept_id = dept_id;
+        this.contractDate = contractDate;
     }
 
     public Employee(int id, String name, String lastname1, String lastname2) {
@@ -28,7 +34,7 @@ public class Employee {
         this.lastname2 = lastname2;
     }
 
-    public Employee(int id, String name, String lastname1, String contractDate, String mail, String telephone) {
+    public Employee(int id, String name, String lastname1, LocalDate contractDate, String mail, String telephone) {
         this.id = id;
         this.name = name;
         this.lastname1 = lastname1;
@@ -37,7 +43,7 @@ public class Employee {
         this.telephone = telephone;
     }
 
-    public Employee(int id, String name, String lastname1, String lastname2, String contractDate, double salary, String mail, String telephone, String address, int dept_id, String notes) {
+    public Employee(int id, String name, String lastname1, String lastname2, LocalDate contractDate, double salary, String mail, String telephone, String address, int dept_id, String notes) {
         this.id = id;
         this.name = name;
         this.lastname1 = lastname1;
@@ -50,10 +56,8 @@ public class Employee {
         this.dept_id = dept_id;
         this.notes = notes;
     }
-    
-    
-    
-    public Employee(int id, String name, String lastname1, String lastname2, String contractDate, String mail, String telephone) {
+
+    public Employee(int id, String name, String lastname1, String lastname2, LocalDate contractDate, String mail, String telephone) {
         this.id = id;
         this.name = name;
         this.lastname1 = lastname1;
@@ -95,11 +99,11 @@ public class Employee {
         this.lastname2 = lastname2;
     }
 
-    public String getContractDate() {
+    public LocalDate getContractDate() {
         return contractDate;
     }
 
-    public void setContractDate(String contractDate) {
+    public void setContractDate(LocalDate contractDate) {
         this.contractDate = contractDate;
     }
 
@@ -150,6 +154,5 @@ public class Employee {
     public void setNotes(String notes) {
         this.notes = notes;
     }
-    
-    
+
 }
