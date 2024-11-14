@@ -32,10 +32,10 @@ public class DepartmentView extends javax.swing.JPanel {
         updateNameTextField = new javax.swing.JTextField();
         updateRightComboBox = new javax.swing.JComboBox<>();
         updateDeptButton = new javax.swing.JButton();
-        separator3 = new javax.swing.JSeparator();
         deleteDeptLabel = new javax.swing.JLabel();
         deleteDeptComboBox = new javax.swing.JComboBox<>();
         deleteDeptButton = new javax.swing.JButton();
+        separator4 = new javax.swing.JSeparator();
 
         setMaximumSize(new java.awt.Dimension(800, 500));
         setMinimumSize(new java.awt.Dimension(800, 500));
@@ -57,14 +57,21 @@ public class DepartmentView extends javax.swing.JPanel {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
         empScrollPane.setViewportView(empTable);
 
-        add(empScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 80, 777, 229));
+        add(empScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 80, 780, 229));
 
         deptsComboBox.setToolTipText("Lista de departamentos");
         add(deptsComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 46, 214, 28));
@@ -116,9 +123,6 @@ public class DepartmentView extends javax.swing.JPanel {
         updateDeptButton.setText("Modificar departamento");
         add(updateDeptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(225, 441, 175, 31));
 
-        separator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        add(separator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(568, 340, -1, 145));
-
         deleteDeptLabel.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
         deleteDeptLabel.setText("Eliminar departamento");
         add(deleteDeptLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(577, 340, -1, -1));
@@ -130,6 +134,9 @@ public class DepartmentView extends javax.swing.JPanel {
         deleteDeptButton.setForeground(new java.awt.Color(255, 255, 255));
         deleteDeptButton.setText("Eliminar departamento");
         add(deleteDeptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(577, 405, 175, 31));
+
+        separator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        add(separator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(561, 340, 10, 160));
     }// </editor-fold>//GEN-END:initComponents
 
     public void removeEmpDataTable() {
@@ -268,7 +275,7 @@ public class DepartmentView extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> rightsComboBox;
     private javax.swing.JSeparator separator1;
     private javax.swing.JSeparator separator2;
-    private javax.swing.JSeparator separator3;
+    private javax.swing.JSeparator separator4;
     private javax.swing.JButton updateDeptButton;
     private javax.swing.JComboBox<String> updateDeptComboBox;
     private javax.swing.JLabel updateDeptLabel;

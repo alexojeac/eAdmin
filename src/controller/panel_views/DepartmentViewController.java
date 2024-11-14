@@ -30,8 +30,8 @@ public class DepartmentViewController {
         this.coverDeptoCombo(deptDAO.findAll());
         this.view.addRefreshButtonListener(this.getRefreshButtonActionListener());
         this.view.addAddDeptButtonListener(this.getAddDeptButtonActionListener());
-        this.view.addUpdateDeptButtonListener(this.getUpdateDeptButtonListener());
-        this.view.addDeleteDeptButtonListener(this.getDeleteDeptButton());
+        this.view.addUpdateDeptButtonListener(this.getUpdateDeptButtonActionListener());
+        this.view.addDeleteDeptButtonListener(this.getDeleteDeptButtonActionListener());
         this.view.addNewDeptTextFieldListener(this.getNewDeptTextFieldFocusListener());
         this.view.addUpdateNameTextField(this.getUpdateDeptTextFieldFocusListener());
     }
@@ -59,7 +59,7 @@ public class DepartmentViewController {
         return al;
     }
 
-    private ActionListener getUpdateDeptButtonListener() {
+    private ActionListener getUpdateDeptButtonActionListener() {
         ActionListener al = (ActionEvent e) -> {
             if (!view.getUpdateNametext().equals("Nuevo nombre")) {
                 Department dept = deptDAO.findByName(view.getUpdateDeptCombo());
@@ -79,7 +79,7 @@ public class DepartmentViewController {
         return al;
     }
 
-    private ActionListener getDeleteDeptButton() {
+    private ActionListener getDeleteDeptButtonActionListener() {
         ActionListener al = (ActionEvent e) -> {
             if (JOptionPane.showConfirmDialog(view, Constants.CONFIRM_DELETE_DEPT, Constants.CONFIRM,
                     JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
@@ -143,10 +143,10 @@ public class DepartmentViewController {
 
         for (Department dept : depts) {
             if (dept.getId() != 2 && dept.getId() != 3 && dept.getId() != 4) {
-                view.setDeptsCombo(dept.getName());
                 view.setDeleteDeptCombo(dept.getName());
                 view.setUpdateDeptCombo(dept.getName());
             }
+            view.setDeptsCombo(dept.getName());
         }
     }
 
