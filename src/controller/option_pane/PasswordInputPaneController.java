@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import views.panel_views.PasswordInputPane;
+import views.option_pane.PasswordInputPane;
 import java.sql.*;
 import utils.Validator;
 import javax.swing.JOptionPane;

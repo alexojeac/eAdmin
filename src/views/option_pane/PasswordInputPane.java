@@ -1,4 +1,4 @@
-package view.panelViews;
+package views.option_pane;
 
 import java.awt.Color;
 import java.awt.event.ActionListener;

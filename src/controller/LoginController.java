@@ -19,7 +19,7 @@ import model.DAO.Impl.AccountDAOImpl;
 import model.DAO.Impl.EmployeeDAOImpl;
 import model.Employee;
 import views.NavigationView;
-import views.panel_views.PasswordInputPane;
+import views.option_pane.PasswordInputPane;
 
 public class LoginController {
 
