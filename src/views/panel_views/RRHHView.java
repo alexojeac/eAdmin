@@ -2,6 +2,7 @@ package views.panel_views;
 
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusListener;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Vector;
@@ -70,24 +71,24 @@ public class RRHHView extends javax.swing.JPanel {
         titleLabel.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
         titleLabel.setText("Listado entradas/salidas");
         add(titleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
-        add(fromDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 90, 30));
-        add(untilDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 60, 90, 30));
+        add(fromDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 100, 30));
+        add(untilDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 60, 100, 30));
 
-        add(deptComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 130, 30));
+        add(deptComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 60, 130, 30));
 
-        add(empComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 60, 160, 30));
+        add(empComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 60, 160, 30));
 
         fromLabel.setText("Desde:");
         add(fromLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, -1));
 
         untilLabel.setText("Hasta:");
-        add(untilLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 40, -1, -1));
+        add(untilLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, -1, -1));
 
         deptLabel.setText("Departamento:");
-        add(deptLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 40, -1, -1));
+        add(deptLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, -1, -1));
 
         empLabel.setText("Empleado:");
-        add(empLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 40, -1, -1));
+        add(empLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 40, -1, -1));
 
         empTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -174,7 +175,7 @@ public class RRHHView extends javax.swing.JPanel {
         refreshButton.setBackground(new java.awt.Color(0, 134, 190));
         refreshButton.setForeground(new java.awt.Color(255, 255, 255));
         refreshButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/refresh_icon.png"))); // NOI18N
-        add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 60, 80, 30));
+        add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 60, 60, 30));
 
         lastName2TextField.setForeground(new java.awt.Color(204, 204, 204));
         lastName2TextField.setText("Apellido 2");
@@ -214,17 +215,14 @@ public class RRHHView extends javax.swing.JPanel {
 
         holidayReqTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
-                "Usuario", "Fecha Inicio", "Fecha Fin"
+                "Usuario", "Fecha Inicio", "Fecha Fin", "id"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -233,12 +231,12 @@ public class RRHHView extends javax.swing.JPanel {
         });
         holidayReqScrollPane.setViewportView(holidayReqTable);
 
-        add(holidayReqScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 90, 260, 180));
+        add(holidayReqScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 90, 270, 180));
 
         moreButton.setBackground(new java.awt.Color(0, 134, 190));
         moreButton.setForeground(new java.awt.Color(255, 255, 255));
         moreButton.setText("Más");
-        add(moreButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 53, 60, 30));
+        add(moreButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 50, 60, 30));
 
         holidayReqLabel.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
         holidayReqLabel.setText("Solicitudes de vacaciones");
@@ -271,9 +269,24 @@ public class RRHHView extends javax.swing.JPanel {
         model.addRow(row);
     }
     
+    public void removeAllItemsEmpCombo() {
+        this.empComboBox.removeAllItems();
+    }
+    
+    public void removeAllItemsUpdateEmpCombo() {
+        this.empUpdateComboBox.removeAllItems();
+    }
+    
+    public void removeAllItemsDeleteEmpCombo() {
+        this.deleteEmpComboBox.removeAllItems();
+    }
+    
     public String getNameSelectedRequestHoliday() {
-        return this.holidayReqTable.getSelectedRow() == 0 ? null 
-                : this.holidayReqTable.getModel().getValueAt(this.holidayReqTable.getSelectedRow(), 0).toString();
+        return this.holidayReqTable.getModel().getValueAt(this.holidayReqTable.getSelectedRow(), 0).toString();
+    }
+    
+    public String getIdSelectedRequestHoliday() {
+        return this.holidayReqTable.getModel().getValueAt(this.holidayReqTable.getSelectedRow(), 3).toString();
     }
 
     public LocalDate getDateFrom() {
@@ -283,13 +296,17 @@ public class RRHHView extends javax.swing.JPanel {
     }
 
     public LocalDate getDateUntil() {
-        return this.untilDateChooser.getDate() != null ? this.fromDateChooser.getDate().toInstant()
+        return this.untilDateChooser.getDate() != null ? this.untilDateChooser.getDate().toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate() : null;
     }
 
     public String getDeptComboSelectedItem() {
         return this.deptComboBox.getSelectedItem().toString();
+    }
+    
+    public boolean isDeptComboEmpty() {
+        return this.deptComboBox.getSelectedIndex() == -1;
     }
 
     public void setDeptComboItem(String dept) {
@@ -298,6 +315,10 @@ public class RRHHView extends javax.swing.JPanel {
 
     public String getEmpComboSelectedItem() {
         return this.empComboBox.getSelectedItem().toString();
+    }
+    
+    public boolean isEmpComboEmpty() {
+        return this.empComboBox.getSelectedIndex() == -1;
     }
 
     public void setEmpComboItem(String emp) {
@@ -332,7 +353,7 @@ public class RRHHView extends javax.swing.JPanel {
         return this.deptDeleteEmpComboBox.getSelectedItem().toString();
     }
 
-    public void getDeptDeleteEmpComboItem(String dept) {
+    public void setDeptDeleteEmpComboItem(String dept) {
         this.deptDeleteEmpComboBox.addItem(dept);
     }
 
@@ -464,7 +485,7 @@ public class RRHHView extends javax.swing.JPanel {
         this.lastName2TextField.setText(lastname);
     }
     
-    public void setMailText(boolean valid) {
+    public void setValidMailText(boolean valid) {
         if (valid) {
             this.emailTextField.setForeground(Color.BLACK);
         } else {
@@ -480,7 +501,7 @@ public class RRHHView extends javax.swing.JPanel {
         this.emailTextField.setText(mail);
     }
     
-    public void setPhoneText(boolean valid) {
+    public void setValidPhoneText(boolean valid) {
         if (valid) {
             this.phoneTextField.setForeground(Color.BLACK);
         } else {
@@ -496,7 +517,7 @@ public class RRHHView extends javax.swing.JPanel {
         this.phoneTextField.setText(phone);
     }
     
-    public void setSalaryText(boolean valid) {
+    public void setValidSalaryText(boolean valid) {
         if (valid) {
             this.salaryTextField.setForeground(Color.BLACK);
         } else {
@@ -510,6 +531,22 @@ public class RRHHView extends javax.swing.JPanel {
     
     public void setSalaryText(String salary) {
         this.salaryTextField.setText(salary);
+    }
+    
+    public String getAddressText() {
+        return this.addressTextField.getText();
+    }
+    
+    public void setAddressText(String address) {
+        this.addressTextField.setText(address);
+    }
+    
+    public void setValidAddressText(boolean valid) {
+        if (valid) {
+            this.addressTextField.setForeground(Color.BLACK);
+        } else {
+            this.addressTextField.setForeground(new Color(204, 204, 204));
+        }
     }
 
     public void addMoreButtonListener(ActionListener listener) {
@@ -530,6 +567,62 @@ public class RRHHView extends javax.swing.JPanel {
 
     public void addAddButtonListener(ActionListener listener) {
         this.addEmpButton.addActionListener(listener);
+    }
+    
+    public void addDeptComboListener(ActionListener listener) {
+        this.deptComboBox.addActionListener(listener);
+    }
+    
+    public void addDeptUpdateEmpComboListener(ActionListener listener) {
+        this.deptUpdateComboBox.addActionListener(listener);
+    }
+    
+    public void addDeptDeleteEmpComboListener(ActionListener listener) {
+        this.deptDeleteEmpComboBox.addActionListener(listener);
+    }
+    
+    public void addNameTextFieldListener(FocusListener listener) {
+        this.nameTextField.addFocusListener(listener);
+    }
+    
+    public void addLastName1TextFieldListener(FocusListener listener) {
+        this.lastname1TextField.addFocusListener(listener);
+    }
+    
+    public void addLastName2TextFieldListener(FocusListener listener) {
+        this.lastName2TextField.addFocusListener(listener);
+    }
+    
+    public void addAddressTextFieldListener(FocusListener listener) {
+        this.addressTextField.addFocusListener(listener);
+    }
+    
+    public void addMailTextFieldListener(FocusListener listener) {
+        this.emailTextField.addFocusListener(listener);
+    }
+    
+    public void addPhoneTextFieldListener(FocusListener listener) {
+        this.phoneTextField.addFocusListener(listener);
+    }
+    
+    public void addSalaryTextFieldListener(FocusListener listener) {
+        this.salaryTextField.addFocusListener(listener);
+    }
+    
+    public void addNewMailTextFieldListener(FocusListener listener) {
+        this.newMailTextField.addFocusListener(listener);
+    }
+    
+    public void addNewSalaryTextFieldListener(FocusListener listener) {
+        this.newSalaryTextField.addFocusListener(listener);
+    }
+    
+    public void addNewAddressTextFieldListener(FocusListener listener) {
+        this.newAddressTextField.addFocusListener(listener);
+    }
+    
+    public void addNewPhoneTextFieldListener(FocusListener listener) {
+        this.newPhoneTextField.addFocusListener(listener);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
