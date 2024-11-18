@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS VACACIONES (
     emp_id INT,
     fecha_inicio DATE,
     fecha_fin DATE,
-    aceptada TINYINT DEFAULT 0 CHECK (aceptada IN (0, 1, 2)),
+    estado TINYINT DEFAULT 0 CHECK (estado IN (0, 1, 2)),
     CONSTRAINT fk_vacacion_empId
         FOREIGN KEY (emp_id)
         REFERENCES EMPLEADOS(emp_id)
