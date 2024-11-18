@@ -6,6 +6,7 @@ import model.Employee;
 public interface EmployeeDAO {
     
     public Employee findById(int id);
+    public Employee findByNameAndLastName(String name, String lastname);
     public List<Employee> finadAll();
     public List<Employee> findByDeptId(int dept_id);
     public void insert(Employee employee);

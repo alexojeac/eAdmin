@@ -39,6 +39,29 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         }
         return new Employee();
     }
+    
+    @Override
+    public Employee findByNameAndLastName(String name, String lastname) {
+        StringBuilder sql = new StringBuilder("SELECT");
+        sql.append(" emp_id, nombre, apellido1, apellido2, fecha_contrato, salario, correo, direccion, tlf, departamento_id, notas");
+        sql.append(" FROM EMPLEADOS");
+        sql.append(" WHERE nombre = '").append(name);
+        sql.append("' AND apellido1 = '").append(lastname).append("';");
+
+        try {
+            ResultSet rs = query.executeQuery(sql.toString());
+
+            while (rs.next()) {
+                return (new Employee(rs.getInt("emp_id"), rs.getString("nombre"), rs.getString("apellido1"),
+                        rs.getString("apellido2"), rs.getDate("fecha_contrato").toLocalDate(), rs.getDouble("salario"), rs.getString("correo"),
+                        rs.getString("direccion"), rs.getString("tlf"), rs.getInt("departamento_id"), rs.getString("notas")));
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(EmployeeDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new Employee();
+    }
 
     @Override
     public List<Employee> finadAll() {

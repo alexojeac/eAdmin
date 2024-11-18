@@ -87,7 +87,7 @@ public class NavigationView extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        navPanel.add(exitPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 200, -1));
+        navPanel.add(exitPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 530, 200, -1));
         navPanel.add(digitalClock, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 80, 40));
 
         personalPanel.setBackground(new java.awt.Color(0, 134, 190));
@@ -226,7 +226,7 @@ public class NavigationView extends javax.swing.JDialog {
         navPanel.add(cityLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 320));
 
         cityLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/city.png"))); // NOI18N
-        navPanel.add(cityLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 316, 200, 260));
+        navPanel.add(cityLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 316, 200, 290));
 
         topBarPanel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -252,7 +252,7 @@ public class NavigationView extends javax.swing.JDialog {
 
         navPanel.add(topBarPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, -1));
 
-        backgroundPanel.add(navPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 580));
+        backgroundPanel.add(navPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 610));
 
         topPanel.setBackground(new java.awt.Color(0, 134, 190));
 
@@ -296,7 +296,7 @@ public class NavigationView extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(currentSectionLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 467, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 617, Short.MAX_VALUE)
                 .addComponent(defaultLogoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(closePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -312,20 +312,20 @@ public class NavigationView extends javax.swing.JDialog {
                 .addComponent(currentSectionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        backgroundPanel.add(topPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 800, 80));
+        backgroundPanel.add(topPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 950, 80));
 
         containerPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        backgroundPanel.add(containerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, 800, 500));
+        backgroundPanel.add(containerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, 950, 530));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(backgroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(backgroundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(backgroundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
+            .addComponent(backgroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -363,7 +363,7 @@ public class NavigationView extends javax.swing.JDialog {
     }
 
     public void setView(JPanel view) {
-        view.setSize(590, 470);
+        view.setSize(957, 500);
         view.setLocation(0, 0);
 
         if (!(this.containerPanel.getLayout() instanceof BorderLayout)) {

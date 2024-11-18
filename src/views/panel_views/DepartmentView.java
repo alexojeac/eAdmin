@@ -36,6 +36,8 @@ public class DepartmentView extends javax.swing.JPanel {
         deleteDeptComboBox = new javax.swing.JComboBox<>();
         deleteDeptButton = new javax.swing.JButton();
         separator4 = new javax.swing.JSeparator();
+        newRightsLabel = new javax.swing.JLabel();
+        updateRightsLabel = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(800, 500));
         setMinimumSize(new java.awt.Dimension(800, 500));
@@ -74,69 +76,75 @@ public class DepartmentView extends javax.swing.JPanel {
         add(empScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 80, 780, 229));
 
         deptsComboBox.setToolTipText("Lista de departamentos");
-        add(deptsComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 46, 214, 28));
+        add(deptsComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 214, 28));
 
         refreshButton.setBackground(new java.awt.Color(0, 134, 190));
         refreshButton.setForeground(new java.awt.Color(255, 255, 255));
         refreshButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/refresh_icon.png"))); // NOI18N
         refreshButton.setToolTipText("Cargar datos en la tabla");
-        add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(243, 46, 50, 28));
-        add(separator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 324, 777, 10));
+        add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 50, 28));
+        add(separator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 324, 920, 10));
 
         newDeptLabel.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
         newDeptLabel.setText("Nuevo departamento");
-        add(newDeptLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 340, -1, -1));
+        add(newDeptLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 340, -1, -1));
 
         newDeptTextField.setForeground(new java.awt.Color(204, 204, 204));
         newDeptTextField.setText("Nombre");
-        add(newDeptTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 369, 175, 30));
+        add(newDeptTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 370, 175, 30));
 
         rightsComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Usuario", "Recursos Humanos", "Administrador" }));
         rightsComboBox.setToolTipText("Permisos para los empleados del departamento");
-        add(rightsComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 405, 175, 30));
+        add(rightsComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 410, 140, 30));
 
         addDeptButton.setBackground(new java.awt.Color(0, 134, 190));
         addDeptButton.setForeground(new java.awt.Color(255, 255, 255));
         addDeptButton.setText("Añadir departamento");
-        add(addDeptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 441, 175, 31));
+        add(addDeptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 450, 180, 31));
 
         separator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        add(separator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 349, -1, 145));
+        add(separator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 340, -1, 145));
 
         updateDeptLabel.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
         updateDeptLabel.setText("Modificar departamento");
-        add(updateDeptLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(225, 340, 159, -1));
+        add(updateDeptLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 340, 159, -1));
 
         updateDeptComboBox.setToolTipText("Lista de departamentos");
-        add(updateDeptComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(225, 369, 175, 30));
+        add(updateDeptComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 370, 175, 30));
 
         updateNameTextField.setForeground(new java.awt.Color(204, 204, 204));
         updateNameTextField.setText("Nuevo nombre");
-        add(updateNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(406, 405, 150, 30));
+        add(updateNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 370, 170, 30));
 
         updateRightComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Usuario", "Recursos Humanos", "Administrador" }));
         updateRightComboBox.setToolTipText("Permisos para el empleado del departamento");
-        add(updateRightComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(225, 405, 175, 30));
+        add(updateRightComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 410, 175, 30));
 
         updateDeptButton.setBackground(new java.awt.Color(0, 134, 190));
         updateDeptButton.setForeground(new java.awt.Color(255, 255, 255));
         updateDeptButton.setText("Modificar departamento");
-        add(updateDeptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(225, 441, 175, 31));
+        add(updateDeptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 450, -1, 31));
 
         deleteDeptLabel.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
         deleteDeptLabel.setText("Eliminar departamento");
-        add(deleteDeptLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(577, 340, -1, -1));
+        add(deleteDeptLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 350, -1, -1));
 
         deleteDeptComboBox.setToolTipText("Lista de departamentos");
-        add(deleteDeptComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(577, 369, 175, 30));
+        add(deleteDeptComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 380, 175, 30));
 
         deleteDeptButton.setBackground(new java.awt.Color(255, 0, 0));
         deleteDeptButton.setForeground(new java.awt.Color(255, 255, 255));
         deleteDeptButton.setText("Eliminar departamento");
-        add(deleteDeptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(577, 405, 175, 31));
+        add(deleteDeptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 430, 175, 31));
 
         separator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        add(separator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(561, 340, 10, 160));
+        add(separator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 340, 10, 150));
+
+        newRightsLabel.setText("Permisos de usuario: ");
+        add(newRightsLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 410, -1, 30));
+
+        updateRightsLabel.setText("Permisos de usuario: ");
+        add(updateRightsLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, -1, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     public void removeEmpDataTable() {
@@ -271,6 +279,7 @@ public class DepartmentView extends javax.swing.JPanel {
     private javax.swing.JTable empTable;
     private javax.swing.JLabel newDeptLabel;
     private javax.swing.JTextField newDeptTextField;
+    private javax.swing.JLabel newRightsLabel;
     private javax.swing.JButton refreshButton;
     private javax.swing.JComboBox<String> rightsComboBox;
     private javax.swing.JSeparator separator1;
@@ -281,5 +290,6 @@ public class DepartmentView extends javax.swing.JPanel {
     private javax.swing.JLabel updateDeptLabel;
     private javax.swing.JTextField updateNameTextField;
     private javax.swing.JComboBox<String> updateRightComboBox;
+    private javax.swing.JLabel updateRightsLabel;
     // End of variables declaration//GEN-END:variables
 }

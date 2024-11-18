@@ -42,6 +42,7 @@ public class HomeView extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         holidaysScrollPane = new javax.swing.JScrollPane();
         holidaysTable = new javax.swing.JTable();
+        jSeparator4 = new javax.swing.JSeparator();
 
         setMaximumSize(new java.awt.Dimension(800, 500));
         setMinimumSize(new java.awt.Dimension(800, 500));
@@ -76,11 +77,11 @@ public class HomeView extends javax.swing.JPanel {
         notesTextArea.setRows(5);
         notesScrollPane.setViewportView(notesTextArea);
 
-        add(notesScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 60, 220, 240));
+        add(notesScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 60, 310, 240));
 
         noteTitleLabel.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
         noteTitleLabel.setText("Notas");
-        add(noteTitleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 20, -1, 40));
+        add(noteTitleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 20, -1, 40));
         add(fromDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, 110, 30));
         add(untilDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 20, 120, 30));
 
@@ -98,8 +99,8 @@ public class HomeView extends javax.swing.JPanel {
         saveNoteButton.setBackground(new java.awt.Color(0, 134, 190));
         saveNoteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save_icon.png"))); // NOI18N
         saveNoteButton.setToolTipText("Guardar notas");
-        add(saveNoteButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 25, 51, 30));
-        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 306, 788, 10));
+        add(saveNoteButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 20, 51, 30));
+        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 306, 940, 10));
 
         requestVacationsLabel.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
         requestVacationsLabel.setText("Solicitar vacaciones");
@@ -122,15 +123,15 @@ public class HomeView extends javax.swing.JPanel {
         add(requestButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(96, 456, -1, 30));
 
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(555, 320, -1, 164));
+        add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 64, -1, 230));
 
         signButton.setBackground(new java.awt.Color(0, 134, 190));
         signButton.setForeground(new java.awt.Color(255, 255, 255));
         signButton.setText("Fichar entrada");
-        add(signButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 410, 120, 40));
+        add(signButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 420, 120, 40));
 
         inOutComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Entrada", "Salida" }));
-        add(inOutComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 350, 160, 30));
+        add(inOutComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 350, 160, 30));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
         jLabel1.setText("Vacaciones");
@@ -138,18 +139,18 @@ public class HomeView extends javax.swing.JPanel {
 
         holidaysTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
-                "Inicio", "Fin", "Aceptadas"
+                "Inicio", "Fin", "Estado"
             }
         ));
         holidaysScrollPane.setViewportView(holidaysTable);
 
-        add(holidaysScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 350, 320, 140));
+        add(holidaysScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 350, 480, 140));
+
+        jSeparator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 320, -1, 164));
     }// </editor-fold>//GEN-END:initComponents
 
     public void removeTimeRecordDataTable() {
@@ -248,6 +249,7 @@ public class HomeView extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
     private javax.swing.JLabel listTitleLabel;
     private javax.swing.JLabel noteTitleLabel;
     private javax.swing.JScrollPane notesScrollPane;

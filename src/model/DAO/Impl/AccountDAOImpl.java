@@ -39,6 +39,27 @@ public class AccountDAOImpl implements AccountDAO {
         }
         return new Account();
     }
+    
+    @Override
+    public Account findByEmpId(int empId) {
+        StringBuilder sql = new StringBuilder("SELECT");
+        sql.append(" id, nombre_usuario, clave, emp_id, nuevo");
+        sql.append(" FROM CUENTAS");
+        sql.append(" WHERE emp_id = '").append(empId).append("';");
+
+        try {
+            ResultSet rs = query.executeQuery(sql.toString());
+
+            while (rs.next()) {
+                return (new Account(rs.getInt("id"), rs.getString("nombre_usuario"), rs.getString("clave"),
+                        rs.getInt("emp_id"), rs.getInt("nuevo")));
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(DepartmentDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new Account();
+    }
 
     @Override
     public void insert(Account account) {

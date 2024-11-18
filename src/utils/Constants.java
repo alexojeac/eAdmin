@@ -21,6 +21,10 @@ public class Constants {
     public static final String ERROR_DEPT_NAME = "Debe indicar un nombre de departamento válido";
     public static final String CONFIRM_DELETE_DEPT = "Seguro que quiere eliminar este departamento, lo empleados que pertenecen a este departamento serán reubicados en uno genérico";
     
+    //RRHH View messages
+    public static final String HOLIDAY_REQUEST_MESSAGE = "El empleado %s solicita vacaciones del día %s al día %s";
+    public static final String INVALID_DATA_SEARCH = "No se puede filtrar con los datos introducidos, seleccione departamento y empleado.";
+    
     //ERROR messages
     public static final String PASS_MATCH_ERROR = "La contraseña no es válida, debe tener al menos 6 caracteres y un símbolo especial";
 

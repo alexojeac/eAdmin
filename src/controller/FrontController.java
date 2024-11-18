@@ -2,6 +2,7 @@ package controller;
 
 import controller.panel_views.DepartmentViewController;
 import controller.panel_views.HomeViewController;
+import controller.panel_views.RRHHController;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -151,11 +152,11 @@ public class FrontController {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     RRHHView currentView = new RRHHView();
                     view.setsectionLabelText("RRHH");
-                    /*try {
+                    try {
                         RRHHController controller = new RRHHController(currentView, connection);
                     } catch (SQLException ex) {
                         Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
-                    }*/
+                    }
                     view.setView(currentView);
                 }
             }
