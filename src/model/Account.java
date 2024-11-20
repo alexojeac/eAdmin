@@ -2,11 +2,15 @@ package model;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+/**
+ *
+ * @author Alejandro Ojea
+ */
 public final class Account {
      private int id;
     private String userName;
     private String passHash;
-    private int user_id;
+    private String user_id;
     private int newAccount;
 
     public Account() {
@@ -21,13 +25,13 @@ public final class Account {
         this.setCryptPass(pass);
     }
 
-    public Account(String userName, String pass, int user_id) {
+    public Account(String userName, String pass, String user_id) {
         this.userName = userName;
         this.setCryptPass(pass);
         this.user_id = user_id;
     }
 
-    public Account(int id, String userName, String pass, int user_id, int newAccount) {
+    public Account(int id, String userName, String pass, String user_id, int newAccount) {
         this.id = id;
         this.userName = userName;
         this.passHash = pass;
@@ -59,11 +63,11 @@ public final class Account {
         this.passHash = passHash;
     }
 
-    public int getUser_id() {
+    public String getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
 

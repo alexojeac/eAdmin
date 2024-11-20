@@ -7,6 +7,8 @@ import java.awt.event.FocusListener;
 import java.sql.*;
 import java.util.List;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.DAO.Impl.DepartmentDAOImpl;
 import model.DAO.Impl.EmployeeDAOImpl;
@@ -15,6 +17,10 @@ import model.Employee;
 import utils.Constants;
 import views.panel_views.DepartmentView;
 
+/**
+ *
+ * @author Alejandro Ojea
+ */
 public class DepartmentViewController {
 
     private final DepartmentView view;
@@ -22,7 +28,7 @@ public class DepartmentViewController {
     private final EmployeeDAOImpl employeeDAO;
     private final DepartmentDAOImpl deptDAO;
 
-    public DepartmentViewController(DepartmentView view, Connection connection) throws SQLException {
+    public DepartmentViewController(DepartmentView view, Connection connection) throws SQLException, Exception {
         this.view = view;
         this.connection = connection;
         this.employeeDAO = new EmployeeDAOImpl(connection);
@@ -38,7 +44,11 @@ public class DepartmentViewController {
 
     private ActionListener getRefreshButtonActionListener() {
         ActionListener al = (ActionEvent e) -> {
-            repaintEmployeesTable(employeeDAO.findByDeptId(deptDAO.findByName(view.getSelectedDept()).getId()));
+            try {
+                repaintEmployeesTable(employeeDAO.findByDeptId(deptDAO.findByName(view.getSelectedDept()).getId()));
+            } catch (Exception ex) {
+                Logger.getLogger(DepartmentViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         };
         return al;
     }
@@ -46,12 +56,16 @@ public class DepartmentViewController {
     private ActionListener getAddDeptButtonActionListener() {
         ActionListener al = (ActionEvent e) -> {
             if (!view.getNewDeptText().equals("Nombre")) {
-                deptDAO.insert(new Department(view.getNewDeptText(), view.getNewRightsCombo().equals("Usuario") ? 0
-                        : view.getNewRightsCombo().equals("Recursos humanos") ? 1 : 2));
-
-                coverDeptoCombo(deptDAO.findAll());
-                view.setNewDeptText("Nombre");
-                view.setValidNewDept(false);
+                try {
+                    deptDAO.insert(new Department(view.getNewDeptText(), view.getNewRightsCombo().equals("Usuario") ? 0
+                            : view.getNewRightsCombo().equals("Recursos humanos") ? 1 : 2));
+                    
+                    coverDeptoCombo(deptDAO.findAll());
+                    view.setNewDeptText("Nombre");
+                    view.setValidNewDept(false);
+                } catch (Exception ex) {
+                    Logger.getLogger(DepartmentViewController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             } else {
                 JOptionPane.showMessageDialog(view, Constants.ERROR_DEPT_NAME, Constants.ERROR, JOptionPane.WARNING_MESSAGE);
             }
@@ -62,16 +76,20 @@ public class DepartmentViewController {
     private ActionListener getUpdateDeptButtonActionListener() {
         ActionListener al = (ActionEvent e) -> {
             if (!view.getUpdateNametext().equals("Nuevo nombre")) {
-                Department dept = deptDAO.findByName(view.getUpdateDeptCombo());
-                dept.setName(view.getUpdateNametext());
-                dept.setRight(view.getNewRightsCombo().equals("Usuario") ? 0
-                        : view.getNewRightsCombo().equals("Recursos humanos") ? 1 : 2);
-
-                deptDAO.update(dept);
-
-                coverDeptoCombo(deptDAO.findAll());
-                view.setUpdateNameText("Nuevo nombre");
-                view.setValidUpdateDept(false);
+                try {
+                    Department dept = deptDAO.findByName(view.getUpdateDeptCombo());
+                    dept.setName(view.getUpdateNametext());
+                    dept.setRight(view.getNewRightsCombo().equals("Usuario") ? 0
+                            : view.getNewRightsCombo().equals("Recursos humanos") ? 1 : 2);
+                    
+                    deptDAO.update(dept);
+                    
+                    coverDeptoCombo(deptDAO.findAll());
+                    view.setUpdateNameText("Nuevo nombre");
+                    view.setValidUpdateDept(false);
+                } catch (Exception ex) {
+                    Logger.getLogger(DepartmentViewController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             } else {
                 JOptionPane.showMessageDialog(view, Constants.ERROR_DEPT_NAME, Constants.ERROR, JOptionPane.WARNING_MESSAGE);
             }
@@ -84,11 +102,21 @@ public class DepartmentViewController {
             if (JOptionPane.showConfirmDialog(view, Constants.CONFIRM_DELETE_DEPT, Constants.CONFIRM,
                     JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
 
-                employeeDAO.findByDeptId(deptDAO.findByName(view.getDeleteDeptCombo()).getId())
-                        .forEach(employee -> employeeDAO.updateDept(employee.getId(), deptDAO.findByName("Genérico").getId()));
+                try {
+                    employeeDAO.findByDeptId(deptDAO.findByName(view.getDeleteDeptCombo()).getId())
+                            .forEach(employee -> {
+                                try {
+                                    employeeDAO.updateDept(employee.getId(), deptDAO.findByName("Genérico").getId());
+                                } catch (Exception ex) {
+                                    Logger.getLogger(DepartmentViewController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            });
 
-                deptDAO.delete(deptDAO.findByName(view.getDeleteDeptCombo()).getId());
-                coverDeptoCombo(deptDAO.findAll());
+                    deptDAO.delete(deptDAO.findByName(view.getDeleteDeptCombo()).getId());
+                    coverDeptoCombo(deptDAO.findAll());
+                } catch (Exception ex) {
+                    Logger.getLogger(DepartmentViewController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         };
         return al;

@@ -5,9 +5,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import model.Account;
 import model.DAO.Impl.AccountDAOImpl;
 import model.DAO.Impl.DepartmentDAOImpl;
 import model.DAO.Impl.EmployeeDAOImpl;
@@ -18,6 +22,7 @@ import model.Employee;
 import model.Holiday;
 import model.TimeRecord;
 import utils.Constants;
+import utils.Validator;
 import views.panel_views.RRHHView;
 
 /**
@@ -34,7 +39,7 @@ public class RRHHController {
     private final HolidayDAOImpl holidayDAO;
     private final DepartmentDAOImpl deptDAO;
 
-    public RRHHController(RRHHView view, Connection connection) throws SQLException {
+    public RRHHController(RRHHView view, Connection connection) throws SQLException, Exception {
         this.view = view;
         this.connection = connection;
         this.empDAO = new EmployeeDAOImpl(connection);
@@ -48,9 +53,13 @@ public class RRHHController {
         this.coverDeptUpdateCombo(deptDAO.findAll());
         this.coverDeptDeleteCombo(deptDAO.findAll());
         this.coverNewDeptDeleteCombo(deptDAO.findAll());
-        this.coverEmpCombo(empDAO.findByDeptId(deptDAO.findByName(view.getDeptComboSelectedItem()).getId()));
-        this.coverUpdateEmpCombo(empDAO.findByDeptId(deptDAO.findByName(view.getDeptUpdateComboSelectedItem()).getId()));
-        this.coverDeleteEmpCombo(empDAO.findByDeptId(deptDAO.findByName(view.getDeptDeleteEmpComboSelectedItem()).getId()));
+        try {
+            this.coverEmpCombo(empDAO.findByDeptId(deptDAO.findByName(view.getDeptComboSelectedItem()).getId()));
+            this.coverUpdateEmpCombo(empDAO.findByDeptId(deptDAO.findByName(view.getDeptUpdateComboSelectedItem()).getId()));
+            this.coverDeleteEmpCombo(empDAO.findByDeptId(deptDAO.findByName(view.getDeptDeleteEmpComboSelectedItem()).getId()));
+        } catch (Exception ex) {
+            Logger.getLogger(RRHHController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.view.addMoreButtonListener(this.getMoreButtonActionListener());
         this.view.addRefreshButtonListener(this.getRefreshButtonActionListener());
         this.view.addUpdateButtonListener(this.getUpdateButtonActionListener());
@@ -62,6 +71,7 @@ public class RRHHController {
         this.view.addNameTextFieldListener(this.getNameTextFieldFocusListener());
         this.view.addLastName1TextFieldListener(this.getLastName1TextFieldFocusListener());
         this.view.addLastName2TextFieldListener(this.getLastName2TextFieldFocusListener());
+        this.view.addIdTextFieldListener(this.getIdTextFieldFocusListener());
         this.view.addAddressTextFieldListener(this.getAddressTextFieldFocusListener());
         this.view.addMailTextFieldListener(this.getMailTextFieldFocusListener());
         this.view.addPhoneTextFieldListener(this.getPhoneTextFieldFocusListener());
@@ -74,24 +84,30 @@ public class RRHHController {
 
     private ActionListener getMoreButtonActionListener() {
         ActionListener al = (ActionEvent e) -> {
-            Employee emp = empDAO.findById(accountDAO.findByName(view.getNameSelectedRequestHoliday()).getUser_id());
-            Holiday holiday = holidayDAO.findById(view.getIdSelectedRequestHoliday());
-            StringBuilder sb = new StringBuilder(emp.getName());
-            sb.append(" ").append(emp.getLastname1()).append(" ").append(emp.getLastname2());
-            
-            int option = JOptionPane.showOptionDialog(view, String.format(Constants.HOLIDAY_REQUEST_MESSAGE,
-                    sb.toString(), holiday.getInitDay(), holiday.getFinishDate()),
-                    view.getNameSelectedRequestHoliday(), JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.QUESTION_MESSAGE, null, new String[]{"Aceptar", "Rechazar"}, "Aceptar");
-            
-            if (option == 0) {
-                holiday.setAccept(1);
-            } else if (option == 1) {
-                holiday.setAccept(2);
+            Employee emp;
+            try {
+                emp = empDAO.findById(accountDAO.findByName(view.getNameSelectedRequestHoliday()).getUser_id());
+
+                Holiday holiday = holidayDAO.findById(view.getIdSelectedRequestHoliday());
+                StringBuilder sb = new StringBuilder(emp.getName());
+                sb.append(" ").append(emp.getLastname1()).append(" ").append(emp.getLastname2());
+
+                int option = JOptionPane.showOptionDialog(view, String.format(Constants.HOLIDAY_REQUEST_MESSAGE,
+                        sb.toString(), holiday.getInitDay(), holiday.getFinishDate()),
+                        view.getNameSelectedRequestHoliday(), JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.QUESTION_MESSAGE, null, new String[]{"Aceptar", "Rechazar"}, "Aceptar");
+
+                if (option == 0) {
+                    holiday.setAccept(1);
+                } else if (option == 1) {
+                    holiday.setAccept(2);
+                }
+
+                holidayDAO.update(holiday);
+                repaintHolidaysTable(holidayDAO.findByState());
+            } catch (Exception ex) {
+                Logger.getLogger(RRHHController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            holidayDAO.update(holiday);
-            repaintHolidaysTable(holidayDAO.findByState());
         };
         return al;
     }
@@ -120,18 +136,20 @@ public class RRHHController {
                     return;
                 }
 
-                String[] name = selectedItem.split(" ", 2);
-                String firstName = name[0];
-                String lastName = name.length > 1 ? name[1] : "";
+                Employee emp;
+                try {
+                    emp = empDAO.findById(view.getEmpComboSelectedItem().split(" - ")[0]);
 
-                Employee emp = empDAO.findByNameAndLastName(firstName, lastName);
-                if (emp == null || emp.getId() == 0) {
-                    JOptionPane.showMessageDialog(view, "Empleado no encontrado.", Constants.ERROR, JOptionPane.WARNING_MESSAGE);
-                    return;
+                    if (emp == null || emp.getId().equals("")) {
+                        JOptionPane.showMessageDialog(view, "Empleado no encontrado.", Constants.ERROR, JOptionPane.WARNING_MESSAGE);
+                        return;
+                    }
+
+                    repaintTimeRecordTable(trDAO.findByEmpIdAndDateFromUntil(emp.getId(),
+                            view.getDateFrom(), view.getDateUntil()), emp);
+                } catch (Exception ex) {
+                    Logger.getLogger(RRHHController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
-                repaintTimeRecordTable(trDAO.findByEmpIdAndDateFromUntil(emp.getId(),
-                        view.getDateFrom(), view.getDateUntil()), emp);
             } else {
                 JOptionPane.showMessageDialog(view, Constants.INVALID_DATA_SEARCH, Constants.ERROR, JOptionPane.WARNING_MESSAGE);
             }
@@ -140,22 +158,98 @@ public class RRHHController {
 
     private ActionListener getUpdateButtonActionListener() {
         ActionListener al = (ActionEvent e) -> {
+
         };
         return al;
     }
 
     private ActionListener getDeleteButtonActionListener() {
         ActionListener al = (ActionEvent e) -> {
+            try {
+                int option = JOptionPane.showOptionDialog(view,
+                        String.format(Constants.CONFIRM_DELETE_EMP, view.getDeleteEmpComboSelectedItem()),
+                        Constants.CONFIRM_DELETE_EMP_TITLE, JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.QUESTION_MESSAGE, null, new String[]{"Eliminar", "Cancelar"}, "Eliminar");
+
+                if (option == 0) {
+                    empDAO.delete(view.getDeleteEmpComboSelectedItem().split(" - ")[0]);
+                    JOptionPane.showMessageDialog(view, Constants.DELETE_EMP, Constants.CONFIRM_DELETE_EMP_TITLE, JOptionPane.WARNING_MESSAGE);
+                }
+                coverAllEmpCombos();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(view, Constants.ERROR_DELETE_EMP, Constants.ERROR, JOptionPane.ERROR_MESSAGE);
+            }
+
         };
         return al;
     }
 
     private ActionListener getAddButtonActionListener() {
         ActionListener al = (ActionEvent e) -> {
+            try {
+                if (view.getNameText().equals("Nombre") || view.getLastname1Text().equals("Apellido 1")) {
+                    JOptionPane.showMessageDialog(view, Constants.ERROR_NAME_LASTNAME, Constants.ERROR, JOptionPane.WARNING_MESSAGE);
+                    return;
+                } else if (!Validator.isValidDni(view.getIdText())) {
+                    JOptionPane.showMessageDialog(view, Constants.DNI_ERROR, Constants.ERROR, JOptionPane.WARNING_MESSAGE);
+                    return;
+                } else if (!Validator.isValidEmail(view.getMailText())) {
+                    JOptionPane.showMessageDialog(view, Constants.EMAIL_ERROR, Constants.ERROR, JOptionPane.WARNING_MESSAGE);
+                    return;
+                } else if (!Validator.isValidPhoneNumber(view.getPhoneText())) {
+                    JOptionPane.showMessageDialog(view, Constants.PHONE_NUMBER_ERROR, Constants.ERROR, JOptionPane.WARNING_MESSAGE);
+                    return;
+                } else if (!Validator.isValidSalary(view.getSalaryText())) {
+                    JOptionPane.showMessageDialog(view, Constants.INVALID_SALARY, Constants.ERROR, JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                
+                Employee emp = new Employee(view.getIdText(), view.getNameText(), view.getLastname1Text(), view.getLastname2Text(), view.getMailText(),
+                        LocalDate.now(), deptDAO.findByName(view.getDeptNewEmpComboSelectedItem()).getId(), Double.valueOf(view.getSalaryText()),
+                        view.getPhoneText(), view.getAddressText());
+                
+                if (emp.getLastname2().equals("Apellido 1")) {
+                    emp.setLastname2("");
+                }
+                if (emp.getAddress().equals("Dirección")) {
+                    emp.setAddress("");
+                }
+                
+                try {
+                    empDAO.insert(emp);
+                    accountDAO.insert(new Account(emp.getId(), "abc123.", emp.getId()));
+                    JOptionPane.showMessageDialog(view, String.format(Constants.INSERT_EMP_SUCCESS,
+                            emp.getId()), Constants.CONFIRM, JOptionPane.INFORMATION_MESSAGE);
+                    
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(view, Constants.INVALID_SALARY, Constants.ERROR, JOptionPane.WARNING_MESSAGE);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(view, Constants.INSERT_EMP_ERROR, Constants.ERROR, JOptionPane.ERROR_MESSAGE);
+                }
+                view.setValidNameText(false);
+                view.setNameText("Nombre");
+                view.setValidLastname1Text(false);
+                view.setLastname1Text("Apellido 1");
+                view.setValidLastname2Text(false);
+                view.setLastname2Text("Apellido 2");
+                view.setValidAddressText(false);
+                view.setIdText("DNI");
+                view.setValiIdText(false);
+                view.setAddressText("Dirección");
+                view.setValidMailText(false);
+                view.setMailText("email");
+                view.setValidPhoneText(false);
+                view.setPhoneText("tlf");
+                view.setValidSalaryText(false);
+                view.setSalaryText("Salario");
+                coverAllEmpCombos();
+            } catch (Exception ex) {
+                Logger.getLogger(RRHHController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         };
         return al;
     }
-    
+
     private FocusListener getNameTextFieldFocusListener() {
         FocusListener listener = new FocusListener() {
             @Override
@@ -176,7 +270,7 @@ public class RRHHController {
         };
         return listener;
     }
-    
+
     private FocusListener getLastName1TextFieldFocusListener() {
         FocusListener listener = new FocusListener() {
             @Override
@@ -197,7 +291,7 @@ public class RRHHController {
         };
         return listener;
     }
-    
+
     private FocusListener getLastName2TextFieldFocusListener() {
         FocusListener listener = new FocusListener() {
             @Override
@@ -218,7 +312,28 @@ public class RRHHController {
         };
         return listener;
     }
-    
+
+    private FocusListener getIdTextFieldFocusListener() {
+        FocusListener listener = new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (view.getIdText().equals("DNI")) {
+                    view.setIdText("");
+                    view.setValiIdText(true);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (view.getIdText().equals("")) {
+                    view.setIdText("DNI");
+                    view.setValiIdText(false);
+                }
+            }
+        };
+        return listener;
+    }
+
     private FocusListener getAddressTextFieldFocusListener() {
         FocusListener listener = new FocusListener() {
             @Override
@@ -239,7 +354,7 @@ public class RRHHController {
         };
         return listener;
     }
-    
+
     private FocusListener getMailTextFieldFocusListener() {
         FocusListener listener = new FocusListener() {
             @Override
@@ -260,7 +375,7 @@ public class RRHHController {
         };
         return listener;
     }
-    
+
     private FocusListener getPhoneTextFieldFocusListener() {
         FocusListener listener = new FocusListener() {
             @Override
@@ -281,7 +396,7 @@ public class RRHHController {
         };
         return listener;
     }
-    
+
     private FocusListener getSalaryTextFieldFocusListener() {
         FocusListener listener = new FocusListener() {
             @Override
@@ -302,7 +417,7 @@ public class RRHHController {
         };
         return listener;
     }
-    
+
     private FocusListener getNewMailTextFieldFocusListener() {
         FocusListener listener = new FocusListener() {
             @Override
@@ -323,7 +438,7 @@ public class RRHHController {
         };
         return listener;
     }
-    
+
     private FocusListener getNewSalaryTextFieldFocusListener() {
         FocusListener listener = new FocusListener() {
             @Override
@@ -344,7 +459,7 @@ public class RRHHController {
         };
         return listener;
     }
-    
+
     private FocusListener getNewAddressTextFieldFocusListener() {
         FocusListener listener = new FocusListener() {
             @Override
@@ -365,7 +480,7 @@ public class RRHHController {
         };
         return listener;
     }
-    
+
     private FocusListener getNewPhoneTextFieldFocusListener() {
         FocusListener listener = new FocusListener() {
             @Override
@@ -386,27 +501,48 @@ public class RRHHController {
         };
         return listener;
     }
-    
 
     private ActionListener getDeptComboActionListener() {
         ActionListener al = (ActionEvent e) -> {
-            coverEmpCombo(empDAO.findByDeptId(deptDAO.findByName(view.getDeptComboSelectedItem()).getId()));
+            try {
+                coverEmpCombo(empDAO.findByDeptId(deptDAO.findByName(view.getDeptComboSelectedItem()).getId()));
+            } catch (Exception ex) {
+                Logger.getLogger(RRHHController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         };
         return al;
     }
-    
+
     private ActionListener getDeptUpdateEmpComboActionListener() {
         ActionListener al = (ActionEvent e) -> {
-            coverUpdateEmpCombo(empDAO.findByDeptId(deptDAO.findByName(view.getDeptUpdateComboSelectedItem()).getId()));
+            try {
+                coverUpdateEmpCombo(empDAO.findByDeptId(deptDAO.findByName(view.getDeptUpdateComboSelectedItem()).getId()));
+            } catch (Exception ex) {
+                Logger.getLogger(RRHHController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         };
         return al;
     }
-    
+
     private ActionListener getDeptDeleteEmpComboActionListener() {
         ActionListener al = (ActionEvent e) -> {
-            coverDeleteEmpCombo(empDAO.findByDeptId(deptDAO.findByName(view.getDeptDeleteEmpComboSelectedItem()).getId()));
+            try {
+                coverDeleteEmpCombo(empDAO.findByDeptId(deptDAO.findByName(view.getDeptDeleteEmpComboSelectedItem()).getId()));
+            } catch (Exception ex) {
+                Logger.getLogger(RRHHController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         };
         return al;
+    }
+
+    private void coverAllEmpCombos() {
+        try {
+            coverDeleteEmpCombo(empDAO.findByDeptId(deptDAO.findByName(view.getDeptDeleteEmpComboSelectedItem()).getId()));
+            coverUpdateEmpCombo(empDAO.findByDeptId(deptDAO.findByName(view.getDeptUpdateComboSelectedItem()).getId()));
+            coverEmpCombo(empDAO.findByDeptId(deptDAO.findByName(view.getDeptComboSelectedItem()).getId()));
+        } catch (Exception ex) {
+            Logger.getLogger(RRHHController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void coverDeptCombo(List<Department> depts) {
@@ -414,25 +550,25 @@ public class RRHHController {
             view.setDeptComboItem(dept.getName());
         }
     }
-    
+
     private void coverDeptNewEmpCombo(List<Department> depts) {
         for (Department dept : depts) {
             view.setDeptNewEmpComboItem(dept.getName());
         }
     }
-    
+
     private void coverDeptUpdateCombo(List<Department> depts) {
         for (Department dept : depts) {
             view.setUpdateDeptComboItem(dept.getName());
         }
     }
-    
+
     private void coverDeptDeleteCombo(List<Department> depts) {
         for (Department dept : depts) {
             view.setDeptDeleteEmpComboItem(dept.getName());
         }
     }
-    
+
     private void coverNewDeptDeleteCombo(List<Department> depts) {
         for (Department dept : depts) {
             view.setNewDeptComboItem(dept.getName());
@@ -442,21 +578,21 @@ public class RRHHController {
     private void coverEmpCombo(List<Employee> employees) {
         view.removeAllItemsEmpCombo();
         for (Employee employee : employees) {
-            view.setEmpComboItem(employee.getName().trim() + " " + employee.getLastname1().trim());
+            view.setEmpComboItem(employee.getId() + " - " + employee.getName() + " " + employee.getLastname1());
         }
     }
-    
+
     private void coverUpdateEmpCombo(List<Employee> employees) {
         view.removeAllItemsUpdateEmpCombo();
         for (Employee employee : employees) {
-            view.setEmpUpdateComboItem(employee.getName().trim() + " " + employee.getLastname1().trim());
+            view.setEmpUpdateComboItem(employee.getId() + " - " + employee.getName() + " " + employee.getLastname1());
         }
     }
-    
+
     private void coverDeleteEmpCombo(List<Employee> employees) {
         view.removeAllItemsDeleteEmpCombo();
         for (Employee employee : employees) {
-            view.setDeleteEmpComboItem(employee.getName().trim() + " " + employee.getLastname1().trim());
+            view.setDeleteEmpComboItem(employee.getId() + " - " + employee.getName() + " " + employee.getLastname1());
         }
     }
 
@@ -476,7 +612,7 @@ public class RRHHController {
         }
     }
 
-    private void repaintHolidaysTable(List<Holiday> holidays) {
+    private void repaintHolidaysTable(List<Holiday> holidays) throws Exception {
         view.removeHolidayReqTable();
 
         for (Holiday h : holidays) {

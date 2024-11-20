@@ -2,9 +2,13 @@ package model;
 
 import java.time.LocalDate;
 
+/**
+ *
+ * @author Alejandro Ojea
+ */
 public class Employee {
 
-    private int id;
+    private String id;
     private String name;
     private String lastname1;
     private String lastname2;
@@ -19,7 +23,8 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(String name, String lastname1, String mail, LocalDate contractDate, int dept_id) {
+    public Employee(String id, String name, String lastname1, String mail, LocalDate contractDate, int dept_id) {
+        this.id = id;
         this.name = name;
         this.lastname1 = lastname1;
         this.mail = mail;
@@ -27,14 +32,20 @@ public class Employee {
         this.contractDate = contractDate;
     }
 
-    public Employee(int id, String name, String lastname1, String lastname2) {
+    public Employee(String id, String name, String lastname1, String lastname2, String mail, LocalDate contractDate, int dept_id, double salary, String telephone, String address) {
         this.id = id;
         this.name = name;
         this.lastname1 = lastname1;
         this.lastname2 = lastname2;
+        this.mail = mail;
+        this.dept_id = dept_id;
+        this.contractDate = contractDate;
+        this.salary = salary;
+        this.telephone = telephone;
+        this.address = address;
     }
 
-    public Employee(int id, String name, String lastname1, LocalDate contractDate, String mail, String telephone) {
+    public Employee(String id, String name, String lastname1, LocalDate contractDate, String mail, String telephone) {
         this.id = id;
         this.name = name;
         this.lastname1 = lastname1;
@@ -43,7 +54,7 @@ public class Employee {
         this.telephone = telephone;
     }
 
-    public Employee(int id, String name, String lastname1, String lastname2, LocalDate contractDate, double salary, String mail, String telephone, String address, int dept_id, String notes) {
+    public Employee(String id, String name, String lastname1, String lastname2, LocalDate contractDate, double salary, String mail, String telephone, String address, int dept_id, String notes) {
         this.id = id;
         this.name = name;
         this.lastname1 = lastname1;
@@ -57,7 +68,7 @@ public class Employee {
         this.notes = notes;
     }
 
-    public Employee(int id, String name, String lastname1, String lastname2, LocalDate contractDate, String mail, String telephone) {
+    public Employee(String id, String name, String lastname1, String lastname2, LocalDate contractDate, String mail, String telephone) {
         this.id = id;
         this.name = name;
         this.lastname1 = lastname1;
@@ -67,11 +78,11 @@ public class Employee {
         this.telephone = telephone;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

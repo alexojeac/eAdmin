@@ -9,6 +9,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.DAO.Impl.EmployeeDAOImpl;
 import model.DAO.Impl.HolidayDAOImpl;
@@ -18,6 +20,10 @@ import model.Holiday;
 import model.TimeRecord;
 import utils.Constants;
 
+/**
+ *
+ * @author Alejandro Ojea
+ */
 public class HomeViewController {
 
     private final HomeView view;
@@ -27,7 +33,7 @@ public class HomeViewController {
     private final HolidayDAOImpl holidayDAO;
     private final Employee currentlyEmployee;
 
-    public HomeViewController(HomeView view, Connection connection, Employee currentlyEmployee) throws SQLException {
+    public HomeViewController(HomeView view, Connection connection, Employee currentlyEmployee) throws SQLException, Exception {
         this.view = view;
         this.connection = connection;
         this.currentlyEmployee = currentlyEmployee;
@@ -47,7 +53,11 @@ public class HomeViewController {
     private ActionListener getRefreshButtonActionListener() {
         ActionListener al = (ActionEvent e) -> {
             if (view.getDateFrom() != null && view.getDateUntil() != null && !view.getDateUntil().isBefore(view.getDateFrom())) {
-                repaintTimeRecordsTable(trDAO.findByEmpIdAndDateFromUntil(currentlyEmployee.getId(), view.getDateFrom(), view.getDateUntil()));
+                try {
+                    repaintTimeRecordsTable(trDAO.findByEmpIdAndDateFromUntil(currentlyEmployee.getId(), view.getDateFrom(), view.getDateUntil()));
+                } catch (Exception ex) {
+                    Logger.getLogger(HomeViewController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             } else {
                 JOptionPane.showMessageDialog(view, Constants.DATE_NULL, Constants.ERROR, JOptionPane.WARNING_MESSAGE);
             }
@@ -57,7 +67,11 @@ public class HomeViewController {
 
     private ActionListener getSaveNotesButtonActionListener() {
         ActionListener al = (ActionEvent e) -> {
-            empDAO.updateNotes(currentlyEmployee.getId(), view.getNotes());
+            try {
+                empDAO.updateNotes(currentlyEmployee.getId(), view.getNotes());
+            } catch (Exception ex) {
+                Logger.getLogger(HomeViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         };
         return al;
     }
@@ -65,11 +79,23 @@ public class HomeViewController {
     private ActionListener getSignButtonActionListener() {
         ActionListener al = (ActionEvent e) -> {
             if (view.getStringInOutCombo().equals("Entrada")) {
-                trDAO.insert(new TimeRecord(currentlyEmployee.getId(), LocalDate.now(), LocalTime.now()));
+                try {
+                    trDAO.insert(new TimeRecord(currentlyEmployee.getId(), LocalDate.now(), LocalTime.now()));
+                } catch (Exception ex) {
+                    Logger.getLogger(HomeViewController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             } else {
-                trDAO.update();
+                try {
+                    trDAO.update();
+                } catch (Exception ex) {
+                    Logger.getLogger(HomeViewController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-            repaintTimeRecordsTable(trDAO.findByEmpId(currentlyEmployee.getId()));
+            try {
+                repaintTimeRecordsTable(trDAO.findByEmpId(currentlyEmployee.getId()));
+            } catch (Exception ex) {
+                Logger.getLogger(HomeViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         };
         return al;
     }
@@ -88,11 +114,19 @@ public class HomeViewController {
     private ActionListener getRequestButtonActionListener() {
         ActionListener al = (ActionEvent e) -> {
             if (view.getDateRequestFrom() != null && view.getDateRequestUntil() != null && !view.getDateRequestUntil().isBefore(view.getDateRequestFrom())) {
-                if (isDateValid(view.getDateRequestFrom(), view.getDateRequestUntil())) {
-                    holidayDAO.insert(new Holiday(currentlyEmployee.getId(), view.getDateRequestFrom(), view.getDateRequestUntil(), 0));
-                    repaintHolidaysTable(holidayDAO.findAllByEmp(currentlyEmployee.getId()));
-                } else {
-                    JOptionPane.showMessageDialog(view, Constants.OVERLAP_DATE, Constants.ERROR, JOptionPane.WARNING_MESSAGE);
+                try {
+                    if (isDateValid(view.getDateRequestFrom(), view.getDateRequestUntil())) {
+                        try {
+                            holidayDAO.insert(new Holiday(currentlyEmployee.getId(), view.getDateRequestFrom(), view.getDateRequestUntil(), 0));
+                            repaintHolidaysTable(holidayDAO.findAllByEmp(currentlyEmployee.getId()));
+                        } catch (Exception ex) {
+                            Logger.getLogger(HomeViewController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(view, Constants.OVERLAP_DATE, Constants.ERROR, JOptionPane.WARNING_MESSAGE);
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(HomeViewController.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             } else {
@@ -134,10 +168,9 @@ public class HomeViewController {
         }
     }
 
-    private boolean isDateValid(LocalDate from, LocalDate until) {
+    private boolean isDateValid(LocalDate from, LocalDate until) throws Exception {
 
         for (Holiday h : holidayDAO.findAllByEmp(currentlyEmployee.getId())) {
-
 
             if (h.getInitDay() != null && h.getFinishDate() != null) {
                 boolean isOverlapping

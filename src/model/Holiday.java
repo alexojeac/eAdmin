@@ -2,15 +2,19 @@ package model;
 
 import java.time.LocalDate;
 
+/**
+ *
+ * @author Alejandro Ojea
+ */
 public class Holiday {
     
     private int id;
-    private int emp_id;
+    private String emp_id;
     private LocalDate initDay;
     private LocalDate finishDate;
     private int accept;
 
-    public Holiday(int id, int emp_id, LocalDate initDay, LocalDate finishDate, int accept) {
+    public Holiday(int id, String emp_id, LocalDate initDay, LocalDate finishDate, int accept) {
         this.id = id;
         this.emp_id = emp_id;
         this.initDay = initDay;
@@ -18,7 +22,7 @@ public class Holiday {
         this.accept = accept;
     }
     
-    public Holiday(int emp_id, LocalDate initDay, LocalDate finishDate, int accept) {
+    public Holiday(String emp_id, LocalDate initDay, LocalDate finishDate, int accept) {
         this.emp_id = emp_id;
         this.initDay = initDay;
         this.finishDate = finishDate;
@@ -33,11 +37,11 @@ public class Holiday {
         this.id = id;
     }
 
-    public int getEmp_id() {
+    public String getEmp_id() {
         return emp_id;
     }
 
-    public void setEmp_id(int emp_id) {
+    public void setEmp_id(String emp_id) {
         this.emp_id = emp_id;
     }
 

@@ -6,6 +6,10 @@ import java.time.ZoneId;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ *
+ * @author Alejandro Ojea
+ */
 public class HomeView extends javax.swing.JPanel {
 
     public HomeView() {

@@ -1,5 +1,9 @@
 package controller;
 
+/**
+ *
+ * @author Alejandro Ojea
+ */
 import controller.panel_views.DepartmentViewController;
 import controller.panel_views.HomeViewController;
 import controller.panel_views.RRHHController;
@@ -25,7 +29,7 @@ public class FrontController {
     private final DepartmentDAOImpl deptoDAO;
     private final EmployeeDAOImpl empDAO;
 
-    public FrontController(NavigationView view, Connection connection, Employee employee) throws SQLException {
+    public FrontController(NavigationView view, Connection connection, Employee employee) throws SQLException, Exception {
         this.view = view;
         this.connection = connection;
         this.currentlyEmployee = employee;
@@ -77,7 +81,9 @@ public class FrontController {
                         LoginController controller = new LoginController(login);
                         login.setVisible(true);
                     } catch (SQLException ex) {
-                        //Logger.getLogger(NavigationController.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (Exception ex) {
+                        Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -107,6 +113,8 @@ public class FrontController {
                         login.setVisible(true);
                     } catch (SQLException ex) {
                         Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (Exception ex) {
+                        Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -131,10 +139,13 @@ public class FrontController {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     HomeView currentView = new HomeView();
                     view.setsectionLabelText("Área personal");
-                    currentlyEmployee = empDAO.findById(currentlyEmployee.getId());
                     try {
+                        currentlyEmployee = empDAO.findById(currentlyEmployee.getId());
+
                         HomeViewController controller = new HomeViewController(currentView, connection, currentlyEmployee);
                     } catch (SQLException ex) {
+                        Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (Exception ex) {
                         Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     view.setView(currentView);
@@ -156,6 +167,8 @@ public class FrontController {
                         RRHHController controller = new RRHHController(currentView, connection);
                     } catch (SQLException ex) {
                         Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (Exception ex) {
+                        Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     view.setView(currentView);
                 }
@@ -174,6 +187,8 @@ public class FrontController {
                     try {
                         DepartmentViewController controller = new DepartmentViewController(currentView, connection);
                     } catch (SQLException ex) {
+                        Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (Exception ex) {
                         Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     view.setView(currentView);
@@ -205,7 +220,7 @@ public class FrontController {
         }
     }
 
-    private int checkPermits(int id) {
+    private int checkPermits(int id) throws Exception {
         return deptoDAO.findPermissionById(id);
     }
 }

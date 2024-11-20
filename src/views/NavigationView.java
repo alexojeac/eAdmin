@@ -5,6 +5,10 @@ import java.awt.event.MouseAdapter;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ *
+ * @author Alejandro Ojea
+ */
 public class NavigationView extends javax.swing.JDialog {
 
     private int xMouse, yMouse;

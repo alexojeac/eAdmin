@@ -1,5 +1,9 @@
 package db;
 
+/**
+ *
+ * @author Alejandro Ojea
+ */
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -19,15 +23,15 @@ public final class QueryProcessor {
     private final Connection connection;
     private static QueryProcessor instance;
 
-    private QueryProcessor(Connection connection) throws SQLException {
+    private QueryProcessor(Connection connection) throws SQLException, Exception {
         this.connection = connection;
         if (!this.databaseExists()) {
             this.executeSqlScriptFromFile("eadmin_init.sql");
             EmployeeDAOImpl empDAO = new EmployeeDAOImpl(connection);
             AccountDAOImpl accountDAO = new AccountDAOImpl(connection);
             switchDatabase("EADMINBD");
-            empDAO.insert(new Employee("admin", "admin", "admin@admin.admin", LocalDate.now(), 3));
-            accountDAO.insert(new Account("admin", "abc123.", 1));
+            empDAO.insert(new Employee("1","admin", "admin", "admin@admin.admin", LocalDate.now(), 3));
+            accountDAO.insert(new Account("admin", "abc123.", "1"));
             return;
         }
         switchDatabase("EADMINBD");
@@ -110,7 +114,7 @@ public final class QueryProcessor {
         }
     }
 
-    public static QueryProcessor getInstance(Connection connection) throws SQLException {
+    public static QueryProcessor getInstance(Connection connection) throws SQLException, Exception {
         if (instance == null) {
             instance = new QueryProcessor(connection);
         }

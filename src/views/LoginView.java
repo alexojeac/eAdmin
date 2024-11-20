@@ -7,6 +7,10 @@ import java.awt.event.MouseAdapter;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ *
+ * @author Alejandro Ojea
+ */
 public class LoginView extends javax.swing.JFrame {
     
     private int xMouse, yMouse;

@@ -6,6 +6,10 @@ import java.awt.event.FocusListener;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ *
+ * @author Alejandro Ojea
+ */
 public class DepartmentView extends javax.swing.JPanel {
 
     public DepartmentView() {

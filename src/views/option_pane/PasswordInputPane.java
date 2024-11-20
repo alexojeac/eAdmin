@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
 
+/**
+ *
+ * @author Alejandro Ojea
+ */
 public class PasswordInputPane extends javax.swing.JDialog {
 
     public PasswordInputPane(java.awt.Frame parent, boolean modal) {

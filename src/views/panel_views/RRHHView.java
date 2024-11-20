@@ -8,6 +8,10 @@ import java.time.ZoneId;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ *
+ * @author Alejandro Ojea
+ */
 public class RRHHView extends javax.swing.JPanel {
 
     public RRHHView() {
@@ -62,6 +66,7 @@ public class RRHHView extends javax.swing.JPanel {
         holidayReqTable = new javax.swing.JTable();
         moreButton = new javax.swing.JButton();
         holidayReqLabel = new javax.swing.JLabel();
+        idTextField = new javax.swing.JTextField();
 
         setMaximumSize(new java.awt.Dimension(800, 500));
         setMinimumSize(new java.awt.Dimension(800, 500));
@@ -154,7 +159,7 @@ public class RRHHView extends javax.swing.JPanel {
 
         emailTextField.setForeground(new java.awt.Color(204, 204, 204));
         emailTextField.setText("email");
-        add(emailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 460, 320, 30));
+        add(emailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 460, 250, 30));
 
         deleteEmpButton.setBackground(new java.awt.Color(255, 0, 0));
         deleteEmpButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -183,15 +188,15 @@ public class RRHHView extends javax.swing.JPanel {
 
         phoneTextField.setForeground(new java.awt.Color(204, 204, 204));
         phoneTextField.setText("tlf");
-        add(phoneTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 460, 100, 30));
+        add(phoneTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 460, 100, 30));
 
         addressTextField.setForeground(new java.awt.Color(204, 204, 204));
         addressTextField.setText("Dirección");
-        add(addressTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 420, 180, 30));
+        add(addressTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 460, 180, 30));
 
         salaryTextField.setForeground(new java.awt.Color(204, 204, 204));
         salaryTextField.setText("Salario");
-        add(salaryTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 460, 110, 30));
+        add(salaryTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 460, 110, 30));
 
         newSalaryTextField.setForeground(new java.awt.Color(204, 204, 204));
         newSalaryTextField.setText("Nuevo salario");
@@ -241,6 +246,10 @@ public class RRHHView extends javax.swing.JPanel {
         holidayReqLabel.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
         holidayReqLabel.setText("Solicitudes de vacaciones");
         add(holidayReqLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 60, -1, -1));
+
+        idTextField.setForeground(new java.awt.Color(204, 204, 204));
+        idTextField.setText("DNI");
+        add(idTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 420, 170, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     public void removeEmpDataTable() {
@@ -485,6 +494,22 @@ public class RRHHView extends javax.swing.JPanel {
         this.lastName2TextField.setText(lastname);
     }
     
+    public void setValiIdText(boolean valid) {
+        if (valid) {
+            this.idTextField.setForeground(Color.BLACK);
+        } else {
+            this.idTextField.setForeground(new Color(204, 204, 204));
+        }
+    }
+    
+    public String getIdText() {
+        return this.idTextField.getText();
+    }
+    
+    public void setIdText(String id) {
+        this.idTextField.setText(id);
+    }
+    
     public void setValidMailText(boolean valid) {
         if (valid) {
             this.emailTextField.setForeground(Color.BLACK);
@@ -593,6 +618,10 @@ public class RRHHView extends javax.swing.JPanel {
         this.lastName2TextField.addFocusListener(listener);
     }
     
+    public void addIdTextFieldListener(FocusListener listener) {
+        this.idTextField.addFocusListener(listener);
+    }
+    
     public void addAddressTextFieldListener(FocusListener listener) {
         this.addressTextField.addFocusListener(listener);
     }
@@ -648,6 +677,7 @@ public class RRHHView extends javax.swing.JPanel {
     private javax.swing.JLabel holidayReqLabel;
     private javax.swing.JScrollPane holidayReqScrollPane;
     private javax.swing.JTable holidayReqTable;
+    private javax.swing.JTextField idTextField;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField lastName2TextField;
     private javax.swing.JTextField lastname1TextField;

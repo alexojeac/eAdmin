@@ -1,5 +1,9 @@
 package controller;
 
+/**
+ *
+ * @author Alejandro Ojea
+ */
 import controller.option_pane.PasswordInputPaneController;
 import db.DatabaseConnection;
 import java.awt.Color;
@@ -29,7 +33,7 @@ public class LoginController {
     private EmployeeDAOImpl empDAO;
     private QueryProcessor query;
 
-    public LoginController(LoginView view) throws SQLException {
+    public LoginController(LoginView view) throws SQLException, Exception {
         this.view = view;
         DatabaseConnection.connect(Constants.DB_HOST, Constants.DB_USER_NAME, Constants.DB_PASSWORD);
         this.connection = DatabaseConnection.getConnection();
@@ -72,7 +76,11 @@ public class LoginController {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    appAcces();
+                    try {
+                        appAcces();
+                    } catch (Exception ex) {
+                        Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         };
@@ -84,7 +92,11 @@ public class LoginController {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    appAcces();
+                    try {
+                        appAcces();
+                    } catch (Exception ex) {
+                        Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         };
@@ -134,19 +146,19 @@ public class LoginController {
         return listener;
     }
 
-    private Employee checkEmployee() {
+    private Employee checkEmployee() throws Exception {
         return empDAO.findById(accountDAO.findByName(view.getUserText()).getUser_id());
     }
 
-    private boolean isNew() {
+    private boolean isNew() throws Exception {
         return accountDAO.findByName(view.getUserText()).getNewAccount() == 0;
     }
 
-    public boolean checkUser() {
+    public boolean checkUser() throws Exception {
         return accountDAO.findByName(view.getUserText()).checkPass(view.getPassText(), accountDAO.findByName(view.getUserText()).getPass());
     }
 
-    private void appAcces() {
+    private void appAcces() throws Exception {
         try {
             if (checkUser()) {
                 if (isNew()) {
