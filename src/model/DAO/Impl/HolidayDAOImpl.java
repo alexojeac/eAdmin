@@ -61,7 +61,7 @@ public class HolidayDAOImpl implements HolidayDAO {
         StringBuilder sql = new StringBuilder("SELECT");
         sql.append(" id, emp_id, fecha_inicio, fecha_fin, estado");
         sql.append(" FROM VACACIONES");
-        sql.append(" WHERE emp_id =  ").append(emp_id).append(";");
+        sql.append(" WHERE emp_id =  '").append(emp_id).append("';");
 
         ResultSet rs = query.executeQuery(sql.toString());
 

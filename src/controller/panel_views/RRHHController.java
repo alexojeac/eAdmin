@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.sql.*;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Vector;
@@ -203,7 +204,8 @@ public class RRHHController {
                 view.setNewAddressText("Nueva dirección");
                 view.setValidNewPhoneText(false);
                 view.setNewPhoneText("Nuevo tlf");
-
+                
+                coverAllEmpCombos();
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(view, Constants.INVALID_SALARY, Constants.ERROR, JOptionPane.WARNING_MESSAGE);
 
@@ -666,6 +668,8 @@ public class RRHHController {
             row.add(tr.getDate());
             row.add(tr.getIn());
             row.add(tr.getOut());
+            row.add(tr.getOut() != null ? String.format("%02d:%02d", Duration.between(tr.getIn(), tr.getOut()).toHours(),
+                    Duration.between(tr.getIn(), tr.getOut()).toMinutes() % 60) : "00:00");
 
             view.addEmpRowTable(row);
         }

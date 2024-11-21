@@ -78,20 +78,27 @@ public class HomeViewController {
 
     private ActionListener getSignButtonActionListener() {
         ActionListener al = (ActionEvent e) -> {
-            if (view.getStringInOutCombo().equals("Entrada")) {
-                try {
-                    trDAO.insert(new TimeRecord(currentlyEmployee.getId(), LocalDate.now(), LocalTime.now()));
-                } catch (Exception ex) {
-                    Logger.getLogger(HomeViewController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } else {
-                try {
-                    trDAO.update();
-                } catch (Exception ex) {
-                    Logger.getLogger(HomeViewController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
             try {
+                List<TimeRecord> todayRecords = trDAO.findByEmpIdAndDate(currentlyEmployee.getId(), LocalDate.now());
+
+                boolean hasEntrada = todayRecords.stream().anyMatch(record -> record.getIn() != null);
+                boolean hasSalida = todayRecords.stream().anyMatch(record -> record.getOut() != null);
+
+                if (view.getStringInOutCombo().equals("Entrada")) {
+                    if (hasEntrada) {
+                        JOptionPane.showMessageDialog(view, Constants.INVALID_TIME_RECORD_IN, Constants.ERROR, JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        trDAO.insert(new TimeRecord(currentlyEmployee.getId(), LocalDate.now(), LocalTime.now(), null));
+                    }
+                } else {
+                    if (hasSalida) {
+                        JOptionPane.showMessageDialog(view, Constants.INVALID_TIME_RECORD_OUT, Constants.ERROR, JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        trDAO.update();
+                    }
+                }
+
+                // Actualizar la tabla después del cambio
                 repaintTimeRecordsTable(trDAO.findByEmpId(currentlyEmployee.getId()));
             } catch (Exception ex) {
                 Logger.getLogger(HomeViewController.class.getName()).log(Level.SEVERE, null, ex);

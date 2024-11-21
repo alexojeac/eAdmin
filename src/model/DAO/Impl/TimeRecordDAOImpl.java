@@ -32,7 +32,7 @@ public class TimeRecordDAOImpl implements TimeRecordDAO {
         StringBuilder sql = new StringBuilder("SELECT");
         sql.append(" id, emp_id, fecha, entrada, salida");
         sql.append(" FROM FICHADAS");
-        sql.append(" WHERE emp_id = ").append(id).append(";");
+        sql.append(" WHERE emp_id = '").append(id).append("';");
 
         ResultSet rs = query.executeQuery(sql.toString());
 
@@ -60,6 +60,29 @@ public class TimeRecordDAOImpl implements TimeRecordDAO {
             trs.add(new TimeRecord(rs.getInt("id"), rs.getString("emp_id"), rs.getDate("fecha").toLocalDate(),
                     rs.getTime("entrada").toLocalTime(),
                     rs.getTime("salida") != null ? rs.getTime("salida").toLocalTime() : null));
+        }
+        return trs;
+    }
+
+    @Override
+    public List<TimeRecord> findByEmpIdAndDate(String empId, LocalDate date) throws Exception {
+        List<TimeRecord> trs = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("SELECT");
+        sql.append(" id, emp_id, fecha, entrada, salida");
+        sql.append(" FROM FICHADAS");
+        sql.append(" WHERE emp_id = '").append(empId).append("'");
+        sql.append(" AND fecha = '").append(date).append("';"); // Asegúrate de usar el formato correcto para la fecha
+
+        ResultSet rs = query.executeQuery(sql.toString());
+
+        while (rs.next()) {
+            trs.add(new TimeRecord(
+                    rs.getInt("id"),
+                    rs.getString("emp_id"),
+                    rs.getDate("fecha").toLocalDate(),
+                    rs.getTime("entrada") != null ? rs.getTime("entrada").toLocalTime() : null,
+                    rs.getTime("salida") != null ? rs.getTime("salida").toLocalTime() : null
+            ));
         }
         return trs;
     }
