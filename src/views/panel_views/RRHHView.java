@@ -38,7 +38,7 @@ public class RRHHView extends javax.swing.JPanel {
         updateLabel = new javax.swing.JLabel();
         deptUpdateComboBox = new javax.swing.JComboBox<>();
         empUpdateComboBox = new javax.swing.JComboBox<>();
-        newDeptComboBox = new javax.swing.JComboBox<>();
+        updateNewDeptComboBox = new javax.swing.JComboBox<>();
         newMailTextField = new javax.swing.JTextField();
         addEmpButton = new javax.swing.JButton();
         separator2 = new javax.swing.JSeparator();
@@ -79,8 +79,10 @@ public class RRHHView extends javax.swing.JPanel {
         add(fromDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 100, 30));
         add(untilDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 60, 100, 30));
 
+        deptComboBox.setToolTipText("Buscar por departamento");
         add(deptComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 60, 130, 30));
 
+        empComboBox.setToolTipText("Seleccionar empleado");
         add(empComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 60, 160, 30));
 
         fromLabel.setText("Desde:");
@@ -127,15 +129,18 @@ public class RRHHView extends javax.swing.JPanel {
         updateLabel.setText("Modificar empleado:");
         add(updateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, -1, 30));
 
+        deptUpdateComboBox.setToolTipText("Buscar empleado por departamento");
         add(deptUpdateComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 290, 140, 30));
 
-        add(empUpdateComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 290, 140, 30));
+        empUpdateComboBox.setToolTipText("Empleado a actualizar");
+        add(empUpdateComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 290, 260, 30));
 
-        add(newDeptComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 170, 30));
+        updateNewDeptComboBox.setToolTipText("Actualizar departamento del empleado");
+        add(updateNewDeptComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 170, 30));
 
         newMailTextField.setForeground(new java.awt.Color(204, 204, 204));
         newMailTextField.setText("Nuevo email");
-        add(newMailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 290, 170, 30));
+        add(newMailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 170, 30));
 
         addEmpButton.setBackground(new java.awt.Color(0, 134, 190));
         addEmpButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -155,6 +160,7 @@ public class RRHHView extends javax.swing.JPanel {
         lastname1TextField.setText("Apellido 1");
         add(lastname1TextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 420, 100, 30));
 
+        deptNewEmpComboBox.setToolTipText("Departamento del nuevo empleado");
         add(deptNewEmpComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 420, 220, 30));
 
         emailTextField.setForeground(new java.awt.Color(204, 204, 204));
@@ -169,8 +175,10 @@ public class RRHHView extends javax.swing.JPanel {
         separator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
         add(separator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 290, 10, 110));
 
+        deptDeleteEmpComboBox.setToolTipText("Buscar por departamento");
         add(deptDeleteEmpComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 290, 150, 30));
 
+        deleteEmpComboBox.setToolTipText("Selección de empleado a eliminar");
         add(deleteEmpComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 330, 270, 30));
 
         deleteTitleLabel.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
@@ -205,7 +213,7 @@ public class RRHHView extends javax.swing.JPanel {
         updateButton.setBackground(new java.awt.Color(0, 134, 190));
         updateButton.setForeground(new java.awt.Color(255, 255, 255));
         updateButton.setText("Modificar");
-        add(updateButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 370, -1, 30));
+        add(updateButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 370, -1, 30));
 
         newAddressTextField.setForeground(new java.awt.Color(204, 204, 204));
         newAddressTextField.setText("Nueva dirección");
@@ -350,12 +358,12 @@ public class RRHHView extends javax.swing.JPanel {
         this.empUpdateComboBox.addItem(emp);
     }
 
-    public String getNewDeptComboSelectedItem() {
-        return this.newDeptComboBox.getSelectedItem().toString();
+    public String getUpdateNewDeptComboSelectedItem() {
+        return this.updateNewDeptComboBox.getSelectedItem().toString();
     }
 
-    public void setNewDeptComboItem(String dept) {
-        this.newDeptComboBox.addItem(dept);
+    public void setUpdateNewDeptComboItem(String dept) {
+        this.updateNewDeptComboBox.addItem(dept);
     }
 
     public String getDeptDeleteEmpComboSelectedItem() {
@@ -684,7 +692,6 @@ public class RRHHView extends javax.swing.JPanel {
     private javax.swing.JButton moreButton;
     private javax.swing.JTextField nameTextField;
     private javax.swing.JTextField newAddressTextField;
-    private javax.swing.JComboBox<String> newDeptComboBox;
     private javax.swing.JTextField newMailTextField;
     private javax.swing.JTextField newPhoneTextField;
     private javax.swing.JTextField newSalaryTextField;
@@ -700,5 +707,6 @@ public class RRHHView extends javax.swing.JPanel {
     private javax.swing.JLabel untilLabel;
     private javax.swing.JButton updateButton;
     private javax.swing.JLabel updateLabel;
+    private javax.swing.JComboBox<String> updateNewDeptComboBox;
     // End of variables declaration//GEN-END:variables
 }

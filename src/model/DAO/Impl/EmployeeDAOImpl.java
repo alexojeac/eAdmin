@@ -109,7 +109,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         sql.append(" SET departamento_id = ").append(employee.getDept_id());
         sql.append(" , salario = ").append(employee.getSalary());
         sql.append(" , correo = '").append(employee.getMail());
-        sql.append("' WHERE emp_id = ").append(employee.getId()).append(";");
+        sql.append("' WHERE emp_id = '").append(employee.getId()).append("';");
 
 
             query.executeStatement(sql.toString());

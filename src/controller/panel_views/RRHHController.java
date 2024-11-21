@@ -158,7 +158,60 @@ public class RRHHController {
 
     private ActionListener getUpdateButtonActionListener() {
         ActionListener al = (ActionEvent e) -> {
+            try {
+                Employee emp = empDAO.findById(view.getEmpUpdateComboSelectedItem().split(" - ")[0]);
 
+                if (Validator.isValidEmail(view.getNewMailText())) {
+                    emp.setMail(view.getNewMailText());
+                } else {
+                    if (!view.getNewMailText().equals("Nuevo email")) {
+                        JOptionPane.showMessageDialog(view, Constants.EMAIL_ERROR, Constants.ERROR, JOptionPane.WARNING_MESSAGE);
+                        return;
+                    }
+                }
+
+                if (Validator.isValidPhoneNumber(view.getNewPhoneText())) {
+                    emp.setMail(view.getNewPhoneText());
+                } else {
+                    if (!view.getNewPhoneText().equals("Nuevo tlf")) {
+                        JOptionPane.showMessageDialog(view, Constants.PHONE_NUMBER_ERROR, Constants.ERROR, JOptionPane.WARNING_MESSAGE);
+                        return;
+                    }
+                }
+
+                if (!view.getNewSalaryText().equals("Nuevo salario")) {
+                    emp.setSalary(Double.parseDouble(view.getNewSalaryText()));
+                }
+
+                if (!view.getNewAddressText().equals("Nueva dirección")) {
+                    emp.setAddress(view.getNewAddressText());
+                }
+
+                if (!view.getUpdateNewDeptComboSelectedItem().equals("")) {
+                    emp.setDept_id(deptDAO.findByName(view.getUpdateNewDeptComboSelectedItem()).getId());
+
+                }
+                empDAO.update(emp);
+
+                JOptionPane.showMessageDialog(view, Constants.UPDATE_EMP_SUCCESS, Constants.ERROR, JOptionPane.INFORMATION_MESSAGE);
+
+                view.setValidNewMailText(false);
+                view.setNewMailText("Nuevo email");
+                view.setValidSalaryText(false);
+                view.setNewSalaryText("Nuevo salario");
+                view.setValidNewAddressText(false);
+                view.setNewAddressText("Nueva dirección");
+                view.setValidNewPhoneText(false);
+                view.setNewPhoneText("Nuevo tlf");
+
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(view, Constants.INVALID_SALARY, Constants.ERROR, JOptionPane.WARNING_MESSAGE);
+
+            } catch (Exception ex) {
+                Logger.getLogger(RRHHController.class
+                        .getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(view, Constants.ERROR_UPDATE_EMP, Constants.ERROR, JOptionPane.WARNING_MESSAGE);
+            }
         };
         return al;
     }
@@ -203,29 +256,23 @@ public class RRHHController {
                     JOptionPane.showMessageDialog(view, Constants.INVALID_SALARY, Constants.ERROR, JOptionPane.WARNING_MESSAGE);
                     return;
                 }
-                
+
                 Employee emp = new Employee(view.getIdText(), view.getNameText(), view.getLastname1Text(), view.getLastname2Text(), view.getMailText(),
-                        LocalDate.now(), deptDAO.findByName(view.getDeptNewEmpComboSelectedItem()).getId(), Double.valueOf(view.getSalaryText()),
+                        LocalDate.now(), deptDAO.findByName(view.getDeptNewEmpComboSelectedItem()).getId(), Double.parseDouble(view.getSalaryText()),
                         view.getPhoneText(), view.getAddressText());
-                
+
                 if (emp.getLastname2().equals("Apellido 1")) {
                     emp.setLastname2("");
                 }
                 if (emp.getAddress().equals("Dirección")) {
                     emp.setAddress("");
                 }
-                
-                try {
-                    empDAO.insert(emp);
-                    accountDAO.insert(new Account(emp.getId(), "abc123.", emp.getId()));
-                    JOptionPane.showMessageDialog(view, String.format(Constants.INSERT_EMP_SUCCESS,
-                            emp.getId()), Constants.CONFIRM, JOptionPane.INFORMATION_MESSAGE);
-                    
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(view, Constants.INVALID_SALARY, Constants.ERROR, JOptionPane.WARNING_MESSAGE);
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(view, Constants.INSERT_EMP_ERROR, Constants.ERROR, JOptionPane.ERROR_MESSAGE);
-                }
+
+                empDAO.insert(emp);
+                accountDAO.insert(new Account(emp.getId(), "abc123.", emp.getId()));
+                JOptionPane.showMessageDialog(view, String.format(Constants.INSERT_EMP_SUCCESS,
+                        emp.getId()), Constants.CONFIRM, JOptionPane.INFORMATION_MESSAGE);
+
                 view.setValidNameText(false);
                 view.setNameText("Nombre");
                 view.setValidLastname1Text(false);
@@ -243,8 +290,11 @@ public class RRHHController {
                 view.setValidSalaryText(false);
                 view.setSalaryText("Salario");
                 coverAllEmpCombos();
+
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(view, Constants.INVALID_SALARY, Constants.ERROR, JOptionPane.WARNING_MESSAGE);
             } catch (Exception ex) {
-                Logger.getLogger(RRHHController.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(view, Constants.INSERT_EMP_ERROR, Constants.ERROR, JOptionPane.ERROR_MESSAGE);
             }
         };
         return al;
@@ -506,8 +556,10 @@ public class RRHHController {
         ActionListener al = (ActionEvent e) -> {
             try {
                 coverEmpCombo(empDAO.findByDeptId(deptDAO.findByName(view.getDeptComboSelectedItem()).getId()));
+
             } catch (Exception ex) {
-                Logger.getLogger(RRHHController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RRHHController.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
         };
         return al;
@@ -517,8 +569,10 @@ public class RRHHController {
         ActionListener al = (ActionEvent e) -> {
             try {
                 coverUpdateEmpCombo(empDAO.findByDeptId(deptDAO.findByName(view.getDeptUpdateComboSelectedItem()).getId()));
+
             } catch (Exception ex) {
-                Logger.getLogger(RRHHController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RRHHController.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
         };
         return al;
@@ -528,8 +582,10 @@ public class RRHHController {
         ActionListener al = (ActionEvent e) -> {
             try {
                 coverDeleteEmpCombo(empDAO.findByDeptId(deptDAO.findByName(view.getDeptDeleteEmpComboSelectedItem()).getId()));
+
             } catch (Exception ex) {
-                Logger.getLogger(RRHHController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RRHHController.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
         };
         return al;
@@ -540,8 +596,10 @@ public class RRHHController {
             coverDeleteEmpCombo(empDAO.findByDeptId(deptDAO.findByName(view.getDeptDeleteEmpComboSelectedItem()).getId()));
             coverUpdateEmpCombo(empDAO.findByDeptId(deptDAO.findByName(view.getDeptUpdateComboSelectedItem()).getId()));
             coverEmpCombo(empDAO.findByDeptId(deptDAO.findByName(view.getDeptComboSelectedItem()).getId()));
+
         } catch (Exception ex) {
-            Logger.getLogger(RRHHController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RRHHController.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -570,8 +628,9 @@ public class RRHHController {
     }
 
     private void coverNewDeptDeleteCombo(List<Department> depts) {
+        view.setUpdateNewDeptComboItem("");
         for (Department dept : depts) {
-            view.setNewDeptComboItem(dept.getName());
+            view.setUpdateNewDeptComboItem(dept.getName());
         }
     }
 
