@@ -61,6 +61,13 @@ CREATE TABLE IF NOT EXISTS VACACIONES (
         ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS EMPRESAS (
+    id VARCHAR(20) PRIMARY KEY,
+    nombre VARCHAR(50),
+    direccion VARCHAR(50),
+    correo VARCHAR(100)
+);
+
 INSERT IGNORE INTO DEPARTAMENTOS (nombre, permisos) VALUES ('Desarrolladores', 0);
 INSERT IGNORE INTO DEPARTAMENTOS (nombre, permisos) VALUES ('Recursos Humanos', 1);
 INSERT IGNORE INTO DEPARTAMENTOS (nombre, permisos) VALUES ('Administración', 2);

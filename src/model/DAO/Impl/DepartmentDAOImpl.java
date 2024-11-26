@@ -85,6 +85,19 @@ public class DepartmentDAOImpl implements DepartmentDAO {
     }
 
     @Override
+    public int countDepartments() throws Exception {
+        int count = 0;
+        String sql = "SELECT COUNT(*) AS total FROM DEPARTAMENTOS;";
+
+        try (ResultSet rs = query.executeQuery(sql)) {
+            if (rs.next()) {
+                count = rs.getInt("total");
+            }
+        }
+        return count;
+    }
+
+    @Override
     public void insert(Department depto) throws Exception {
         StringBuilder sql = new StringBuilder("INSERT INTO DEPARTAMENTOS ");
         sql.append("(nombre, permisos) ");

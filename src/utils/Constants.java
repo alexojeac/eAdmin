@@ -17,13 +17,13 @@ public class Constants {
     public static final String ACCES_ERROR = "Error al intentar acceder a la base de datos.";
     public static final String LOGIN_ERROR = "Usuario y/o contraseña incorrectos.";
 
-    //Home View messages
+    //Home view messages
     public static final String DATE_NULL = "Las fechas son incorrectas.";
     public static final String OVERLAP_DATE = "Existen vacaciones que coinciden en algún momento con este intervalo de fechas.";
     public static final String INVALID_TIME_RECORD_IN = "Ya existe una ficha de entrada para el día de hoy.";
     public static final String INVALID_TIME_RECORD_OUT = "Ya existe una ficha de salida para el día de hoy.";
 
-    //Department View messages
+    //Department view messages
     public static final String ERROR_DEPT_NAME = "Debe indicar un nombre de departamento válido, este nombre tampoco puede ser igual al de otro departamento.";
     public static final String CONFIRM_DELETE_DEPT = "Seguro que quiere eliminar este departamento, lo empleados que pertenecen a este departamento serán reubicados en uno genérico.";
 
@@ -39,6 +39,10 @@ public class Constants {
     public static final String ERROR_UPDATE_EMP = "Error al intentar actualizar el empleado.";
     public static final String INVALID_DATA_SEARCH = "No se puede filtrar con los datos introducidos, seleccione departamento y empleado.";
     public static final String INSERT_EMP_ERROR = "Ha ocurrido un error al intentar crear el empleado, compruebe que no existe un empleado con este DNI.";
+
+    //Asministration view messages
+    public static final String ENTERPRISE_ERROR = "Error al guardad los datos de la empresa, comprueba que todos los campos están cubiertos.";
+    public static final String ENTERPRISE_SAVE = "Datos de la empresa guardados correctamente.";
 
     //ERROR messages
     public static final String PASS_MATCH_ERROR = "La contraseña no es válida, debe tener al menos 6 caracteres y un símbolo especial";

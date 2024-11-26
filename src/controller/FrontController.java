@@ -4,6 +4,7 @@ package controller;
  *
  * @author Alejandro Ojea
  */
+import controller.panel_views.AdministrationViewController;
 import controller.panel_views.DepartmentViewController;
 import controller.panel_views.HomeViewController;
 import controller.panel_views.RRHHController;
@@ -17,6 +18,7 @@ import model.DAO.Impl.DepartmentDAOImpl;
 import model.DAO.Impl.EmployeeDAOImpl;
 import model.Employee;
 import views.LoginView;
+import views.panel_views.AdministrationView;
 import views.panel_views.DepartmentView;
 import views.panel_views.HomeView;
 import views.panel_views.RRHHView;
@@ -41,6 +43,7 @@ public class FrontController {
         this.view.addRRHHLabelListener(this.getRRHHLabelMouseListener());
         this.view.addHomeLabelListener(getHomeLabelMouseListener());
         this.view.addDeptosLabelListener(this.getDeptosLabelMouseListener());
+        this.view.addAdminLabelListener(this.getAdminLabelMouseListener());
         HomeView currentView = new HomeView();
         this.view.setsectionLabelText("Área personal");
         HomeViewController controller = new HomeViewController(currentView, connection, currentlyEmployee);
@@ -186,6 +189,27 @@ public class FrontController {
                     view.setsectionLabelText("Departamentos");
                     try {
                         DepartmentViewController controller = new DepartmentViewController(currentView, connection);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (Exception ex) {
+                        Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    view.setView(currentView);
+                }
+            }
+        };
+        return adapter;
+    }
+
+    private MouseAdapter getAdminLabelMouseListener() {
+        MouseAdapter adapter = new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    AdministrationView currentView = new AdministrationView();
+                    view.setsectionLabelText("Departamentos");
+                    try {
+                        AdministrationViewController controller = new AdministrationViewController(currentView, connection);
                     } catch (SQLException ex) {
                         Logger.getLogger(FrontController.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (Exception ex) {

@@ -455,6 +455,10 @@ public class NavigationView extends javax.swing.JDialog {
     public void addDeptosLabelListener(MouseAdapter listener) {
         this.deptTitleLabel.addMouseListener(listener);
     }
+    
+    public void addAdminLabelListener(MouseAdapter listener) {
+        this.adminTitleLabel.addMouseListener(listener);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel adminIconLabel;
