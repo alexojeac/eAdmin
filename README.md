@@ -1,6 +1,6 @@
 # eAdmin
 
-App de escritotio de gestión empresarial, gestiona los empleados y departamentos de tu empresa, así como las fichadas y peticiones de los empleados.
+App de escritotio de gestión empresarial, gestiona los empleados y departamentos de tu empresa, así como las fichadas y peticiones de vacaciones de los empleados.
 
 ## Índice
 1. [Instalación](#instalación)
@@ -14,7 +14,9 @@ App de escritotio de gestión empresarial, gestiona los empleados y departamento
 
 ## Uso
 Inicia la máquina virtual de Ubuntu Server.
+Inicia sesión con usuario: "eadmin" y contraseña "abc123."
 Ejecuta `sudo docker start mysql-container` para levantar el container de docker que aloja la base de datos.
+Ejecuta eadmin.jar en la carpeta dist.
 
 
 ## Licencia
