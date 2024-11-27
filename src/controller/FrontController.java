@@ -207,7 +207,7 @@ public class FrontController {
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     AdministrationView currentView = new AdministrationView();
-                    view.setsectionLabelText("Departamentos");
+                    view.setsectionLabelText("Administración");
                     try {
                         AdministrationViewController controller = new AdministrationViewController(currentView, connection);
                     } catch (SQLException ex) {

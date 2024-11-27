@@ -99,8 +99,8 @@ public class DepartmentViewController {
 
     private ActionListener getDeleteDeptButtonActionListener() {
         ActionListener al = (ActionEvent e) -> {
-            if (JOptionPane.showConfirmDialog(view, Constants.CONFIRM_DELETE_DEPT, Constants.CONFIRM,
-                    JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION) {
+            if (JOptionPane.showOptionDialog(view, Constants.CONFIRM_DELETE_DEPT, Constants.CONFIRM,
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Eliminar", "Cancelar"}, "Elimianr") == JOptionPane.YES_OPTION) {
 
                 try {
                     employeeDAO.findByDeptId(deptDAO.findByName(view.getDeleteDeptCombo()).getId())
