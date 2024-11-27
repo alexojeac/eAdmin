@@ -187,8 +187,10 @@ public class DepartmentViewController {
             row.add(e.getName());
             row.add(e.getLastname1() + " " + e.getLastname2());
             row.add(e.getContractDate());
-            row.add(e.getAddress());
+            row.add(e.getMail());
             row.add(e.getTelephone());
+            row.add(e.getAddress());
+            row.add(e.getId());
 
             view.addEmpRowTable(row);
         }

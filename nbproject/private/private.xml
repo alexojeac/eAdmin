@@ -3,12 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/alexo/OneDrive/Documentos/NetBeansProjects/eAdmin/src/views/panel_views/DepartmentView.java</file>
-            <file>file:/C:/Users/alexo/OneDrive/Documentos/NetBeansProjects/eAdmin/src/model/DAO/Impl/DepartmentDAOImpl.java</file>
-            <file>file:/C:/Users/alexo/OneDrive/Documentos/NetBeansProjects/eAdmin/src/model/DAO/DepartmentDAO.java</file>
+            <file>file:/C:/Users/alexo/OneDrive/Documentos/NetBeansProjects/eAdmin/src/controller/panel_views/HomeViewController.java</file>
             <file>file:/C:/Users/alexo/OneDrive/Documentos/NetBeansProjects/eAdmin/src/utils/Constants.java</file>
-            <file>file:/C:/Users/alexo/OneDrive/Documentos/NetBeansProjects/eAdmin/src/controller/FrontController.java</file>
-            <file>file:/C:/Users/alexo/OneDrive/Documentos/NetBeansProjects/eAdmin/src/controller/panel_views/AdministrationViewController.java</file>
         </group>
     </open-files>
 </project-private>

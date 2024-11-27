@@ -22,6 +22,7 @@ public class Constants {
     public static final String OVERLAP_DATE = "Existen vacaciones que coinciden en algún momento con este intervalo de fechas.";
     public static final String INVALID_TIME_RECORD_IN = "Ya existe una ficha de entrada para el día de hoy.";
     public static final String INVALID_TIME_RECORD_OUT = "Ya existe una ficha de salida para el día de hoy.";
+    public static final String INVALID_TIME_RECORD_BEFORE_NOW = "La fecha inicial no puede ser inferior al día de hoy.";
 
     //Department view messages
     public static final String ERROR_DEPT_NAME = "Debe indicar un nombre de departamento válido, este nombre tampoco puede ser igual al de otro departamento.";

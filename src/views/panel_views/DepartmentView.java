@@ -57,14 +57,14 @@ public class DepartmentView extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Nombre", "Apellidos", "Fecha contrato", "Dirección", "Teléfono"
+                "Nombre", "Apellidos", "Fecha contrato", "Correo", "Teléfono", "Dirección", "DNI"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {

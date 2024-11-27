@@ -98,7 +98,6 @@ public class HomeViewController {
                     }
                 }
 
-                // Actualizar la tabla después del cambio
                 repaintTimeRecordsTable(trDAO.findByEmpId(currentlyEmployee.getId()));
             } catch (Exception ex) {
                 Logger.getLogger(HomeViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -120,26 +119,33 @@ public class HomeViewController {
 
     private ActionListener getRequestButtonActionListener() {
         ActionListener al = (ActionEvent e) -> {
-            if (view.getDateRequestFrom() != null && view.getDateRequestUntil() != null && !view.getDateRequestUntil().isBefore(view.getDateRequestFrom())) {
-                try {
-                    if (isDateValid(view.getDateRequestFrom(), view.getDateRequestUntil())) {
-                        try {
-                            holidayDAO.insert(new Holiday(currentlyEmployee.getId(), view.getDateRequestFrom(), view.getDateRequestUntil(), 0));
-                            repaintHolidaysTable(holidayDAO.findAllByEmp(currentlyEmployee.getId()));
-                        } catch (Exception ex) {
-                            Logger.getLogger(HomeViewController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(view, Constants.OVERLAP_DATE, Constants.ERROR, JOptionPane.WARNING_MESSAGE);
-                    }
-                } catch (Exception ex) {
-                    Logger.getLogger(HomeViewController.class.getName()).log(Level.SEVERE, null, ex);
+            if (view.getDateRequestFrom() != null && view.getDateRequestUntil() != null) {
+                if (view.getDateRequestFrom().isBefore(LocalDate.now())) {
+                    JOptionPane.showMessageDialog(view, Constants.INVALID_TIME_RECORD_BEFORE_NOW, Constants.ERROR, JOptionPane.WARNING_MESSAGE);
+                    return;
                 }
 
+                if (!view.getDateRequestUntil().isBefore(view.getDateRequestFrom())) {
+                    try {
+                        if (isDateValid(view.getDateRequestFrom(), view.getDateRequestUntil())) {
+                            try {
+                                holidayDAO.insert(new Holiday(currentlyEmployee.getId(), view.getDateRequestFrom(), view.getDateRequestUntil(), 0));
+                                repaintHolidaysTable(holidayDAO.findAllByEmp(currentlyEmployee.getId()));
+                            } catch (Exception ex) {
+                                Logger.getLogger(HomeViewController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(view, Constants.OVERLAP_DATE, Constants.ERROR, JOptionPane.WARNING_MESSAGE);
+                        }
+                    } catch (Exception ex) {
+                        Logger.getLogger(HomeViewController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(view, Constants.DATE_NULL, Constants.ERROR, JOptionPane.WARNING_MESSAGE);
+                }
             } else {
                 JOptionPane.showMessageDialog(view, Constants.DATE_NULL, Constants.ERROR, JOptionPane.WARNING_MESSAGE);
             }
-
         };
         return al;
     }

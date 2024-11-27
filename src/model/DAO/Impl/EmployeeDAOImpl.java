@@ -33,7 +33,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         while (rs.next()) {
             return (new Employee(rs.getString("emp_id"), rs.getString("nombre"), rs.getString("apellido1"),
                     rs.getString("apellido2"), rs.getDate("fecha_contrato").toLocalDate(), rs.getDouble("salario"), rs.getString("correo"),
-                    rs.getString("direccion"), rs.getString("tlf"), rs.getInt("departamento_id"), rs.getString("notas")));
+                    rs.getString("tlf"), rs.getString("direccion"), rs.getInt("departamento_id"), rs.getString("notas")));
         }
         return new Employee();
     }
@@ -42,15 +42,15 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     public List<Employee> finadAll() throws Exception {
         List<Employee> employees = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT");
-        sql.append(" emp_id, nombre, apellido1, apellido2, fecha_contrato, direccion, tlf");
+        sql.append(" emp_id, nombre, apellido1, apellido2, fecha_contrato, salario, correo, direccion, tlf, departamento_id, notas");
         sql.append(" FROM EMPLEADOS;");
 
         ResultSet rs = query.executeQuery(sql.toString());
 
         while (rs.next()) {
             employees.add(new Employee(rs.getString("emp_id"), rs.getString("nombre"), rs.getString("apellido1"),
-                    rs.getString("apellido2"), rs.getDate("fecha_contrato").toLocalDate(),
-                    rs.getString("direccion"), rs.getString("tlf")));
+                    rs.getString("apellido2"), rs.getDate("fecha_contrato").toLocalDate(), rs.getDouble("salario"), rs.getString("correo"),
+                    rs.getString("tlf"), rs.getString("direccion"), rs.getInt("departamento_id"), rs.getString("notas")));
         }
 
         return employees;
@@ -60,7 +60,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     public List<Employee> findByDeptId(int dept_id) throws Exception {
         List<Employee> employees = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT");
-        sql.append(" emp_id, nombre, apellido1, apellido2, fecha_contrato, direccion, tlf");
+        sql.append(" emp_id, nombre, apellido1, apellido2, fecha_contrato, salario, correo, direccion, tlf, departamento_id, notas");
         sql.append(" FROM EMPLEADOS");
         sql.append(" WHERE departamento_id = ").append(dept_id).append(";");;
 
@@ -68,8 +68,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
         while (rs.next()) {
             employees.add(new Employee(rs.getString("emp_id"), rs.getString("nombre"), rs.getString("apellido1"),
-                    rs.getString("apellido2"), rs.getDate("fecha_contrato").toLocalDate(),
-                    rs.getString("direccion"), rs.getString("tlf")));
+                    rs.getString("apellido2"), rs.getDate("fecha_contrato").toLocalDate(), rs.getDouble("salario"), rs.getString("correo"),
+                    rs.getString("tlf"), rs.getString("direccion"), rs.getInt("departamento_id"), rs.getString("notas")));
         }
 
         return employees;
@@ -116,12 +116,13 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
-
     public void update(Employee employee) throws Exception {
         final StringBuilder sql = new StringBuilder("UPDATE EMPLEADOS");
         sql.append(" SET departamento_id = ").append(employee.getDept_id());
         sql.append(" , salario = ").append(employee.getSalary());
         sql.append(" , correo = '").append(employee.getMail());
+        sql.append("' , direccion = '").append(employee.getAddress());
+        sql.append("' , tlf = '").append(employee.getTelephone());
         sql.append("' WHERE emp_id = '").append(employee.getId()).append("';");
 
         query.executeStatement(sql.toString());

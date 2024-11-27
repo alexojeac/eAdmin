@@ -162,6 +162,9 @@ public class RRHHController {
             try {
                 Employee emp = empDAO.findById(view.getEmpUpdateComboSelectedItem().split(" - ")[0]);
 
+                System.out.println("Correo: " + emp.getMail());
+                System.out.println("Movil: " + emp.getTelephone());
+
                 if (Validator.isValidEmail(view.getNewMailText())) {
                     emp.setMail(view.getNewMailText());
                 } else {
@@ -172,7 +175,7 @@ public class RRHHController {
                 }
 
                 if (Validator.isValidPhoneNumber(view.getNewPhoneText())) {
-                    emp.setMail(view.getNewPhoneText());
+                    emp.setTelephone(view.getNewPhoneText());
                 } else {
                     if (!view.getNewPhoneText().equals("Nuevo tlf")) {
                         JOptionPane.showMessageDialog(view, Constants.PHONE_NUMBER_ERROR, Constants.ERROR, JOptionPane.WARNING_MESSAGE);
@@ -194,7 +197,7 @@ public class RRHHController {
                 }
                 empDAO.update(emp);
 
-                JOptionPane.showMessageDialog(view, Constants.UPDATE_EMP_SUCCESS, Constants.ERROR, JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(view, Constants.UPDATE_EMP_SUCCESS, Constants.CONFIRM, JOptionPane.INFORMATION_MESSAGE);
 
                 view.setValidNewMailText(false);
                 view.setNewMailText("Nuevo email");
@@ -204,7 +207,7 @@ public class RRHHController {
                 view.setNewAddressText("Nueva dirección");
                 view.setValidNewPhoneText(false);
                 view.setNewPhoneText("Nuevo tlf");
-                
+
                 coverAllEmpCombos();
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(view, Constants.INVALID_SALARY, Constants.ERROR, JOptionPane.WARNING_MESSAGE);
@@ -263,7 +266,7 @@ public class RRHHController {
                         LocalDate.now(), deptDAO.findByName(view.getDeptNewEmpComboSelectedItem()).getId(), Double.parseDouble(view.getSalaryText()),
                         view.getPhoneText(), view.getAddressText());
 
-                if (emp.getLastname2().equals("Apellido 1")) {
+                if (emp.getLastname2().equals("Apellido 2")) {
                     emp.setLastname2("");
                 }
                 if (emp.getAddress().equals("Dirección")) {
@@ -646,14 +649,20 @@ public class RRHHController {
     private void coverUpdateEmpCombo(List<Employee> employees) {
         view.removeAllItemsUpdateEmpCombo();
         for (Employee employee : employees) {
-            view.setEmpUpdateComboItem(employee.getId() + " - " + employee.getName() + " " + employee.getLastname1());
+            if (!employee.getId().equals("1")) {
+                view.setEmpUpdateComboItem(employee.getId() + " - " + employee.getName() + " " + employee.getLastname1());
+
+            }
         }
     }
 
     private void coverDeleteEmpCombo(List<Employee> employees) {
         view.removeAllItemsDeleteEmpCombo();
         for (Employee employee : employees) {
-            view.setDeleteEmpComboItem(employee.getId() + " - " + employee.getName() + " " + employee.getLastname1());
+            if (!employee.getId().equals("1")) {
+                view.setDeleteEmpComboItem(employee.getId() + " - " + employee.getName() + " " + employee.getLastname1());
+
+            }
         }
     }
 
