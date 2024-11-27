@@ -9,14 +9,14 @@ App de escritotio de gestión empresarial, gestiona los empleados y departamento
 4. [Agradecimientos](#agradecimientos)
 
 ## Instalación
-1. Clona el repositorio: `https://github.com/alexojeac/eAdmin`
+1. Clona o descarga el repositorio: `https://github.com/alexojeac/eAdmin`
 2. Instala la máquina virtual en Oracle VirtualBox: `https://drive.google.com/file/d/1WMNl3-V7i4zEoX2Kegg2mwJFXfP3strB/view?usp=drive_link`
 
 ## Uso
-Inicia la máquina virtual de Ubuntu Server.
-Inicia sesión con usuario: "eadmin" y contraseña "abc123."
-Ejecuta `sudo docker start mysql-container` para levantar el container de docker que aloja la base de datos.
-Ejecuta eadmin.jar en la carpeta dist.
+1. Inicia la máquina virtual de Ubuntu Server.
+2. Inicia sesión con usuario: "eadmin" y contraseña "abc123."
+3. Ejecuta `sudo docker start mysql-container` para levantar el container de docker que aloja la base de datos.
+4. Ejecuta eadmin.jar en la carpeta dist.
 
 
 ## Licencia
